@@ -1,0 +1,1 @@
+This is a coordination smoke test. Synthetic observations: coarse QoI A=1.000, B=0.800; fine QoI A=1.002, B=0.802. No real experiment or physical validation. Do not interpret these as new scientific discovery.
