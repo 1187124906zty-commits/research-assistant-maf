@@ -1,0 +1,2744 @@
+{
+  "schema": "AMMT_EXISTING_EVIDENCE_DOSSIER_V1",
+  "task": {
+    "stage": "paper_formation",
+    "scope": "read-only retained-source/array inspection; no solver imports, no PDE reruns",
+    "source_root": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02",
+    "output_root": "C:\\Users\\Administrator\\Documents\\ChatGPT\\skill开发\\research-workflow\\paper\\ammt-study\\evidence",
+    "production_unique_runs": 6,
+    "disjoint_count_explanation": "A/B/C use 3; B four corners LL/HL/LH/HH use 4 including B reused as LL; union=6. Additional calibration and verification runs are historical evidence, not included in this six-run production count."
+  },
+  "physical_model": {
+    "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+    "lab_equation": "partial_t H = div(k(T) grad T)",
+    "moving_equation": "div(u H - k(T) grad T)=0; u=(-v,0,0), xi=x-vt",
+    "enthalpy": "H=rho*(integral[T0,T] cp(theta)dtheta + latent*f(T))",
+    "rho_kg_m3": 8440.0,
+    "latent_J_kg": 280000.0,
+    "Ts_C": 1290.0,
+    "Tl_C": 1350.0,
+    "T0_C": 25.0,
+    "phase_fraction": "0 below Ts; (T-Ts)/(Tl-Ts) in [Ts,Tl); 1 at/above Tl",
+    "C0_J_m3_K": 3392880.0,
+    "U": "H/C0, unit K; this is a scale variable, not actual temperature",
+    "laser": "q=2*eta*P/(pi*w^2)*exp(-2*(xi^2+y^2)/w^2)",
+    "w_m": 8.5e-05,
+    "D4sigma_m": 0.00017,
+    "source_location": "top z=0; flux integrated over each rectangle using erf, represented as equivalent source in top control volume",
+    "material_table": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+    "material_table_rows": [
+      {
+        "property": "cp",
+        "temperature_C": -18.0,
+        "value": 402.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 21.0,
+        "value": 410.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 93.0,
+        "value": 427.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 204.0,
+        "value": 456.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 316.0,
+        "value": 481.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 427.0,
+        "value": 511.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 538.0,
+        "value": 536.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 649.0,
+        "value": 565.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 760.0,
+        "value": 590.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 871.0,
+        "value": 620.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 982.0,
+        "value": 645.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "cp",
+        "temperature_C": 1093.0,
+        "value": 670.0,
+        "unit": "J_kgK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 2"
+      },
+      {
+        "property": "k",
+        "temperature_C": -157.0,
+        "value": 7.2,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": -129.0,
+        "value": 7.5,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": -73.0,
+        "value": 8.4,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": -18.0,
+        "value": 9.2,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 21.0,
+        "value": 9.8,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 38.0,
+        "value": 10.1,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 93.0,
+        "value": 10.8,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 204.0,
+        "value": 12.5,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 316.0,
+        "value": 14.1,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 427.0,
+        "value": 15.7,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 538.0,
+        "value": 17.5,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 649.0,
+        "value": 19.0,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 760.0,
+        "value": 20.8,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 871.0,
+        "value": 22.8,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      },
+      {
+        "property": "k",
+        "temperature_C": 982.0,
+        "value": 25.2,
+        "unit": "W_mK",
+        "source_locator": "Special Metals INCONEL 625 bulletin p.2 Table 3"
+      }
+    ],
+    "property_roles": "Tabulated alloy bulletin data; high-T interpolation/continuation, constant density/latent heat and linear equilibrium fraction are model closures, not measured high-T IN625 specimen properties.",
+    "omitted_physics": [
+      "liquid momentum and Marangoni flow",
+      "free-surface deformation",
+      "recoil/keyhole dynamics",
+      "evaporation",
+      "radiative/convective feedback in production solve"
+    ]
+  },
+  "calibration": {
+    "eta": 0.2890548519203547,
+    "root_residual_um": 0.1575457177625026,
+    "dL_deta_bracket_um": 1276.787776412803,
+    "eta_expanded_sensitivity_from_B_U": 0.016651161918021334,
+    "sensitivity_note": "Local/bracket propagation of reported B U only; not posterior parameter certainty",
+    "objective_points": [
+      {
+        "eta": 0.2,
+        "L_um": 234.56922314200827,
+        "residual_um": -124.43077685799173,
+        "data_role": "B_LENGTH_ONLY_CALIBRATION",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-01-r13"
+      },
+      {
+        "eta": 0.4,
+        "L_um": 511.68225620654886,
+        "residual_um": 152.68225620654886,
+        "data_role": "B_LENGTH_ONLY_CALIBRATION",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-02-r13"
+      },
+      {
+        "eta": 0.2898050701419095,
+        "L_um": 359.95786945492335,
+        "residual_um": 0.9578694549233546,
+        "data_role": "B_LENGTH_ONLY_CALIBRATION",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-03-r13-repair-01"
+      },
+      {
+        "eta": 0.285314816634814,
+        "L_um": 354.22476866406913,
+        "residual_um": -4.775231335930869,
+        "data_role": "B_LENGTH_ONLY_CALIBRATION",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-04-r13"
+      },
+      {
+        "eta": 0.2890548519203547,
+        "L_um": 359.1575457177625,
+        "residual_um": 0.1575457177625026,
+        "data_role": "B_LENGTH_ONLY_CALIBRATION",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13"
+      }
+    ],
+    "data_roles": {
+      "B_L": "calibration",
+      "B_W_D": "post-calibration diagnostics",
+      "A_C": "nonblind retrospective condition comparison"
+    },
+    "observations_read_by_calibration": [
+      "validation/b-length-calibration-only.json"
+    ],
+    "provenance_audit_status": "PASS",
+    "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\application-research-results.json",
+    "limitation": "Five retained successful points show a local bracket and monotone sampled response; no proof of global unique root over eta in [0,1]. Propagated B U is sensitivity, not a calibrated posterior or complete prediction uncertainty."
+  },
+  "runs": [
+    {
+      "run": "fipy-application-A-frozen-r13",
+      "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-A-frozen-r13",
+      "role": "production condition or deterministic constitutive corner; not an experimental replicate",
+      "power_W": 137.9,
+      "speed_m_s": 0.4,
+      "eta": 0.2890548519203547,
+      "branch": "linear-extrapolation",
+      "cells": 902664,
+      "core_dx_dy_dz_m": [
+        4e-06,
+        3e-06,
+        1e-06
+      ],
+      "domain_m": [
+        [
+          -0.001,
+          0.00035
+        ],
+        [
+          0.0,
+          0.00035999999999999997
+        ],
+        [
+          -0.0003,
+          0.0
+        ]
+      ],
+      "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+      "framework": {
+        "FiPy": "4.0.3",
+        "scipy": "1.18.1",
+        "numpy": "2.5.3",
+        "pyamg": "5.3.0",
+        "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]"
+      },
+      "boundary_recipe": {
+        "right": "Cold material inflow U=0",
+        "left": "Zero diffusive gradient, advective outflow",
+        "y0": "Mirror symmetry",
+        "outer_y_bottom": "Adiabatic, domain study required",
+        "top": "Integrated Gaussian flux plus adiabatic remainder"
+      },
+      "primary_observers": {
+        "L": "Two-solidus-crossing surface length proxy",
+        "W_D": "Bilinear per-xi passage interpolation THEN max-xi; source-connected continuous boundary",
+        "geometry_policy": "Nodalmax upper hot bbox plus two cold nodes bounds ROI; four-neighbour seed y0z0; reject truncation",
+        "nodalmax_operator": "Retained as sensitivity proxy, not primary"
+      },
+      "result_source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-A-frozen-r13\\result.json",
+      "L_um": 309.8856792638423,
+      "W_um": 153.36005335598344,
+      "D_um": 40.46931231766381,
+      "surface_peak_C": 2707.1936651681717,
+      "temperature_min_C": 25.000000000000004,
+      "iterations": 74,
+      "duration_s": 1107.652513000001,
+      "nonlinear_equation_L1_relative": 1.2841515517804504e-07,
+      "balance_relative": -3.05007776843657e-11,
+      "final_correction_T_C": 2.6300048602934112e-05,
+      "fusion_geometry": {
+        "qualified": true,
+        "component_count": 1,
+        "selected_component": 1,
+        "selected_pixels": 15625,
+        "outer_boundary_truncated": false,
+        "selection": "Four-neighbour component containing y=0,z=0 in passage Tmax",
+        "geometry_max_pitch_m": [
+          5.006249230044696e-07,
+          5.000170837383532e-07
+        ],
+        "bounding_method": "Continuous bilinear isotherm crossings on sampled edges"
+      },
+      "passage_geometry": {
+        "qualified": true,
+        "selected_component": 1,
+        "components": 1,
+        "outer_truncated": false,
+        "W_m": 0.00015336005335598343,
+        "D_m": 4.0469312317663805e-05,
+        "all_components": [
+          {
+            "component": 1,
+            "pixels": 14556,
+            "W_sampled_m": 0.000153,
+            "D_sampled_m": 4.0017857142857146e-05
+          }
+        ],
+        "ROI_m": {
+          "y": [
+            0.0,
+            8.25e-05
+          ],
+          "z": [
+            -4.1500000000000006e-05,
+            0.0
+          ]
+        },
+        "max_pitch_m": [
+          5.000000000000122e-07,
+          4.940476190476201e-07
+        ],
+        "operator": "Symmetry restored perxi, bilinear passage slices interpolated then maxxi, source-connected four-neighbour geometry"
+      },
+      "history_accepted_min_C": 24.999999999408573,
+      "history_accepted_max_C": 2861.160313615769,
+      "history_rows": 74,
+      "raw_fields_audit": {
+        "source_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-A-frozen-r13\\fields.npz",
+        "keys": [
+          "x_m",
+          "y_m",
+          "z_m",
+          "x_faces_m",
+          "y_faces_m",
+          "z_faces_m",
+          "T_C",
+          "U_K",
+          "surface_T_C",
+          "surface_y0_T_C",
+          "top_q_W_m2",
+          "yz_Tmax_C",
+          "yz_y_m",
+          "yz_z_m",
+          "liquid_fraction"
+        ],
+        "shape": [
+          199,
+          56,
+          81
+        ],
+        "all_T_finite": true,
+        "T_min_C": 25.000000000000004,
+        "T_cell_max_C": 2682.0412815470136,
+        "T_surface_max_C": 2707.1936651681717,
+        "liquid_fraction_min": 0.0,
+        "liquid_fraction_max": 1.0,
+        "q_min_W_m2": 0.0,
+        "integrated_half_source_W": 19.930332039908453,
+        "half_power_expected_W": 19.930332039908457,
+        "half_power_difference_W": -3.552713678800501e-15,
+        "Ts_centerline_crossings_m": [
+          -0.00025405524645031723,
+          5.5830432813525084e-05
+        ],
+        "Tl_centerline_crossings_m": [
+          -0.00020576005606655887,
+          5.31519766029149e-05
+        ],
+        "L_reconstructed_from_retained_centerline_um": 309.8856792638423,
+        "L_vs_result_difference_um": 0.0
+      },
+      "source_binding_audit": [
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\fipy_application_frame.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-A-frozen-r13\\frozen-solver-source.py",
+          "recorded_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "observed_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "recorded_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "observed_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "recorded_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "observed_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "recorded_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "observed_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        }
+      ],
+      "mechanism_fields_present": true,
+      "science_gate_as_stored": "PENDING_APPLICATION_REVIEW"
+    },
+    {
+      "run": "fipy-application-B-cal-05-r13",
+      "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13",
+      "role": "production condition or deterministic constitutive corner; not an experimental replicate",
+      "power_W": 179.2,
+      "speed_m_s": 0.8,
+      "eta": 0.2890548519203547,
+      "branch": "linear-extrapolation",
+      "cells": 902664,
+      "core_dx_dy_dz_m": [
+        4e-06,
+        3e-06,
+        1e-06
+      ],
+      "domain_m": [
+        [
+          -0.001,
+          0.00035
+        ],
+        [
+          0.0,
+          0.00035999999999999997
+        ],
+        [
+          -0.0003,
+          0.0
+        ]
+      ],
+      "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+      "framework": {
+        "FiPy": "4.0.3",
+        "scipy": "1.18.1",
+        "numpy": "2.5.3",
+        "pyamg": "5.3.0",
+        "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]"
+      },
+      "boundary_recipe": {
+        "right": "Cold material inflow U=0",
+        "left": "Zero diffusive gradient, advective outflow",
+        "y0": "Mirror symmetry",
+        "outer_y_bottom": "Adiabatic, domain study required",
+        "top": "Integrated Gaussian flux plus adiabatic remainder"
+      },
+      "primary_observers": {
+        "L": "Two-solidus-crossing surface length proxy",
+        "W_D": "Bilinear per-xi passage interpolation THEN max-xi; source-connected continuous boundary",
+        "geometry_policy": "Nodalmax upper hot bbox plus two cold nodes bounds ROI; four-neighbour seed y0z0; reject truncation",
+        "nodalmax_operator": "Retained as sensitivity proxy, not primary"
+      },
+      "result_source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13\\result.json",
+      "L_um": 359.1575457177625,
+      "W_um": 143.0406226383922,
+      "D_um": 31.12034988767346,
+      "surface_peak_C": 2697.0732343382333,
+      "temperature_min_C": 25.000000000000004,
+      "iterations": 52,
+      "duration_s": 673.4984783,
+      "nonlinear_equation_L1_relative": 1.1101784994680737e-07,
+      "balance_relative": -6.034533007221461e-11,
+      "final_correction_T_C": 1.0866614275073516e-05,
+      "fusion_geometry": {
+        "qualified": true,
+        "component_count": 1,
+        "selected_component": 1,
+        "selected_pixels": 10972,
+        "outer_boundary_truncated": false,
+        "selection": "Four-neighbour component containing y=0,z=0 in passage Tmax",
+        "geometry_max_pitch_m": [
+          5.006249230044696e-07,
+          5.000170837383532e-07
+        ],
+        "bounding_method": "Continuous bilinear isotherm crossings on sampled edges"
+      },
+      "passage_geometry": {
+        "qualified": true,
+        "selected_component": 1,
+        "components": 1,
+        "outer_truncated": false,
+        "W_m": 0.0001430406226383922,
+        "D_m": 3.112034988767346e-05,
+        "all_components": [
+          {
+            "component": 1,
+            "pixels": 10247,
+            "W_sampled_m": 0.000143,
+            "D_sampled_m": 3.102272727272728e-05
+          }
+        ],
+        "ROI_m": {
+          "y": [
+            0.0,
+            7.65e-05
+          ],
+          "z": [
+            -3.2500000000000004e-05,
+            0.0
+          ]
+        },
+        "max_pitch_m": [
+          5.000000000000122e-07,
+          4.92424242424246e-07
+        ],
+        "operator": "Symmetry restored perxi, bilinear passage slices interpolated then maxxi, source-connected four-neighbour geometry"
+      },
+      "history_accepted_min_C": 24.999999999999968,
+      "history_accepted_max_C": 2666.9342467906945,
+      "history_rows": 52,
+      "raw_fields_audit": {
+        "source_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13\\fields.npz",
+        "keys": [
+          "x_m",
+          "y_m",
+          "z_m",
+          "x_faces_m",
+          "y_faces_m",
+          "z_faces_m",
+          "T_C",
+          "U_K",
+          "surface_T_C",
+          "surface_y0_T_C",
+          "top_q_W_m2",
+          "yz_Tmax_C",
+          "yz_y_m",
+          "yz_z_m",
+          "liquid_fraction"
+        ],
+        "shape": [
+          199,
+          56,
+          81
+        ],
+        "all_T_finite": true,
+        "T_min_C": 25.000000000000004,
+        "T_cell_max_C": 2666.2498561252232,
+        "T_surface_max_C": 2697.0732343382333,
+        "liquid_fraction_min": 0.0,
+        "liquid_fraction_max": 1.0,
+        "q_min_W_m2": 0.0,
+        "integrated_half_source_W": 25.89931473206378,
+        "half_power_expected_W": 25.89931473206378,
+        "half_power_difference_W": 0.0,
+        "Ts_centerline_crossings_m": [
+          -0.00030676153661527534,
+          5.2396009102487154e-05
+        ],
+        "Tl_centerline_crossings_m": [
+          -0.00022649751057069413,
+          4.963009488579577e-05
+        ],
+        "L_reconstructed_from_retained_centerline_um": 359.1575457177625,
+        "L_vs_result_difference_um": 0.0
+      },
+      "source_binding_audit": [
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\fipy_application_frame.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13\\frozen-solver-source.py",
+          "recorded_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "observed_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "recorded_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "observed_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "recorded_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "observed_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "recorded_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "observed_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        }
+      ],
+      "mechanism_fields_present": true,
+      "science_gate_as_stored": "PENDING_APPLICATION_REVIEW"
+    },
+    {
+      "run": "fipy-application-C-frozen-r13",
+      "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-C-frozen-r13",
+      "role": "production condition or deterministic constitutive corner; not an experimental replicate",
+      "power_W": 179.2,
+      "speed_m_s": 1.2,
+      "eta": 0.2890548519203547,
+      "branch": "linear-extrapolation",
+      "cells": 902664,
+      "core_dx_dy_dz_m": [
+        4e-06,
+        3e-06,
+        1e-06
+      ],
+      "domain_m": [
+        [
+          -0.001,
+          0.00035
+        ],
+        [
+          0.0,
+          0.00035999999999999997
+        ],
+        [
+          -0.0003,
+          0.0
+        ]
+      ],
+      "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+      "framework": {
+        "FiPy": "4.0.3",
+        "scipy": "1.18.1",
+        "numpy": "2.5.3",
+        "pyamg": "5.3.0",
+        "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]"
+      },
+      "boundary_recipe": {
+        "right": "Cold material inflow U=0",
+        "left": "Zero diffusive gradient, advective outflow",
+        "y0": "Mirror symmetry",
+        "outer_y_bottom": "Adiabatic, domain study required",
+        "top": "Integrated Gaussian flux plus adiabatic remainder"
+      },
+      "primary_observers": {
+        "L": "Two-solidus-crossing surface length proxy",
+        "W_D": "Bilinear per-xi passage interpolation THEN max-xi; source-connected continuous boundary",
+        "geometry_policy": "Nodalmax upper hot bbox plus two cold nodes bounds ROI; four-neighbour seed y0z0; reject truncation",
+        "nodalmax_operator": "Retained as sensitivity proxy, not primary"
+      },
+      "result_source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-C-frozen-r13\\result.json",
+      "L_um": 320.6313629678825,
+      "W_um": 129.04618690578758,
+      "D_um": 22.044541383670747,
+      "surface_peak_C": 2420.501526672031,
+      "temperature_min_C": 25.000000000000004,
+      "iterations": 91,
+      "duration_s": 1511.229172499996,
+      "nonlinear_equation_L1_relative": 9.625153697950313e-08,
+      "balance_relative": -4.125276107958146e-11,
+      "final_correction_T_C": 1.4760801605007146e-05,
+      "fusion_geometry": {
+        "qualified": true,
+        "component_count": 1,
+        "selected_component": 1,
+        "selected_pixels": 6869,
+        "outer_boundary_truncated": false,
+        "selection": "Four-neighbour component containing y=0,z=0 in passage Tmax",
+        "geometry_max_pitch_m": [
+          5.006249230044696e-07,
+          5.000170837383532e-07
+        ],
+        "bounding_method": "Continuous bilinear isotherm crossings on sampled edges"
+      },
+      "passage_geometry": {
+        "qualified": true,
+        "selected_component": 1,
+        "components": 1,
+        "outer_truncated": false,
+        "W_m": 0.00012904618690578757,
+        "D_m": 2.2044541383670747e-05,
+        "all_components": [
+          {
+            "component": 1,
+            "pixels": 7014,
+            "W_sampled_m": 0.000129,
+            "D_sampled_m": 2.2031250000000004e-05
+          }
+        ],
+        "ROI_m": {
+          "y": [
+            0.0,
+            7.05e-05
+          ],
+          "z": [
+            -2.3500000000000002e-05,
+            0.0
+          ]
+        },
+        "max_pitch_m": [
+          4.964788732394462e-07,
+          4.895833333333362e-07
+        ],
+        "operator": "Symmetry restored perxi, bilinear passage slices interpolated then maxxi, source-connected four-neighbour geometry"
+      },
+      "history_accepted_min_C": 24.9999999999867,
+      "history_accepted_max_C": 2588.0026699752448,
+      "history_rows": 91,
+      "raw_fields_audit": {
+        "source_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-C-frozen-r13\\fields.npz",
+        "keys": [
+          "x_m",
+          "y_m",
+          "z_m",
+          "x_faces_m",
+          "y_faces_m",
+          "z_faces_m",
+          "T_C",
+          "U_K",
+          "surface_T_C",
+          "surface_y0_T_C",
+          "top_q_W_m2",
+          "yz_Tmax_C",
+          "yz_y_m",
+          "yz_z_m",
+          "liquid_fraction"
+        ],
+        "shape": [
+          199,
+          56,
+          81
+        ],
+        "all_T_finite": true,
+        "T_min_C": 25.000000000000004,
+        "T_cell_max_C": 2386.702889642079,
+        "T_surface_max_C": 2420.501526672031,
+        "liquid_fraction_min": 0.0,
+        "liquid_fraction_max": 1.0,
+        "q_min_W_m2": 0.0,
+        "integrated_half_source_W": 25.89931473206378,
+        "half_power_expected_W": 25.89931473206378,
+        "half_power_difference_W": 0.0,
+        "Ts_centerline_crossings_m": [
+          -0.0002744954268024964,
+          4.613593616538614e-05
+        ],
+        "Tl_centerline_crossings_m": [
+          -0.00019370402415012371,
+          4.27719661924136e-05
+        ],
+        "L_reconstructed_from_retained_centerline_um": 320.6313629678825,
+        "L_vs_result_difference_um": 0.0
+      },
+      "source_binding_audit": [
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\fipy_application_frame.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-C-frozen-r13\\frozen-solver-source.py",
+          "recorded_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "observed_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "recorded_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "observed_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "recorded_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "observed_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "recorded_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "observed_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        }
+      ],
+      "mechanism_fields_present": true,
+      "science_gate_as_stored": "PENDING_APPLICATION_REVIEW"
+    },
+    {
+      "run": "fipy-application-B-highT-frozen-r14",
+      "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-highT-frozen-r14",
+      "role": "production condition or deterministic constitutive corner; not an experimental replicate",
+      "power_W": 179.2,
+      "speed_m_s": 0.8,
+      "eta": 0.2890548519203547,
+      "branch": "hold-last",
+      "cells": 902664,
+      "core_dx_dy_dz_m": [
+        4e-06,
+        3e-06,
+        1e-06
+      ],
+      "domain_m": [
+        [
+          -0.001,
+          0.00035
+        ],
+        [
+          0.0,
+          0.00035999999999999997
+        ],
+        [
+          -0.0003,
+          0.0
+        ]
+      ],
+      "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+      "framework": {
+        "FiPy": "4.0.3",
+        "scipy": "1.18.1",
+        "numpy": "2.5.3",
+        "pyamg": "5.3.0",
+        "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]"
+      },
+      "boundary_recipe": {
+        "right": "Cold material inflow U=0",
+        "left": "Zero diffusive gradient, advective outflow",
+        "y0": "Mirror symmetry",
+        "outer_y_bottom": "Adiabatic, domain study required",
+        "top": "Integrated Gaussian flux plus adiabatic remainder"
+      },
+      "primary_observers": {
+        "L": "Two-solidus-crossing surface length proxy",
+        "W_D": "Bilinear per-xi passage interpolation THEN max-xi; source-connected continuous boundary",
+        "geometry_policy": "Nodalmax upper hot bbox plus two cold nodes bounds ROI; four-neighbour seed y0z0; reject truncation",
+        "nodalmax_operator": "Retained as sensitivity proxy, not primary"
+      },
+      "result_source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-highT-frozen-r14\\result.json",
+      "L_um": 393.44045830101044,
+      "W_um": 143.7869176712329,
+      "D_um": 30.797065270818912,
+      "surface_peak_C": 3720.946596884735,
+      "temperature_min_C": 25.000000000000004,
+      "iterations": 56,
+      "duration_s": 1086.0490790999975,
+      "nonlinear_equation_L1_relative": 6.896702666570753e-08,
+      "balance_relative": 1.7410403719387755e-11,
+      "final_correction_T_C": 1.6324755279129022e-05,
+      "fusion_geometry": {
+        "qualified": true,
+        "component_count": 1,
+        "selected_component": 1,
+        "selected_pixels": 10836,
+        "outer_boundary_truncated": false,
+        "selection": "Four-neighbour component containing y=0,z=0 in passage Tmax",
+        "geometry_max_pitch_m": [
+          5.006249230044696e-07,
+          5.000170837383532e-07
+        ],
+        "bounding_method": "Continuous bilinear isotherm crossings on sampled edges"
+      },
+      "passage_geometry": {
+        "qualified": true,
+        "selected_component": 1,
+        "components": 1,
+        "outer_truncated": false,
+        "W_m": 0.00014378691767123292,
+        "D_m": 3.079706527081891e-05,
+        "all_components": [
+          {
+            "component": 1,
+            "pixels": 10123,
+            "W_sampled_m": 0.000143,
+            "D_sampled_m": 3.0530303030303034e-05
+          }
+        ],
+        "ROI_m": {
+          "y": [
+            0.0,
+            7.65e-05
+          ],
+          "z": [
+            -3.2500000000000004e-05,
+            0.0
+          ]
+        },
+        "max_pitch_m": [
+          5.000000000000122e-07,
+          4.92424242424246e-07
+        ],
+        "operator": "Symmetry restored perxi, bilinear passage slices interpolated then maxxi, source-connected four-neighbour geometry"
+      },
+      "history_accepted_min_C": 24.999999999999943,
+      "history_accepted_max_C": 3653.361480973255,
+      "history_rows": 56,
+      "raw_fields_audit": {
+        "source_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-highT-frozen-r14\\fields.npz",
+        "keys": [
+          "x_m",
+          "y_m",
+          "z_m",
+          "x_faces_m",
+          "y_faces_m",
+          "z_faces_m",
+          "T_C",
+          "U_K",
+          "surface_T_C",
+          "surface_y0_T_C",
+          "top_q_W_m2",
+          "yz_Tmax_C",
+          "yz_y_m",
+          "yz_z_m",
+          "liquid_fraction"
+        ],
+        "shape": [
+          199,
+          56,
+          81
+        ],
+        "all_T_finite": true,
+        "T_min_C": 25.000000000000004,
+        "T_cell_max_C": 3645.9225484137883,
+        "T_surface_max_C": 3720.946596884735,
+        "liquid_fraction_min": 0.0,
+        "liquid_fraction_max": 1.0,
+        "q_min_W_m2": 0.0,
+        "integrated_half_source_W": 25.89931473206378,
+        "half_power_expected_W": 25.89931473206378,
+        "half_power_difference_W": 0.0,
+        "Ts_centerline_crossings_m": [
+          -0.00034026709117461235,
+          5.3173367126398076e-05
+        ],
+        "Tl_centerline_crossings_m": [
+          -0.00025909722884143155,
+          5.0743389971816936e-05
+        ],
+        "L_reconstructed_from_retained_centerline_um": 393.44045830101044,
+        "L_vs_result_difference_um": 0.0
+      },
+      "source_binding_audit": [
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\fipy_application_frame.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-highT-frozen-r14\\frozen-solver-source.py",
+          "recorded_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "observed_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "recorded_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "observed_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "recorded_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "observed_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "recorded_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "observed_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        }
+      ],
+      "mechanism_fields_present": true,
+      "science_gate_as_stored": "PENDING_APPLICATION_REVIEW"
+    },
+    {
+      "run": "fipy-application-B-khold-cplinear-r15",
+      "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-khold-cplinear-r15",
+      "role": "production condition or deterministic constitutive corner; not an experimental replicate",
+      "power_W": 179.2,
+      "speed_m_s": 0.8,
+      "eta": 0.2890548519203547,
+      "branch": "k:hold-last;cp:linear-extrapolation",
+      "cells": 902664,
+      "core_dx_dy_dz_m": [
+        4e-06,
+        3e-06,
+        1e-06
+      ],
+      "domain_m": [
+        [
+          -0.001,
+          0.00035
+        ],
+        [
+          0.0,
+          0.00035999999999999997
+        ],
+        [
+          -0.0003,
+          0.0
+        ]
+      ],
+      "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+      "framework": {
+        "FiPy": "4.0.3",
+        "scipy": "1.18.1",
+        "numpy": "2.5.3",
+        "pyamg": "5.3.0",
+        "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]"
+      },
+      "boundary_recipe": {
+        "right": "Cold material inflow U=0",
+        "left": "Zero diffusive gradient, advective outflow",
+        "y0": "Mirror symmetry",
+        "outer_y_bottom": "Adiabatic, domain study required",
+        "top": "Integrated Gaussian flux plus adiabatic remainder"
+      },
+      "primary_observers": {
+        "L": "Two-solidus-crossing surface length proxy",
+        "W_D": "Bilinear per-xi passage interpolation THEN max-xi; source-connected continuous boundary",
+        "geometry_policy": "Nodalmax upper hot bbox plus two cold nodes bounds ROI; four-neighbour seed y0z0; reject truncation",
+        "nodalmax_operator": "Retained as sensitivity proxy, not primary"
+      },
+      "result_source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-khold-cplinear-r15\\result.json",
+      "L_um": 402.3712581813177,
+      "W_um": 143.15007404634164,
+      "D_um": 30.092012429039947,
+      "surface_peak_C": 3506.5728926812694,
+      "temperature_min_C": 25.000000000000004,
+      "iterations": 59,
+      "duration_s": 837.9678989000022,
+      "nonlinear_equation_L1_relative": 7.83309389411468e-08,
+      "balance_relative": 1.4339625622113726e-11,
+      "final_correction_T_C": 2.067851482934202e-05,
+      "fusion_geometry": {
+        "qualified": true,
+        "component_count": 1,
+        "selected_component": 1,
+        "selected_pixels": 10460,
+        "outer_boundary_truncated": false,
+        "selection": "Four-neighbour component containing y=0,z=0 in passage Tmax",
+        "geometry_max_pitch_m": [
+          5.006249230044696e-07,
+          5.000170837383532e-07
+        ],
+        "bounding_method": "Continuous bilinear isotherm crossings on sampled edges"
+      },
+      "passage_geometry": {
+        "qualified": true,
+        "selected_component": 1,
+        "components": 1,
+        "outer_truncated": false,
+        "W_m": 0.00014315007404634163,
+        "D_m": 3.0092012429039947e-05,
+        "all_components": [
+          {
+            "component": 1,
+            "pixels": 9775,
+            "W_sampled_m": 0.000143,
+            "D_sampled_m": 3.0023437500000007e-05
+          }
+        ],
+        "ROI_m": {
+          "y": [
+            0.0,
+            7.65e-05
+          ],
+          "z": [
+            -3.150000000000001e-05,
+            0.0
+          ]
+        },
+        "max_pitch_m": [
+          5.000000000000122e-07,
+          4.921875000000043e-07
+        ],
+        "operator": "Symmetry restored perxi, bilinear passage slices interpolated then maxxi, source-connected four-neighbour geometry"
+      },
+      "history_accepted_min_C": 24.999999999999755,
+      "history_accepted_max_C": 3441.390905134253,
+      "history_rows": 59,
+      "raw_fields_audit": {
+        "source_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-khold-cplinear-r15\\fields.npz",
+        "keys": [
+          "x_m",
+          "y_m",
+          "z_m",
+          "x_faces_m",
+          "y_faces_m",
+          "z_faces_m",
+          "T_C",
+          "U_K",
+          "surface_T_C",
+          "surface_y0_T_C",
+          "top_q_W_m2",
+          "yz_Tmax_C",
+          "yz_y_m",
+          "yz_z_m",
+          "liquid_fraction"
+        ],
+        "shape": [
+          199,
+          56,
+          81
+        ],
+        "all_T_finite": true,
+        "T_min_C": 25.000000000000004,
+        "T_cell_max_C": 3436.0563349508884,
+        "T_surface_max_C": 3506.5728926812694,
+        "liquid_fraction_min": 0.0,
+        "liquid_fraction_max": 1.0,
+        "q_min_W_m2": 0.0,
+        "integrated_half_source_W": 25.89931473206378,
+        "half_power_expected_W": 25.89931473206378,
+        "half_power_difference_W": 0.0,
+        "Ts_centerline_crossings_m": [
+          -0.00034924882533819007,
+          5.312243284312767e-05
+        ],
+        "Tl_centerline_crossings_m": [
+          -0.0002699979421444573,
+          5.0671715096325975e-05
+        ],
+        "L_reconstructed_from_retained_centerline_um": 402.3712581813177,
+        "L_vs_result_difference_um": 0.0
+      },
+      "source_binding_audit": [
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\fipy_application_frame.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-khold-cplinear-r15\\frozen-solver-source.py",
+          "recorded_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "observed_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "recorded_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "observed_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "recorded_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "observed_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "recorded_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "observed_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\run_constitutive_factorial.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-khold-cplinear-r15\\frozen-factorial-wrapper.py",
+          "recorded_sha256": "aeb4a67f156ffb38d53da49958f8c8bd853137251ef8118849535d5a194b9563",
+          "observed_sha256": "aeb4a67f156ffb38d53da49958f8c8bd853137251ef8118849535d5a194b9563",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        }
+      ],
+      "mechanism_fields_present": true,
+      "science_gate_as_stored": "PENDING_APPLICATION_REVIEW"
+    },
+    {
+      "run": "fipy-application-B-klinear-cphold-r15",
+      "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-klinear-cphold-r15",
+      "role": "production condition or deterministic constitutive corner; not an experimental replicate",
+      "power_W": 179.2,
+      "speed_m_s": 0.8,
+      "eta": 0.2890548519203547,
+      "branch": "k:linear-extrapolation;cp:hold-last",
+      "cells": 902664,
+      "core_dx_dy_dz_m": [
+        4e-06,
+        3e-06,
+        1e-06
+      ],
+      "domain_m": [
+        [
+          -0.001,
+          0.00035
+        ],
+        [
+          0.0,
+          0.00035999999999999997
+        ],
+        [
+          -0.0003,
+          0.0
+        ]
+      ],
+      "candidate": "FIPY_APPLICATION_MOVING_FRAME_V5",
+      "framework": {
+        "FiPy": "4.0.3",
+        "scipy": "1.18.1",
+        "numpy": "2.5.3",
+        "pyamg": "5.3.0",
+        "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]"
+      },
+      "boundary_recipe": {
+        "right": "Cold material inflow U=0",
+        "left": "Zero diffusive gradient, advective outflow",
+        "y0": "Mirror symmetry",
+        "outer_y_bottom": "Adiabatic, domain study required",
+        "top": "Integrated Gaussian flux plus adiabatic remainder"
+      },
+      "primary_observers": {
+        "L": "Two-solidus-crossing surface length proxy",
+        "W_D": "Bilinear per-xi passage interpolation THEN max-xi; source-connected continuous boundary",
+        "geometry_policy": "Nodalmax upper hot bbox plus two cold nodes bounds ROI; four-neighbour seed y0z0; reject truncation",
+        "nodalmax_operator": "Retained as sensitivity proxy, not primary"
+      },
+      "result_source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-klinear-cphold-r15\\result.json",
+      "L_um": 352.9886879571668,
+      "W_um": 143.71622129720419,
+      "D_um": 31.61342715629935,
+      "surface_peak_C": 2756.354569813648,
+      "temperature_min_C": 25.000000000000004,
+      "iterations": 56,
+      "duration_s": 726.0573315000001,
+      "nonlinear_equation_L1_relative": 1.3149740366546284e-07,
+      "balance_relative": -5.996782710948353e-11,
+      "final_correction_T_C": 2.1253455088299233e-05,
+      "fusion_geometry": {
+        "qualified": true,
+        "component_count": 1,
+        "selected_component": 1,
+        "selected_pixels": 11245,
+        "outer_boundary_truncated": false,
+        "selection": "Four-neighbour component containing y=0,z=0 in passage Tmax",
+        "geometry_max_pitch_m": [
+          5.006249230044696e-07,
+          5.000170837383532e-07
+        ],
+        "bounding_method": "Continuous bilinear isotherm crossings on sampled edges"
+      },
+      "passage_geometry": {
+        "qualified": true,
+        "selected_component": 1,
+        "components": 1,
+        "outer_truncated": false,
+        "W_m": 0.0001437162212972042,
+        "D_m": 3.161342715629935e-05,
+        "all_components": [
+          {
+            "component": 1,
+            "pixels": 8668,
+            "W_sampled_m": 0.000143,
+            "D_sampled_m": 3.150000000000001e-05
+          }
+        ],
+        "ROI_m": {
+          "y": [
+            0.0,
+            7.65e-05
+          ],
+          "z": [
+            -3.35e-05,
+            0.0
+          ]
+        },
+        "max_pitch_m": [
+          5.000000000000122e-07,
+          5.000000000000054e-07
+        ],
+        "operator": "Symmetry restored perxi, bilinear passage slices interpolated then maxxi, source-connected four-neighbour geometry"
+      },
+      "history_accepted_min_C": 24.9999999999995,
+      "history_accepted_max_C": 2785.6694264616285,
+      "history_rows": 56,
+      "raw_fields_audit": {
+        "source_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-klinear-cphold-r15\\fields.npz",
+        "keys": [
+          "x_m",
+          "y_m",
+          "z_m",
+          "x_faces_m",
+          "y_faces_m",
+          "z_faces_m",
+          "T_C",
+          "U_K",
+          "surface_T_C",
+          "surface_y0_T_C",
+          "top_q_W_m2",
+          "yz_Tmax_C",
+          "yz_y_m",
+          "yz_z_m",
+          "liquid_fraction"
+        ],
+        "shape": [
+          199,
+          56,
+          81
+        ],
+        "all_T_finite": true,
+        "T_min_C": 25.000000000000004,
+        "T_cell_max_C": 2724.8199471809567,
+        "T_surface_max_C": 2756.354569813648,
+        "liquid_fraction_min": 0.0,
+        "liquid_fraction_max": 1.0,
+        "q_min_W_m2": 0.0,
+        "integrated_half_source_W": 25.89931473206378,
+        "half_power_expected_W": 25.89931473206378,
+        "half_power_difference_W": 0.0,
+        "Ts_centerline_crossings_m": [
+          -0.0003005381586446211,
+          5.2450529312545706e-05
+        ],
+        "Tl_centerline_crossings_m": [
+          -0.00021996722969352402,
+          4.97183097318152e-05
+        ],
+        "L_reconstructed_from_retained_centerline_um": 352.9886879571668,
+        "L_vs_result_difference_um": 0.0
+      },
+      "source_binding_audit": [
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\fipy_application_frame.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-klinear-cphold-r15\\frozen-solver-source.py",
+          "recorded_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "observed_sha256": "bfe2f8b5649c81efc5fef71d17f826874bb7c07dc829ad2035cc74d2d24c9762",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\native_fv_enthalpy.py",
+          "recorded_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "observed_sha256": "a105ff869e94472f6a07c86ab2265f16e11cbbf558c297b86eb1f3183245482d",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\passage_observer.py",
+          "recorded_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "observed_sha256": "77d34cb89124e654d75beab077c9b986b7ffd75a185bef86c5c3ed8447163818",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\material-properties.csv",
+          "recorded_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "observed_sha256": "c83276c43e744829129337e09b2af6638692d785fb563259a97d0633c30e5bc0",
+          "matches": true,
+          "binding_kind": "live_dependency_checked_against_executed_binding"
+        },
+        {
+          "recorded_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\solver\\run_constitutive_factorial.py",
+          "inspected_path": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-klinear-cphold-r15\\frozen-factorial-wrapper.py",
+          "recorded_sha256": "aeb4a67f156ffb38d53da49958f8c8bd853137251ef8118849535d5a194b9563",
+          "observed_sha256": "aeb4a67f156ffb38d53da49958f8c8bd853137251ef8118849535d5a194b9563",
+          "matches": true,
+          "binding_kind": "executed_snapshot"
+        }
+      ],
+      "mechanism_fields_present": true,
+      "science_gate_as_stored": "PENDING_APPLICATION_REVIEW"
+    }
+  ],
+  "comparison_rows": [
+    {
+      "case": "A",
+      "observable": "L",
+      "simulated_um": 309.8856792638423,
+      "experimental_um": 300.0,
+      "expanded_uncertainty_um": 11.91,
+      "deviation_percent": 3.295226421280764,
+      "signed_difference_over_expanded_U": 0.8300318441513259,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": 9.885679263842292,
+      "inside_source_expanded_U_scale": true,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "A",
+      "observable": "W",
+      "simulated_um": 153.36005335598344,
+      "experimental_um": 147.9,
+      "expanded_uncertainty_um": 6.42,
+      "deviation_percent": 3.691719645695357,
+      "signed_difference_over_expanded_U": 0.8504756006204724,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": 5.460053355983433,
+      "inside_source_expanded_U_scale": true,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "A",
+      "observable": "D",
+      "simulated_um": 40.46931231766381,
+      "experimental_um": 42.5,
+      "expanded_uncertainty_um": 4.49,
+      "deviation_percent": -4.778088664320455,
+      "signed_difference_over_expanded_U": -0.4522689715670809,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": -2.0306876823361932,
+      "inside_source_expanded_U_scale": true,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "B",
+      "observable": "L",
+      "simulated_um": 359.1575457177625,
+      "experimental_um": 359.0,
+      "expanded_uncertainty_um": 21.26,
+      "deviation_percent": 0.043884601048050864,
+      "signed_difference_over_expanded_U": 0.007410428869355719,
+      "role": "calibration",
+      "signed_difference_um": 0.1575457177625026,
+      "inside_source_expanded_U_scale": true,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "B",
+      "observable": "W",
+      "simulated_um": 143.0406226383922,
+      "experimental_um": 123.5,
+      "expanded_uncertainty_um": 6.3,
+      "deviation_percent": 15.822366508819588,
+      "signed_difference_over_expanded_U": 3.101686133078126,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": 19.540622638392193,
+      "inside_source_expanded_U_scale": false,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "B",
+      "observable": "D",
+      "simulated_um": 31.12034988767346,
+      "experimental_um": 36.0,
+      "expanded_uncertainty_um": 3.97,
+      "deviation_percent": -13.554583645351503,
+      "signed_difference_over_expanded_U": -1.2291310106615971,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": -4.879650112326541,
+      "inside_source_expanded_U_scale": false,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "C",
+      "observable": "L",
+      "simulated_um": 320.6313629678825,
+      "experimental_um": 370.0,
+      "expanded_uncertainty_um": 32.57,
+      "deviation_percent": -13.342874873545265,
+      "signed_difference_over_expanded_U": -1.5157702496812244,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": -49.368637032117476,
+      "inside_source_expanded_U_scale": false,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "C",
+      "observable": "W",
+      "simulated_um": 129.04618690578758,
+      "experimental_um": 106.0,
+      "expanded_uncertainty_um": 4.48,
+      "deviation_percent": 21.741685760176964,
+      "signed_difference_over_expanded_U": 5.144238148613298,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": 23.04618690578758,
+      "inside_source_expanded_U_scale": false,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    },
+    {
+      "case": "C",
+      "observable": "D",
+      "simulated_um": 22.044541383670747,
+      "experimental_um": 29.6,
+      "expanded_uncertainty_um": 3.26,
+      "deviation_percent": -25.52519802813937,
+      "signed_difference_over_expanded_U": -2.3176253424322866,
+      "role": "nonblind class-level comparison",
+      "signed_difference_um": -7.555458616329254,
+      "inside_source_expanded_U_scale": false,
+      "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\experimental-comparison.csv"
+    }
+  ],
+  "comparison_statistic_boundary": "Signed difference divided by separately sourced experimental expanded U; not a z score, p-value, or combined experimental+numerical+calibration uncertainty En.",
+  "experimental_roles": {
+    "length": "Lane AMMT-20 us thermography class means; A/B/C frame counts 19/10/7 (not independent specimens)",
+    "width_depth": "Current exact NIST Section 2 Table 2 targets from AMMT-100 us traces; A/B/C 3/3/4 independent tracks. Lane Table 4 class W/D combines AMMT-100 and AMMT-20 us measurements and reports integer means.",
+    "uncertainty": "Lane Tables 5-7 U=2*uc, components in quadrature without correlations; separate from NIST class SD and from standard uncertainty of mean.",
+    "joint_operator_limit": "Length and W/D are class comparisons, not same-track simultaneous 3D measurements."
+  },
+  "width_depth_primary_provenance": {
+    "status": "PRIMARY_OFFICIAL_DECIMAL_CLASS_MEANS_FOUND",
+    "source": {
+      "url": "https://www.nist.gov/ambench/chal-amb2018-02-mp-xsection",
+      "snapshot_path": "validation\\nist-data\\amb2018-02-mp-xsection-official.html",
+      "retrieved_utc": "2026-09-29T19:03:58.624437+00:00",
+      "sha256": "6a3b3816abdaec44e5e57b3821cafc3817b085b847f2fec356d8bce615cad9ed",
+      "locator": "Section 2, Table 2, Class Width and Class Depth columns; trace rows 1-10",
+      "page_dates": "Created May 30, 2018; Updated May 20, 2025"
+    },
+    "official_rows": [
+      {
+        "case": "C",
+        "trace": 1,
+        "width_mean_um": 104.4,
+        "width_sd_um": 0.187,
+        "depth_mean_um": 29.0,
+        "depth_sd_um": 0.081
+      },
+      {
+        "case": "C",
+        "trace": 2,
+        "width_mean_um": 107.7,
+        "width_sd_um": 0.187,
+        "depth_mean_um": 29.2,
+        "depth_sd_um": 0.041
+      },
+      {
+        "case": "C",
+        "trace": 3,
+        "width_mean_um": 106.6,
+        "width_sd_um": 0.071,
+        "depth_mean_um": 30.0,
+        "depth_sd_um": 0.0
+      },
+      {
+        "case": "C",
+        "trace": 4,
+        "width_mean_um": 105.4,
+        "width_sd_um": 0.216,
+        "depth_mean_um": 30.2,
+        "depth_sd_um": 0.148
+      },
+      {
+        "case": "A",
+        "trace": 5,
+        "width_mean_um": 144.0,
+        "width_sd_um": 0.32,
+        "depth_mean_um": 44.4,
+        "depth_sd_um": 0.122
+      },
+      {
+        "case": "A",
+        "trace": 6,
+        "width_mean_um": 151.3,
+        "width_sd_um": 0.071,
+        "depth_mean_um": 41.0,
+        "depth_sd_um": 0.187
+      },
+      {
+        "case": "A",
+        "trace": 7,
+        "width_mean_um": 148.5,
+        "width_sd_um": 0.357,
+        "depth_mean_um": 42.1,
+        "depth_sd_um": 0.108
+      },
+      {
+        "case": "B",
+        "trace": 8,
+        "width_mean_um": 116.4,
+        "width_sd_um": 0.187,
+        "depth_mean_um": 38.2,
+        "depth_sd_um": 0.179
+      },
+      {
+        "case": "B",
+        "trace": 9,
+        "width_mean_um": 129.1,
+        "width_sd_um": 0.142,
+        "depth_mean_um": 34.8,
+        "depth_sd_um": 0.041
+      },
+      {
+        "case": "B",
+        "trace": 10,
+        "width_mean_um": 124.9,
+        "width_sd_um": 0.204,
+        "depth_mean_um": 34.9,
+        "depth_sd_um": 0.147
+      }
+    ],
+    "cases": {
+      "C": {
+        "trace_ids": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "n_independent_tracks": 4,
+        "recomputed_unweighted_trace_mean_and_sample_sd": {
+          "width_um": 106.025,
+          "width_sd_um": 1.4338177476002052,
+          "depth_um": 29.6,
+          "depth_sd_um": 0.5887840577551897
+        },
+        "official_display": {
+          "width_um": 106.0,
+          "width_sd_um": 1.4,
+          "depth_um": 29.6,
+          "depth_sd_um": 0.6
+        },
+        "matches_display_precision": true
+      },
+      "A": {
+        "trace_ids": [
+          5,
+          6,
+          7
+        ],
+        "n_independent_tracks": 3,
+        "recomputed_unweighted_trace_mean_and_sample_sd": {
+          "width_um": 147.93333333333334,
+          "width_sd_um": 3.6828431046317154,
+          "depth_um": 42.5,
+          "depth_sd_um": 1.7349351572897462
+        },
+        "official_display": {
+          "width_um": 147.9,
+          "width_sd_um": 3.7,
+          "depth_um": 42.5,
+          "depth_sd_um": 1.7
+        },
+        "matches_display_precision": true
+      },
+      "B": {
+        "trace_ids": [
+          8,
+          9,
+          10
+        ],
+        "n_independent_tracks": 3,
+        "recomputed_unweighted_trace_mean_and_sample_sd": {
+          "width_um": 123.46666666666667,
+          "width_sd_um": 6.47018804466557,
+          "depth_um": 35.96666666666667,
+          "depth_sd_um": 1.9347695814575296
+        },
+        "official_display": {
+          "width_um": 123.5,
+          "width_sd_um": 6.5,
+          "depth_um": 36.0,
+          "depth_sd_um": 1.9
+        },
+        "matches_display_precision": true
+      }
+    },
+    "aggregation": "Unweighted arithmetic mean and sample SD across displayed trace means reproduce Table 2 class values to display precision. NIST text calls them class mean and standard deviation; raw microscope picks and exact pre-display precision are not published here.",
+    "c_depth_conflict": {
+      "nist_official_class_um": 29.6,
+      "nist_trace_depths_um": [
+        29,
+        29.2,
+        30,
+        30.2
+      ],
+      "unweighted_mean_um": 29.6,
+      "kollmannsberger_2019_um": 29.5,
+      "lane_2020_table4_um": 30,
+      "assessment": "The current official primary table directly supports 29.6. Kollmannsberger 29.5 is a conflicting secondary transcription or earlier-release possibility; its cause is undocumented. Lane 30 is an integer display consistent with 29.6 but does not establish the earlier decimal."
+    },
+    "limitations": [
+      "No original microscope control-software measurements or manually selected boundary coordinates in the page",
+      "Displayed trace values are rounded; exact pre-display aggregation cannot be proven",
+      "Class SD is across trace means and is not Lane 2020 expanded measurement uncertainty U(k=2)"
+    ]
+  },
+  "research_case_metrics": [
+    {
+      "case": "A",
+      "power_W": 137.9,
+      "speed_m_s": 0.4,
+      "absorbed_line_energy_J_m": 99.65166019954228,
+      "residence_w_over_v_us": 212.50000000000003,
+      "rear_Ts_Tl_span_um": 48.29519038375836,
+      "rear_phase_passage_us": 120.7379759593959,
+      "model_centerline_Tl_to_Ts_mean_cooling_MK_s": 0.4969438946051072,
+      "model_width_depth_ratio": 3.7895393959794506,
+      "experimental_mean_width_depth_ratio": 3.48,
+      "full_model_liquid_volume_nL": 0.5999520000000003,
+      "cooling_definition": "Centerline rear Tl=1350 to Ts=1290°C interval; not Lane's reported cooling-rate observable"
+    },
+    {
+      "case": "B",
+      "power_W": 179.2,
+      "speed_m_s": 0.8,
+      "absorbed_line_energy_J_m": 64.74828683015944,
+      "residence_w_over_v_us": 106.25000000000001,
+      "rear_Ts_Tl_span_um": 80.26402604458121,
+      "rear_phase_passage_us": 100.3300325557265,
+      "model_centerline_Tl_to_Ts_mean_cooling_MK_s": 0.5980263184572783,
+      "model_width_depth_ratio": 4.596369358143031,
+      "experimental_mean_width_depth_ratio": 3.4305555555555554,
+      "full_model_liquid_volume_nL": 0.4427280000000002,
+      "cooling_definition": "Centerline rear Tl=1350 to Ts=1290°C interval; not Lane's reported cooling-rate observable"
+    },
+    {
+      "case": "C",
+      "power_W": 179.2,
+      "speed_m_s": 1.2,
+      "absorbed_line_energy_J_m": 43.16552455343963,
+      "residence_w_over_v_us": 70.83333333333334,
+      "rear_Ts_Tl_span_um": 80.79140265237265,
+      "rear_phase_passage_us": 67.32616887697722,
+      "model_centerline_Tl_to_Ts_mean_cooling_MK_s": 0.8911839333920206,
+      "model_width_depth_ratio": 5.853883946135397,
+      "experimental_mean_width_depth_ratio": 3.5810810810810807,
+      "full_model_liquid_volume_nL": 0.23299200000000014,
+      "cooling_definition": "Centerline rear Tl=1350 to Ts=1290°C interval; not Lane's reported cooling-rate observable"
+    }
+  ],
+  "B_C_descriptive_trends": {
+    "L": {
+      "model_C_minus_B_um": -38.52618274987998,
+      "experiment_C_minus_B_um": 11.0,
+      "model_C_vs_B_percent": -10.726819806301691,
+      "experiment_C_vs_B_percent": 3.064066852367686,
+      "combined_expanded_U_if_uncorrelated_um": 38.89463330589453,
+      "uncertainty_note": "Descriptive class-mean contrast; cross-condition covariance not supplied. Quadrature scale assumes zero correlation and is not a new uncertainty validation model."
+    },
+    "W": {
+      "model_C_minus_B_um": -13.994435732604614,
+      "experiment_C_minus_B_um": -17.5,
+      "model_C_vs_B_percent": -9.783539441087763,
+      "experiment_C_vs_B_percent": -14.17004048582996,
+      "combined_expanded_U_if_uncorrelated_um": 7.730485107675973,
+      "uncertainty_note": "Descriptive class-mean contrast; cross-condition covariance not supplied. Quadrature scale assumes zero correlation and is not a new uncertainty validation model."
+    },
+    "D": {
+      "model_C_minus_B_um": -9.075808504002712,
+      "experiment_C_minus_B_um": -6.399999999999999,
+      "model_C_vs_B_percent": -29.163581183248755,
+      "experiment_C_vs_B_percent": -17.77777777777777,
+      "combined_expanded_U_if_uncorrelated_um": 5.136973817336429,
+      "uncertainty_note": "Descriptive class-mean contrast; cross-condition covariance not supplied. Quadrature scale assumes zero correlation and is not a new uncertainty validation model."
+    }
+  },
+  "factorial": {
+    "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\report\\constitutive-factorial-results.json",
+    "scope": "FIXED_B_EFFECTIVE_ETA_MODEL_INTERNAL_CONSTITUTIVE_FACTORIAL",
+    "eta": 0.2890548519203547,
+    "coding": "first letter k, second cp; L linear extrapolation, H hold last value at own endpoint",
+    "rows": [
+      {
+        "branch": "LL",
+        "k_branch": "linear-extrapolation",
+        "cp_branch": "linear-extrapolation",
+        "run": "fipy-application-B-cal-05-r13",
+        "L_um": 359.1575457177625,
+        "W_um": 143.0406226383922,
+        "D_um": 31.12034988767346,
+        "surface_peak_C": 2697.0732343382333,
+        "Ts_rear_um": -306.76153661527536,
+        "Ts_front_um": 52.396009102487156,
+        "Tl_rear_um": -226.49751057069412,
+        "Tl_front_um": 49.63009488579577,
+        "Tl_length_um": 276.1276054564899,
+        "rear_phase_span_um": 80.26402604458121,
+        "rear_phase_passage_us": 100.3300325557265,
+        "liquid_half_volume_m3": 2.213640000000001e-13,
+        "mushy_half_volume_m3": 7.861200000000002e-14,
+        "heat_to_Ts_half_J": 0.002957843690403043,
+        "heat_to_Tl_half_J": 0.002363417692715328,
+        "hot_front_net_outward_latent_coordinate_W": 1.1261111992159725,
+        "hot_front_net_outward_sensible_coordinate_W": 1.9103340658132937,
+        "hot_front_net_outward_diffusive_W": 4.401929767808981,
+        "hot_rear_net_outward_latent_coordinate_W": -1.290768238028341,
+        "hot_rear_net_outward_sensible_coordinate_W": -1.8293620508655348,
+        "hot_rear_net_outward_diffusive_W": 14.723959252476138,
+        "mushy_x_face_Pe_median": 4.436821677351234,
+        "liquid_x_face_Pe_median": 0.5591570270495717,
+        "blackbody_no_feedback_absorbed_fraction": 0.000993143511433421
+      },
+      {
+        "branch": "HL",
+        "k_branch": "hold-last",
+        "cp_branch": "linear-extrapolation",
+        "run": "fipy-application-B-khold-cplinear-r15",
+        "L_um": 402.3712581813177,
+        "W_um": 143.15007404634164,
+        "D_um": 30.092012429039947,
+        "surface_peak_C": 3506.5728926812694,
+        "Ts_rear_um": -349.24882533819004,
+        "Ts_front_um": 53.12243284312767,
+        "Tl_rear_um": -269.9979421444573,
+        "Tl_front_um": 50.671715096325975,
+        "Tl_length_um": 320.6696572407833,
+        "rear_phase_span_um": 79.25088319373278,
+        "rear_phase_passage_us": 99.06360399216597,
+        "liquid_half_volume_m3": 2.460600000000001e-13,
+        "mushy_half_volume_m3": 7.230000000000003e-14,
+        "heat_to_Ts_half_J": 0.0033452838094244946,
+        "heat_to_Tl_half_J": 0.002798715718326438,
+        "hot_front_net_outward_latent_coordinate_W": 1.0389018732493944,
+        "hot_front_net_outward_sensible_coordinate_W": 2.265267657254827,
+        "hot_front_net_outward_diffusive_W": 4.204433043034889,
+        "hot_rear_net_outward_latent_coordinate_W": -1.1375991515447916,
+        "hot_rear_net_outward_sensible_coordinate_W": -2.169169138514484,
+        "hot_rear_net_outward_diffusive_W": 14.91330340892631,
+        "mushy_x_face_Pe_median": 5.77334501159608,
+        "liquid_x_face_Pe_median": 0.8438366316893712,
+        "blackbody_no_feedback_absorbed_fraction": 0.00165695616012391
+      },
+      {
+        "branch": "LH",
+        "k_branch": "linear-extrapolation",
+        "cp_branch": "hold-last",
+        "run": "fipy-application-B-klinear-cphold-r15",
+        "L_um": 352.9886879571668,
+        "W_um": 143.71622129720419,
+        "D_um": 31.61342715629935,
+        "surface_peak_C": 2756.354569813648,
+        "Ts_rear_um": -300.5381586446211,
+        "Ts_front_um": 52.450529312545704,
+        "Tl_rear_um": -219.96722969352402,
+        "Tl_front_um": 49.718309731815204,
+        "Tl_length_um": 269.68553942533924,
+        "rear_phase_span_um": 80.57092895109706,
+        "rear_phase_passage_us": 100.71366118887133,
+        "liquid_half_volume_m3": 2.2227600000000008e-13,
+        "mushy_half_volume_m3": 7.906800000000002e-14,
+        "heat_to_Ts_half_J": 0.0029024159867546582,
+        "heat_to_Tl_half_J": 0.0023070429956215193,
+        "hot_front_net_outward_latent_coordinate_W": 1.1760546751940606,
+        "hot_front_net_outward_sensible_coordinate_W": 1.811667660630531,
+        "hot_front_net_outward_diffusive_W": 4.450652696249963,
+        "hot_rear_net_outward_latent_coordinate_W": -1.3645126546155268,
+        "hot_rear_net_outward_sensible_coordinate_W": -1.7286674423233457,
+        "hot_rear_net_outward_diffusive_W": 14.707560895985523,
+        "mushy_x_face_Pe_median": 4.390000426125581,
+        "liquid_x_face_Pe_median": 0.48538399111436076,
+        "blackbody_no_feedback_absorbed_fraction": 0.0010127595944438824
+      },
+      {
+        "branch": "HH",
+        "k_branch": "hold-last",
+        "cp_branch": "hold-last",
+        "run": "fipy-application-B-highT-frozen-r14",
+        "L_um": 393.44045830101044,
+        "W_um": 143.7869176712329,
+        "D_um": 30.797065270818912,
+        "surface_peak_C": 3720.946596884735,
+        "Ts_rear_um": -340.26709117461235,
+        "Ts_front_um": 53.17336712639808,
+        "Tl_rear_um": -259.09722884143156,
+        "Tl_front_um": 50.74338997181694,
+        "Tl_length_um": 309.8406188132485,
+        "rear_phase_span_um": 81.1698623331808,
+        "rear_phase_passage_us": 101.462327916476,
+        "liquid_half_volume_m3": 2.474040000000001e-13,
+        "mushy_half_volume_m3": 7.374000000000002e-14,
+        "heat_to_Ts_half_J": 0.0032688086491032,
+        "heat_to_Tl_half_J": 0.0027137459426512804,
+        "hot_front_net_outward_latent_coordinate_W": 1.0780429867158723,
+        "hot_front_net_outward_sensible_coordinate_W": 2.161400243782986,
+        "hot_front_net_outward_diffusive_W": 4.269159340913858,
+        "hot_rear_net_outward_latent_coordinate_W": -1.2226451029499004,
+        "hot_rear_net_outward_sensible_coordinate_W": -2.0705964146462823,
+        "hot_rear_net_outward_diffusive_W": 14.936414174832883,
+        "mushy_x_face_Pe_median": 5.7195513227512595,
+        "liquid_x_face_Pe_median": 0.718069841269843,
+        "blackbody_no_feedback_absorbed_fraction": 0.001800767516119728
+      }
+    ],
+    "effects": [
+      {
+        "quantity": "L_um",
+        "k_effect_at_cp_linear": 43.213712463555225,
+        "cp_effect_at_k_linear": -6.168857760595699,
+        "k_effect_at_cp_hold": 40.451770343843634,
+        "cp_effect_at_k_hold": -8.93079988030729,
+        "k_main_average": 41.83274140369943,
+        "cp_main_average": -7.549828820451495,
+        "interaction_HH_HL_LH_LL": -2.761942119711591,
+        "joint_HH_minus_LL": 34.282912583247935
+      },
+      {
+        "quantity": "W_um",
+        "k_effect_at_cp_linear": 0.10945140794945019,
+        "cp_effect_at_k_linear": 0.6755986588119924,
+        "k_effect_at_cp_hold": 0.07069637402872786,
+        "cp_effect_at_k_hold": 0.6368436248912701,
+        "k_main_average": 0.09007389098908902,
+        "cp_main_average": 0.6562211418516313,
+        "interaction_HH_HL_LH_LL": -0.038755033920722326,
+        "joint_HH_minus_LL": 0.7462950328407203
+      },
+      {
+        "quantity": "D_um",
+        "k_effect_at_cp_linear": -1.0283374586335121,
+        "cp_effect_at_k_linear": 0.4930772686258891,
+        "k_effect_at_cp_hold": -0.8163618854804362,
+        "cp_effect_at_k_hold": 0.705052841778965,
+        "k_main_average": -0.9223496720569742,
+        "cp_main_average": 0.599065055202427,
+        "interaction_HH_HL_LH_LL": 0.2119755731530759,
+        "joint_HH_minus_LL": -0.3232846168545471
+      },
+      {
+        "quantity": "surface_peak_C",
+        "k_effect_at_cp_linear": 809.4996583430361,
+        "cp_effect_at_k_linear": 59.281335475414835,
+        "k_effect_at_cp_hold": 964.5920270710867,
+        "cp_effect_at_k_hold": 214.37370420346542,
+        "k_main_average": 887.0458427070614,
+        "cp_main_average": 136.82751983944013,
+        "interaction_HH_HL_LH_LL": 155.0923687280506,
+        "joint_HH_minus_LL": 1023.8733625465015
+      },
+      {
+        "quantity": "Ts_rear_um",
+        "k_effect_at_cp_linear": -42.487288722914684,
+        "cp_effect_at_k_linear": 6.223377970654269,
+        "k_effect_at_cp_hold": -39.728932529991255,
+        "cp_effect_at_k_hold": 8.981734163577698,
+        "k_main_average": -41.10811062645297,
+        "cp_main_average": 7.602556067115984,
+        "interaction_HH_HL_LH_LL": 2.7583561929234293,
+        "joint_HH_minus_LL": -33.505554559336986
+      },
+      {
+        "quantity": "Ts_front_um",
+        "k_effect_at_cp_linear": 0.726423740640513,
+        "cp_effect_at_k_linear": 0.05452021005854846,
+        "k_effect_at_cp_hold": 0.7228378138523723,
+        "cp_effect_at_k_hold": 0.05093428327040783,
+        "k_main_average": 0.7246307772464426,
+        "cp_main_average": 0.052727246664478145,
+        "interaction_HH_HL_LH_LL": -0.0035859267881406254,
+        "joint_HH_minus_LL": 0.7773580239109208
+      },
+      {
+        "quantity": "Tl_rear_um",
+        "k_effect_at_cp_linear": -43.500431573763166,
+        "cp_effect_at_k_linear": 6.5302808771700995,
+        "k_effect_at_cp_hold": -39.12999914790754,
+        "cp_effect_at_k_hold": 10.900713303025725,
+        "k_main_average": -41.31521536083535,
+        "cp_main_average": 8.715497090097912,
+        "interaction_HH_HL_LH_LL": 4.3704324258556255,
+        "joint_HH_minus_LL": -32.59971827073744
+      },
+      {
+        "quantity": "Tl_front_um",
+        "k_effect_at_cp_linear": 1.0416202105302048,
+        "cp_effect_at_k_linear": 0.08821484601943297,
+        "k_effect_at_cp_hold": 1.025080240001735,
+        "cp_effect_at_k_hold": 0.07167487549096307,
+        "k_main_average": 1.0333502252659699,
+        "cp_main_average": 0.07994486075519802,
+        "interaction_HH_HL_LH_LL": -0.016539970528469894,
+        "joint_HH_minus_LL": 1.113295086021168
+      },
+      {
+        "quantity": "Tl_length_um",
+        "k_effect_at_cp_linear": 44.54205178429339,
+        "cp_effect_at_k_linear": -6.4420660311506595,
+        "k_effect_at_cp_hold": 40.15507938790927,
+        "cp_effect_at_k_hold": -10.829038427534783,
+        "k_main_average": 42.34856558610133,
+        "cp_main_average": -8.635552229342721,
+        "interaction_HH_HL_LH_LL": -4.386972396384124,
+        "joint_HH_minus_LL": 33.71301335675861
+      },
+      {
+        "quantity": "rear_phase_span_um",
+        "k_effect_at_cp_linear": -1.013142850848439,
+        "cp_effect_at_k_linear": 0.3069029065158446,
+        "k_effect_at_cp_hold": 0.598933382083743,
+        "cp_effect_at_k_hold": 1.9189791394480267,
+        "k_main_average": -0.207104734382348,
+        "cp_main_average": 1.1129410229819356,
+        "interaction_HH_HL_LH_LL": 1.612076232932182,
+        "joint_HH_minus_LL": 0.9058362885995876
+      },
+      {
+        "quantity": "rear_phase_passage_us",
+        "k_effect_at_cp_linear": -1.2664285635605381,
+        "cp_effect_at_k_linear": 0.38362863314482354,
+        "k_effect_at_cp_hold": 0.7486667276046717,
+        "cp_effect_at_k_hold": 2.3987239243100333,
+        "k_main_average": -0.2588809179779332,
+        "cp_main_average": 1.3911762787274284,
+        "interaction_HH_HL_LH_LL": 2.01509529116521,
+        "joint_HH_minus_LL": 1.1322953607494952
+      },
+      {
+        "quantity": "liquid_half_volume_m3",
+        "k_effect_at_cp_linear": 2.4696000000000024e-14,
+        "cp_effect_at_k_linear": 9.119999999999864e-16,
+        "k_effect_at_cp_hold": 2.5128000000000047e-14,
+        "cp_effect_at_k_hold": 1.3440000000000092e-15,
+        "k_main_average": 2.4912000000000036e-14,
+        "cp_main_average": 1.1279999999999978e-15,
+        "interaction_HH_HL_LH_LL": 4.320000000000228e-16,
+        "joint_HH_minus_LL": 2.6040000000000033e-14
+      },
+      {
+        "quantity": "mushy_half_volume_m3",
+        "k_effect_at_cp_linear": -6.311999999999994e-15,
+        "cp_effect_at_k_linear": 4.559999999999932e-16,
+        "k_effect_at_cp_hold": -5.327999999999995e-15,
+        "cp_effect_at_k_hold": 1.4399999999999918e-15,
+        "k_main_average": -5.819999999999994e-15,
+        "cp_main_average": 9.479999999999925e-16,
+        "interaction_HH_HL_LH_LL": 9.839999999999986e-16,
+        "joint_HH_minus_LL": -4.872000000000002e-15
+      },
+      {
+        "quantity": "heat_to_Ts_half_J",
+        "k_effect_at_cp_linear": 0.00038744011902145173,
+        "cp_effect_at_k_linear": -5.5427703648384605e-05,
+        "k_effect_at_cp_hold": 0.00036639266234854157,
+        "cp_effect_at_k_hold": -7.647516032129476e-05,
+        "k_main_average": 0.00037691639068499665,
+        "cp_main_average": -6.595143198483968e-05,
+        "interaction_HH_HL_LH_LL": -2.1047456672910157e-05,
+        "joint_HH_minus_LL": 0.00031096495870015697
+      },
+      {
+        "quantity": "heat_to_Tl_half_J",
+        "k_effect_at_cp_linear": 0.0004352980256111102,
+        "cp_effect_at_k_linear": -5.637469709380855e-05,
+        "k_effect_at_cp_hold": 0.00040670294702976114,
+        "cp_effect_at_k_hold": -8.496977567515763e-05,
+        "k_main_average": 0.0004210004863204357,
+        "cp_main_average": -7.067223638448309e-05,
+        "interaction_HH_HL_LH_LL": -2.8595078581349076e-05,
+        "joint_HH_minus_LL": 0.0003503282499359526
+      },
+      {
+        "quantity": "hot_front_net_outward_latent_coordinate_W",
+        "k_effect_at_cp_linear": -0.08720932596657804,
+        "cp_effect_at_k_linear": 0.049943475978088125,
+        "k_effect_at_cp_hold": -0.09801168847818831,
+        "cp_effect_at_k_hold": 0.03914111346647786,
+        "k_main_average": -0.09261050722238318,
+        "cp_main_average": 0.04454229472228299,
+        "interaction_HH_HL_LH_LL": -0.010802362511610264,
+        "joint_HH_minus_LL": -0.04806821250010018
+      },
+      {
+        "quantity": "hot_front_net_outward_sensible_coordinate_W",
+        "k_effect_at_cp_linear": 0.35493359144153347,
+        "cp_effect_at_k_linear": -0.0986664051827626,
+        "k_effect_at_cp_hold": 0.3497325831524547,
+        "cp_effect_at_k_hold": -0.10386741347184136,
+        "k_main_average": 0.3523330872969941,
+        "cp_main_average": -0.10126690932730198,
+        "interaction_HH_HL_LH_LL": -0.005201008289078768,
+        "joint_HH_minus_LL": 0.2510661779696921
+      },
+      {
+        "quantity": "hot_front_net_outward_diffusive_W",
+        "k_effect_at_cp_linear": -0.19749672477409153,
+        "cp_effect_at_k_linear": 0.04872292844098247,
+        "k_effect_at_cp_hold": -0.1814933553361051,
+        "cp_effect_at_k_hold": 0.06472629787896889,
+        "k_main_average": -0.18949504005509832,
+        "cp_main_average": 0.05672461315997568,
+        "interaction_HH_HL_LH_LL": 0.016003369437986414,
+        "joint_HH_minus_LL": -0.13277042689512264
+      },
+      {
+        "quantity": "hot_rear_net_outward_latent_coordinate_W",
+        "k_effect_at_cp_linear": 0.15316908648354932,
+        "cp_effect_at_k_linear": -0.07374441658718589,
+        "k_effect_at_cp_hold": 0.14186755166562648,
+        "cp_effect_at_k_hold": -0.08504595140510873,
+        "k_main_average": 0.1475183190745879,
+        "cp_main_average": -0.07939518399614731,
+        "interaction_HH_HL_LH_LL": -0.011301534817922843,
+        "joint_HH_minus_LL": 0.06812313507844059
+      },
+      {
+        "quantity": "hot_rear_net_outward_sensible_coordinate_W",
+        "k_effect_at_cp_linear": -0.3398070876489492,
+        "cp_effect_at_k_linear": 0.10069460854218915,
+        "k_effect_at_cp_hold": -0.3419289723229366,
+        "cp_effect_at_k_hold": 0.0985727238682017,
+        "k_main_average": -0.3408680299859429,
+        "cp_main_average": 0.09963366620519543,
+        "interaction_HH_HL_LH_LL": -0.0021218846739874397,
+        "joint_HH_minus_LL": -0.24123436378074747
+      },
+      {
+        "quantity": "hot_rear_net_outward_diffusive_W",
+        "k_effect_at_cp_linear": 0.1893441564501721,
+        "cp_effect_at_k_linear": -0.016398356490615384,
+        "k_effect_at_cp_hold": 0.2288532788473603,
+        "cp_effect_at_k_hold": 0.023110765906572794,
+        "k_main_average": 0.2090987176487662,
+        "cp_main_average": 0.003356204707978705,
+        "interaction_HH_HL_LH_LL": 0.03950912239718818,
+        "joint_HH_minus_LL": 0.2124549223567449
+      },
+      {
+        "quantity": "mushy_x_face_Pe_median",
+        "k_effect_at_cp_linear": 1.3365233342448457,
+        "cp_effect_at_k_linear": -0.04682125122565317,
+        "k_effect_at_cp_hold": 1.3295508966256788,
+        "cp_effect_at_k_hold": -0.05379368884482005,
+        "k_main_average": 1.3330371154352623,
+        "cp_main_average": -0.05030747003523661,
+        "interaction_HH_HL_LH_LL": -0.006972437619166882,
+        "joint_HH_minus_LL": 1.2827296454000257
+      },
+      {
+        "quantity": "liquid_x_face_Pe_median",
+        "k_effect_at_cp_linear": 0.28467960463979947,
+        "cp_effect_at_k_linear": -0.07377303593521095,
+        "k_effect_at_cp_hold": 0.2326858501554822,
+        "cp_effect_at_k_hold": -0.1257667904195282,
+        "k_main_average": 0.25868272739764087,
+        "cp_main_average": -0.09976991317736958,
+        "interaction_HH_HL_LH_LL": -0.05199375448431731,
+        "joint_HH_minus_LL": 0.15891281422027126
+      },
+      {
+        "quantity": "blackbody_no_feedback_absorbed_fraction",
+        "k_effect_at_cp_linear": 0.0006638126486904891,
+        "cp_effect_at_k_linear": 1.961608301046143e-05,
+        "k_effect_at_cp_hold": 0.0007880079216758455,
+        "cp_effect_at_k_hold": 0.00014381135599581788,
+        "k_main_average": 0.0007259102851831673,
+        "cp_main_average": 8.171371950313965e-05,
+        "interaction_HH_HL_LH_LL": 0.00012419527298535645,
+        "joint_HH_minus_LL": 0.000807624004686307
+      }
+    ],
+    "effect_formulas": {
+      "k_conditional_at_cp_L": "Q_HL-Q_LL",
+      "cp_conditional_at_k_L": "Q_LH-Q_LL",
+      "interaction": "Q_HH-Q_HL-Q_LH+Q_LL",
+      "joint": "Q_HH-Q_LL",
+      "k_average_main": "((Q_HL-Q_LL)+(Q_HH-Q_LH))/2",
+      "cp_average_main": "((Q_LH-Q_LL)+(Q_HH-Q_HL))/2"
+    },
+    "matched_temperature_properties": {
+      "LL": [
+        {
+          "T_C": 1290.0,
+          "k_W_mK": 31.859459459459455,
+          "cp_J_kgK": 714.3693693693695,
+          "cp_effective_J_kgK": 5381.036036036036,
+          "enthalpy_from_T0_J_m3": 6034992409.309309,
+          "alpha_m2_s": 7.015038453971535e-07
+        },
+        {
+          "T_C": 1320.0,
+          "k_W_mK": 32.508108108108104,
+          "cp_J_kgK": 721.1261261261261,
+          "cp_effective_J_kgK": 5387.792792792793,
+          "enthalpy_from_T0_J_m3": 7398326139.039039,
+          "alpha_m2_s": 7.148885870188642e-07
+        },
+        {
+          "T_C": 1350.0,
+          "k_W_mK": 33.15675675675675,
+          "cp_J_kgK": 727.8828828828829,
+          "cp_effective_J_kgK": 727.8828828828829,
+          "enthalpy_from_T0_J_m3": 8763370679.57958,
+          "alpha_m2_s": 5.397194760949321e-06
+        },
+        {
+          "T_C": 2000.0,
+          "k_W_mK": 47.2108108108108,
+          "cp_J_kgK": 874.2792792792793,
+          "cp_effective_J_kgK": 874.2792792792793,
+          "enthalpy_from_T0_J_m3": 13158101490.390388,
+          "alpha_m2_s": 6.398067638040591e-06
+        }
+      ],
+      "HL": [
+        {
+          "T_C": 1290.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 714.3693693693695,
+          "cp_effective_J_kgK": 5381.036036036036,
+          "enthalpy_from_T0_J_m3": 6034992409.309309,
+          "alpha_m2_s": 5.548712126300526e-07
+        },
+        {
+          "T_C": 1320.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 721.1261261261261,
+          "cp_effective_J_kgK": 5387.792792792793,
+          "enthalpy_from_T0_J_m3": 7398326139.039039,
+          "alpha_m2_s": 5.541753562823321e-07
+        },
+        {
+          "T_C": 1350.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 727.8828828828829,
+          "cp_effective_J_kgK": 727.8828828828829,
+          "enthalpy_from_T0_J_m3": 8763370679.57958,
+          "alpha_m2_s": 4.102008799404261e-06
+        },
+        {
+          "T_C": 2000.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 874.2792792792793,
+          "cp_effective_J_kgK": 874.2792792792793,
+          "enthalpy_from_T0_J_m3": 13158101490.390388,
+          "alpha_m2_s": 3.415135256302409e-06
+        }
+      ],
+      "LH": [
+        {
+          "T_C": 1290.0,
+          "k_W_mK": 31.859459459459455,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 5336.666666666667,
+          "enthalpy_from_T0_J_m3": 5998106377.777778,
+          "alpha_m2_s": 7.07336190786996e-07
+        },
+        {
+          "T_C": 1320.0,
+          "k_W_mK": 32.508108108108104,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 5336.666666666667,
+          "enthalpy_from_T0_J_m3": 7349350377.777778,
+          "alpha_m2_s": 7.217373348138775e-07
+        },
+        {
+          "T_C": 1350.0,
+          "k_W_mK": 33.15675675675675,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 670.0,
+          "enthalpy_from_T0_J_m3": 8700594377.777779,
+          "alpha_m2_s": 5.863471167283856e-06
+        },
+        {
+          "T_C": 2000.0,
+          "k_W_mK": 47.2108108108108,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 670.0,
+          "enthalpy_from_T0_J_m3": 12376214377.777777,
+          "alpha_m2_s": 8.348802930397326e-06
+        }
+      ],
+      "HH": [
+        {
+          "T_C": 1290.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 5336.666666666667,
+          "enthalpy_from_T0_J_m3": 5998106377.777778,
+          "alpha_m2_s": 5.59484445444346e-07
+        },
+        {
+          "T_C": 1320.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 5336.666666666667,
+          "enthalpy_from_T0_J_m3": 7349350377.777778,
+          "alpha_m2_s": 5.59484445444346e-07
+        },
+        {
+          "T_C": 1350.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 670.0,
+          "enthalpy_from_T0_J_m3": 8700594377.777779,
+          "alpha_m2_s": 4.456391030628846e-06
+        },
+        {
+          "T_C": 2000.0,
+          "k_W_mK": 25.2,
+          "cp_J_kgK": 670.0,
+          "cp_effective_J_kgK": 670.0,
+          "enthalpy_from_T0_J_m3": 12376214377.777777,
+          "alpha_m2_s": 4.456391030628846e-06
+        }
+      ]
+    },
+    "limits": [
+      "Not material-property identification or true liquid-temperature validation.",
+      "LL and HH reuse frozen earlier runs, new wrapper's legacy equivalence is verified.",
+      "Interaction is a finite model response contrast, not statistical inference.",
+      "No cross-condition repeatability claimed; selected-temperature CVs change with the state."
+    ],
+    "mechanism_claim_as_recorded": "Within fixed-B scalar conduction-latent model, k continuation chiefly drives joint rear-tail growth, cp partly opposes it; rearTs/Tl translate rather than phase-band significantly thickening. No trueproperty, shapevalidation, or flow claim."
+  },
+  "numerical_evidence": {
+    "uncalibrated_eta020_matrix": [
+      {
+        "case": "baseline",
+        "cells": 178992,
+        "dx_dy_dz_um": [
+          8.0,
+          6.0,
+          2.0
+        ],
+        "eta": 0.2,
+        "L_um": 232.4851772458446,
+        "W_um": 118.86009778117878,
+        "D_um": 20.310481659454812,
+        "L1": 1.2852901408095261e-06,
+        "final_correction_C": 0.0002894895612826076,
+        "balance": 3.528333896877076e-07,
+        "duration_s": 225.51427709999916,
+        "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-eta020-mesh1-r8"
+      },
+      {
+        "case": "x4",
+        "cells": 315216,
+        "dx_dy_dz_um": [
+          4.0,
+          6.0,
+          2.0
+        ],
+        "eta": 0.2,
+        "L_um": 234.72285232447706,
+        "W_um": 118.90031904935856,
+        "D_um": 20.420173104523215,
+        "L1": 1.0268942387945244e-07,
+        "final_correction_C": 1.0017628710556892e-05,
+        "balance": 1.559347888908341e-11,
+        "duration_s": 97.84034090000205,
+        "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-eta020-x4-r10"
+      },
+      {
+        "case": "x2",
+        "cells": 578160,
+        "dx_dy_dz_um": [
+          2.0,
+          6.0,
+          2.0
+        ],
+        "eta": 0.2,
+        "L_um": 234.80767870785073,
+        "W_um": 118.89401782915274,
+        "D_um": 20.459175523689403,
+        "L1": 9.298391291806046e-08,
+        "final_correction_C": 1.252887113878387e-05,
+        "balance": -3.826086273203292e-11,
+        "duration_s": 351.14335159999973,
+        "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-eta020-x2-r12"
+      },
+      {
+        "case": "y3",
+        "cells": 303744,
+        "dx_dy_dz_um": [
+          8.0,
+          3.0,
+          2.0
+        ],
+        "eta": 0.2,
+        "L_um": 232.47985141128692,
+        "W_um": 119.06797295731425,
+        "D_um": 20.31056760062591,
+        "L1": 9.462295075172879e-08,
+        "final_correction_C": 1.1153180594192236e-05,
+        "balance": -3.3981290004092567e-10,
+        "duration_s": 245.18171240000083,
+        "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-eta020-y3-r12"
+      },
+      {
+        "case": "z1",
+        "cells": 302049,
+        "dx_dy_dz_um": [
+          8.0,
+          6.0,
+          1.0
+        ],
+        "eta": 0.2,
+        "L_um": 232.35841830226167,
+        "W_um": 118.88205944965034,
+        "D_um": 20.314255878982664,
+        "L1": 1.0045498172161067e-07,
+        "final_correction_C": 1.0782247727547656e-05,
+        "balance": 6.13259443227321e-12,
+        "duration_s": 171.15618209999957,
+        "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-eta020-z1-r12"
+      },
+      {
+        "case": "domain",
+        "cells": 291600,
+        "dx_dy_dz_um": [
+          8.0,
+          6.0,
+          2.0
+        ],
+        "eta": 0.2,
+        "L_um": 232.48517765260382,
+        "W_um": 118.86009801400192,
+        "D_um": 20.3104818076019,
+        "L1": 2.4481112525495304e-07,
+        "final_correction_C": 2.2402005853905393e-05,
+        "balance": -3.5723309231374047e-10,
+        "duration_s": 46.45620240000062,
+        "source": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-eta020-domain-r12"
+      }
+    ],
+    "frozen_eta_neighborhood": [
+      {
+        "name": "B-x2",
+        "condition": "B",
+        "data_role": "NUMERICAL_SPATIAL_SENSITIVITY",
+        "baseline_directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-x2-frozen-r14",
+        "changed_controls": {
+          "dx_um": 2
+        },
+        "baseline": {
+          "L_um": 359.1575457177625,
+          "W_um": 143.0406226383922,
+          "D_um": 31.12034988767346
+        },
+        "result": {
+          "L_um": 359.5183942887015,
+          "W_um": 143.0318495677137,
+          "D_um": 31.160979778167494
+        },
+        "signed_difference_um": {
+          "L_um": 0.3608485709389697,
+          "W_um": -0.008773070678500972,
+          "D_um": 0.04062989049403498
+        },
+        "signed_relative_difference": {
+          "L_um": 0.0010047083104374928,
+          "W_um": -6.133272154917391e-05,
+          "D_um": 0.001305573062021651
+        },
+        "numerical_geometry_target_met": true
+      },
+      {
+        "name": "B-domain",
+        "condition": "B",
+        "data_role": "NUMERICAL_DOMAIN_SENSITIVITY",
+        "baseline_directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-domain-frozen-r14",
+        "changed_controls": {
+          "left_mm": 1.4,
+          "right_mm": 0.5,
+          "y_mm": 0.54,
+          "depth_mm": 0.45
+        },
+        "baseline": {
+          "L_um": 359.1575457177625,
+          "W_um": 143.0406226383922,
+          "D_um": 31.12034988767346
+        },
+        "result": {
+          "L_um": 359.15754516762513,
+          "W_um": 143.04062262863468,
+          "D_um": 31.120349890182474
+        },
+        "signed_difference_um": {
+          "L_um": -5.501373721017444e-07,
+          "W_um": -9.75751390797086e-09,
+          "D_um": 2.5090152178108838e-09
+        },
+        "signed_relative_difference": {
+          "L_um": -1.5317438785876435e-09,
+          "W_um": -6.82149848622928e-11,
+          "D_um": 8.062297586199974e-11
+        },
+        "numerical_geometry_target_met": true
+      },
+      {
+        "name": "C-x2",
+        "condition": "C",
+        "data_role": "NUMERICAL_SPEED_SPATIAL_SENSITIVITY",
+        "baseline_directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-C-frozen-r13",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-C-x2-frozen-r14",
+        "changed_controls": {
+          "dx_um": 2
+        },
+        "baseline": {
+          "L_um": 320.6313629678825,
+          "W_um": 129.04618690578758,
+          "D_um": 22.044541383670747
+        },
+        "result": {
+          "L_um": 320.8306886940154,
+          "W_um": 129.0173256915783,
+          "D_um": 22.08939769255408
+        },
+        "signed_difference_um": {
+          "L_um": 0.19932572613288357,
+          "W_um": -0.02886121420928589,
+          "D_um": 0.044856308883332474
+        },
+        "signed_relative_difference": {
+          "L_um": 0.0006216663407093146,
+          "W_um": -0.0002236502674066342,
+          "D_um": 0.0020348034510057574
+        },
+        "numerical_geometry_target_met": true
+      },
+      {
+        "name": "A-domain",
+        "condition": "A",
+        "data_role": "NUMERICAL_SPEED_DOMAIN_SENSITIVITY",
+        "baseline_directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-A-frozen-r13",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-A-domain-frozen-r14",
+        "changed_controls": {
+          "left_mm": 1.4,
+          "right_mm": 0.5,
+          "y_mm": 0.54,
+          "depth_mm": 0.45
+        },
+        "baseline": {
+          "L_um": 309.8856792638423,
+          "W_um": 153.36005335598344,
+          "D_um": 40.46931231766381
+        },
+        "result": {
+          "L_um": 309.885682182483,
+          "W_um": 153.36005335471353,
+          "D_um": 40.469312299058465
+        },
+        "signed_difference_um": {
+          "L_um": 2.91864068913128e-06,
+          "W_um": -1.2699103990598815e-09,
+          "D_um": -1.8605341267630138e-08
+        },
+        "signed_relative_difference": {
+          "L_um": 9.418443266125559e-09,
+          "W_um": -8.280581359163535e-12,
+          "D_um": -4.597394964754414e-10
+        },
+        "numerical_geometry_target_met": true
+      },
+      {
+        "name": "B-highT",
+        "condition": "B",
+        "data_role": "FIXED_PARAMETER_MODEL_FORM_SENSITIVITY",
+        "baseline_directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-cal-05-r13",
+        "directory": "C:\\Users\\Administrator\\Documents\\ChatGPT\\电脑答疑\\simulation-agent-mvp\\research\\reproduction-case\\nist-amb2018-02\\verification\\fipy-application-B-highT-frozen-r14",
+        "changed_controls": {
+          "branch": "hold-last"
+        },
+        "baseline": {
+          "L_um": 359.1575457177625,
+          "W_um": 143.0406226383922,
+          "D_um": 31.12034988767346
+        },
+        "result": {
+          "L_um": 393.44045830101044,
+          "W_um": 143.7869176712329,
+          "D_um": 30.797065270818912
+        },
+        "signed_difference_um": {
+          "L_um": 34.282912583247935,
+          "W_um": 0.7462950328407203,
+          "D_um": -0.3232846168545471
+        },
+        "signed_relative_difference": {
+          "L_um": 0.09545368875582123,
+          "W_um": 0.005217364263908162,
+          "D_um": -0.010388206367261885
+        },
+        "numerical_geometry_target_met": null
+      }
+    ],
+    "current_claim_status_as_recorded": {
+      "execution": "COMPLETED_NUMERICALLY_ACCEPTED_A_B_C",
+      "calibration": "B_LENGTH_PROXY_ONLY",
+      "experiment_comparison": "COMPLETED_NONBLIND_CONDITION_COMPARISON",
+      "numerical_geometry_sensitivity": "PASS",
+      "maximum_condition_equation_L1": 1.2841515517804504e-07,
+      "maximum_condition_full_correction_C": 2.6300048602934112e-05,
+      "maximum_condition_abs_power_balance_relative": 6.034533007221461e-11,
+      "physical_validation": "NOT_ESTABLISHED_BY_CALIBRATION_OR_PROCESS_COMPLETION",
+      "physical_scope": "Literature-conditioned conduction/phase-change research and model-discrepancy diagnosis",
+      "internal_temperature": "MODEL_STATE_WITHOUT_INDEPENDENT_TEMPERATURE_VALIDATION"
+    },
+    "constant_property_analytic_geometry": {
+      "scope": "CONSTANT_PROPS_ANALYTICAL_Ts_ISO_GEOMETRY_NO_EXPERIMENT_OBSERVATIONS",
+      "Ts_C": 1290.0,
+      "analytic_m": {
+        "L": 0.00040753487223490673,
+        "W": 0.0001532928547567595,
+        "D": 3.483571358212982e-05
+      },
+      "fipy_m": {
+        "L": 0.0004080998265780106,
+        "W": 0.0001535840201596997,
+        "D": 3.466185562495091e-05
+      },
+      "limitation": "Surface uniform-core face averages assumed; actual iso edges are inside uniform core. W/D from surface/symmetry under this constant-property monotone reference, not general metallography component audit.",
+      "relative_error": {
+        "L": 0.0013862723943247612,
+        "W": 0.0018994062273951506,
+        "D": -0.004990796493059335
+      }
+    },
+    "steady_transient_retained_comparison": {
+      "scope": "RETAINED_UNCALIBRATED_MATCHED_MOVING_FRAME_APPROXIMATION_CHECK_NOT_NUMERICAL_RELEASE",
+      "fixed": "eta.2,P179.2,v.8,w85um,linearpropertybranch,T0same; truncationdomains/dimensionalmeshesdiffer",
+      "transient_source_x_m": 0.0002000000000000001,
+      "transient_station_x_m": 0.0002,
+      "transient_elapsed_s": 0.003,
+      "ROI_m": {
+        "xi": [
+          -0.0005,
+          0.00015
+        ],
+        "y": [
+          -0.00012,
+          0.00012
+        ],
+        "z": [
+          -6e-05,
+          0.0
+        ]
+      },
+      "same_cell_locations_T_above1200": {
+        "points": 308,
+        "mean_difference_C": -0.7837817364271564,
+        "RMS_difference_C": 19.640293663228384,
+        "max_abs_difference_C": 76.49824562428398
+      },
+      "same_surface_xy_above1200": {
+        "points": 232,
+        "mean_difference_C": -8.590459809684296,
+        "RMS_difference_C": 32.80588383899669,
+        "max_abs_difference_C": 108.75453768444936
+      },
+      "transient_snapshot_Ts_crossings_m": [
+        -0.00018979905113479566,
+        4.319581311287645e-05
+      ],
+      "steady_Ts_crossings_m": [
+        -0.00019385961462964745,
+        4.0863237694829624e-05
+      ],
+      "L_difference_m": 1.7279880768049513e-06,
+      "limitation": "Oldnative h10 has unresolved spatial/surface/crossingphaseerror; differenty0 and halfcell surface reconstruction. Agreement supports rough localstationaryapproximation only, doesnotprove maturedsteadyframeworknumericalaccuracy or physicalvalidation."
+    },
+    "factory_history_repair": {
+      "request": "V3 independent nonlinear residual history audit",
+      "reviewer": "native_fv_61_executor",
+      "producer": "root",
+      "source_sha256": "1964a7ba1c2f4c7c374f2ee8b96b7406bc7a9f056df4bfb1ef0965bcd414cd82",
+      "supersedes": "Core formulation acceptance in native61-fipy-v3-first-pass-r1.json is now conditional on fresh current-coefficient exponential weights. API/sign/scaling probe remains valid, but old r5/r6 application convergence claims do not apply to intended nonlinear equation.",
+      "actual_evidence": "verification/native61-fipy-stencil-history-r1/report.json",
+      "fresh_vs_persistent_harmonic_k": "Exact equality on actual saved179k application field; not cause of root difference",
+      "found_bug": "FiPy4.0.3 AbstractConvectionTerm stencil uses numeric diffusion coefficient snapshot; FaceTerm coeffMatrix and boundary constraints also cache. Reusing term across coefficient updates can freeze first assembly Peclet weights.",
+      "old_history_test": {
+        "fresh_final_D_L1": 0.050645498451027796,
+        "cold_first_assembly_then_final_D_L1": 0.001386915169723153,
+        "full_vector_L1_difference": 0.05050950085001335,
+        "global_signed_residual": "Both about5.13e-9, so global balance cannot detect this local discretization error"
+      },
+      "repair": "Root equation() factory creates fresh DiffusionTerm - ExponentialConvectionTerm + source on every F/emit/full-correction/Picard assembly after final D update",
+      "actual_repair_test": {
+        "factory_cold_first_history_L1": 0.050645498451027796,
+        "factory_warm_first_history_L1": 0.050645498451027796,
+        "full_vector_L1_difference": 0.0,
+        "factory_vs_fresh_direct_difference": 0.0
+      },
+      "disposition": "ACCEPT_SCOPED_FACTORY_HISTORY_REPAIR_AND_REQUIRED_RAW_FIELD_SAVING; REAL_APPLICATION_CONVERGENCE_AND_NUMERICAL_STUDIES_PENDING",
+      "execution_repairs_seen": [
+        "Merged original measurement knots",
+        "Last callback-accepted checkpoint separated from unaccepted F trial",
+        "STOP during residual evaluation retains accepted checkpoint",
+        "Initial field digest and boundary recipe",
+        "Requested properties/final residual/face coefficients and geometry raw outputs"
+      ],
+      "old_runs": "r5/r6/r7 retained as historical-stencil exploratory diagnostics; not formal baseline or solver equivalence truth",
+      "mechanism_field_request": "APPLICATION-MECHANISM61-FIELDS-R1: implemented saving scope accepted; downstream science claims remain gated",
+      "calibration": "NOT_CLEARED",
+      "A_C": "NOT_STARTED"
+    },
+    "formal_adequacy_boundary": "Observed sensitivity, not a certified absolute discretization bound. Calibrated B/C axial refinements and A/B domain extensions do not establish full 3D asymptotic convergence or branch-specific submicrometre accuracy."
+  },
+  "artifact_check_result": "All six source snapshot/dependency bindings matched; retained arrays finite and bounded liquid fraction; source power and centerline length independently reproduced from saved arrays; comparison ratios and factorial effect algebra checked. No new physical validation granted."
+}

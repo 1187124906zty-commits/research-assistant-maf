@@ -1,0 +1,71 @@
+{
+  "summary": "Completed and JSON-validated reviews/AMMT_MECHANISM/attempt-1.json. Recommend acceptance of the bounded evidence interpretation, with the qualifications below; this does not clear the withheld producer manuscript. At fixed B conditions and effective eta, conductivity holding increases modeled solidus length by 43.214 μm with cp linear and 40.452 μm with cp held. Heat-capacity holding decreases length by 6.169 and 8.931 μm, respectively. The finite interaction HH−HL−LH+LL is −2.762 μm, and the joint HH−LL response is +34.283 μm. For HL−LL, rear solidus/liquidus coordinates shift −42.487/−43.500 μm, front solidus shifts +0.726 μm, and the rear phase span changes −1.013 μm. Approximately 98.3% of the length increase comes from rear solidus displacement. The evidence establishes a predominantly rear-tail response to the implemented conductivity continuation, partly opposed by cp continuation. Beam distribution, measurement operators, other constitutive closures and omitted directional liquid transport remain viable explanations of the experimental discrepancy. The retained checks weaken nonlinear nonconvergence and the inspected axial/domain changes as dominant explanations. No real melt-flow causality is established.",
+  "findings": [
+    {
+      "blocking": false,
+      "claim_ids": [],
+      "reason": "Supported interpretation with consequential scope qualifications: 'k continuation chiefly drives the fixed-B rear-tail increase, and cp continuation partly offsets it' follows the conditional contrasts in both settings of the other factor. All four B corners remain wider (143.041–143.787 μm) and shallower (30.092–31.613 μm) than nominal experimental targets W=123.5 and D=36 μm. Neither tested continuation repairs the wide/shallow discrepancy. The joint depth response of −0.323 μm conceals opposing effects: k holding gives −1.028/−0.816 μm, while cp holding gives +0.493/+0.705 μm. Preserve the description 'deterministic finite model contrast at fixed calibrated source parameter'; do not infer statistical significance, independent replication, property identification or general validation. Bounded transfer test: if cross-speed transfer matters to the manuscript, run one additional four-corner factorial at C with the same frozen eta, observer and numerical acceptance rules, without refitting. Compare conditional length and rear-coordinate signs with B. A reversal would falsify transfer of the B direction; agreement would support transfer only across these two conditions.",
+      "evidence_paths": [
+        "inputs/verified-data.json#/factorial/rows",
+        "inputs/verified-data.json#/factorial/effects",
+        "inputs/verified-data.json#/factorial/effect_formulas",
+        "inputs/evidence-dossier.md — Fixed-B 2×2 continuation contrast"
+      ]
+    },
+    {
+      "blocking": false,
+      "claim_ids": [],
+      "reason": "Moderate mechanistic attribution limit affecting 'reduced diffusion explains the rear response': at matched 1320 °C, holding k changes conductivity from 32.508 to 25.2 W/(m K), approximately −22.48%, and increases the mushy x-face median coordinate-transport/diffusion Pe from 4.437 to 5.773. This supports reduced modeled diffusion relative to coordinate transport. However, the executed CompositeMaterial changes k/K and the surface-temperature inverse together; cp changes H and T(H). The factorial therefore isolates the implemented constitutive branch, including consistent recovery, rather than separately quantifying a bulk-diffusion contribution. Pe medians and temperature-selected flux regions also sample different states. Rear diffusive outward flux actually rises from 14.724 to 14.913 W in HL, so reduced conductivity cannot be paraphrased as a measured decrease in that regional heat flow. Bounded diagnostic: compare retained LL/HL rear crossings on the same top-cell or subsurface plane, then postprocess a two-field-by-two-recovery-operator matrix on identical coordinates. Label crossed recovery results as diagnostics rather than alternative physical solutions. Strong recovery dependence would weaken exclusive bulk-field attribution. Compare fluxes on one fixed spatial control volume alongside state-selected budgets. These tests still cannot establish liquid convection: u=(−v,0,0) describes coordinate transport, not measured liquid velocity.",
+      "evidence_paths": [
+        "inputs/verified-data.json#/factorial/matched_temperature_properties",
+        "inputs/verified-data.json#/factorial/rows",
+        "inputs/evidence-dossier.md — Actual model, equations and conditions",
+        "inputs/evidence-dossier.md — Observables and the measurement gap",
+        "C:/Users/Administrator/Documents/ChatGPT/电脑答疑/simulation-agent-mvp/research/reproduction-case/nist-amb2018-02/verification/fipy-application-B-khold-cplinear-r15/frozen-factorial-wrapper.py:28"
+      ]
+    },
+    {
+      "blocking": false,
+      "claim_ids": [],
+      "reason": "High consequence only for a claim of unique physical cause: beam-shape mismatch, camera/fusion operator mismatch, high-temperature/storage/phase closures and missing directional transport all survive. The current Gaussian model is wide/shallow, whereas the archived article's isotropic measured-beam model is narrow/deep. The article supplies an implementable precedent for effective directional transport, but its fitted eta=0.086 and tensor multipliers (1,1.4,0.9) cannot be imported as constants or treated as evidence of Marangoni flow in this model. B length calibration does not identify these alternatives, and the present evidence cannot rank them uniquely. Bounded source test: obtain an auditable AMMT beam map and compare it with the circular Gaussian at equal integrated absorbed power, keeping eta and other settings fixed at B; report W, D and rear/front coordinates. If the map is unavailable, use a declared beam-shape sensitivity envelope without calling it measured-beam validation. An operator test requires raw AMMT thermography and microscope boundary picks to replay radiance calibration, solidification-location selection, pixel/PSF/exposure/projection effects. Operator changes could reconcile proxies without establishing a transport mechanism. A subsequent preregistered directional-transport contrast should use multiple QoIs and an additional unfitted condition; improvement would support an effective closure, not real melt-flow causality.",
+      "evidence_paths": [
+        "inputs/evidence-dossier.md — Original numerical paper and competing explanations",
+        "inputs/evidence-dossier.md — Observables and the measurement gap",
+        "inputs/evidence-dossier.md — Calibration, data roles and exact comparison",
+        "inputs/verified-data.json#/calibration",
+        "inputs/verified-data.json#/experimental_roles"
+      ]
+    },
+    {
+      "blocking": false,
+      "claim_ids": [],
+      "reason": "Moderate numerical qualification affecting small-effect and absolute-accuracy claims: retained local residual/power ratios are approximately 6.90×10⁻⁸–1.31×10⁻⁷ with tiny full corrections, and B axial refinement changes L by +0.361 μm. Inspected domain extensions produce negligible geometry changes. These checks weaken retained nonlinear nonconvergence and the inspected discretization/truncation changes as dominant explanations of the 34–43 μm length response. They do not certify multidirectional convergence, absolute error or branch-specific small interactions. The 0.039 μm width interaction and 0.090 μm k-average width effect should remain descriptive arithmetic without fine physical ranking. Subcell phase-front spans and peak temperatures lack independent accuracy evidence. Bounded test, only if a small effect becomes consequential: refine the relevant contrast branches in the spatial direction controlling that QoI, keep physics/source/observer fixed, and compare the contrast itself and its rear/front decomposition against a prospectively specified claim-relevant stability criterion. Major-tail prose need not wait for this test. The older transient comparison and fixed-field blackbody screening do not eliminate steady-assumption or boundary-feedback error across A/C and all corners.",
+      "evidence_paths": [
+        "inputs/evidence-dossier.md — Six unique production runs and numerical adequacy",
+        "inputs/verified-data.json#/numerical_evidence/frozen_eta_neighborhood",
+        "inputs/verified-data.json#/numerical_evidence/formal_adequacy_boundary",
+        "inputs/verified-data.json#/numerical_evidence/steady_transient_retained_comparison",
+        "inputs/verified-data.json#/factorial/rows"
+      ]
+    },
+    {
+      "blocking": false,
+      "claim_ids": [],
+      "reason": "Consequential validation/uncertainty qualification, rather than a defect established in the unseen manuscript: B L is fitted; A/C are known, nonblind fixed-parameter comparisons; B W/D are post-calibration diagnostics. Difference/U values use Lane expanded U(k=2) alone with separately sourced NIST means, without combined numerical, calibration, input or operator uncertainty. They support descriptive comparison against a measurement-uncertainty scale, not z scores or joint coverage. The nominal B-to-C experimental length increase of 11 μm is unresolved against the stated zero-correlation quadrature scale of 38.895 μm, even though C's individual model residual of −49.369 μm lies outside C U=32.57 μm. Do not assert a statistically demonstrated opposite speed trend. Independent condition/specimen data and a combined uncertainty model are required for stronger predictive or coverage claims; their absence does not block bounded discrepancy prose.",
+      "evidence_paths": [
+        "inputs/evidence-dossier.md — Statistical meaning of U and replication",
+        "inputs/evidence-dossier.md — Condition trends and mechanism evidence",
+        "inputs/verified-data.json#/comparison_statistic_boundary",
+        "inputs/verified-data.json#/B_C_descriptive_trends"
+      ]
+    }
+  ],
+  "limitations": [
+    "No formal claim IDs were supplied. The claim_ids arrays are empty, and each finding names the affected candidate claim explicitly.",
+    "The actual producer output outputs/mechanism-analysis.md exists, but its interpretation was intentionally withheld and was not read. Its numerical fidelity and inclusion of these qualifications remain unassessed. This review accepts the bounded evidence interpretation, not the unseen manuscript.",
+    "Read both supplied original inputs, inspected the executed factorial wrapper's constitutive mapping, and independently recomputed key length contrasts and the rear-displacement fraction. No new solver run, raw-array reconstruction, experimental reaggregation or full provenance audit was performed by this reviewer. Retained residual and source-binding checks are reported evidence from the dossier.",
+    "The dossier itself contains interpretation, and the dispatch packet included numerical/support summaries. The review was separated from the producer manuscript but was not blind to prior evidence interpretation.",
+    "Missing scientific evidence includes raw AMMT thermography and microscope boundary picks, exact beam/operator replay, measured high-temperature coupon properties, liquid velocity/free-surface observations, cross-condition constitutive factorials, full branch-specific multidirectional convergence and combined prediction uncertainty. These gaps restrict stronger claims without blocking the bounded sensitivity/discrepancy input.",
+    "No novelty search or Additive Manufacturing journal-compliance assessment was contracted or performed. No statistically independent replication or real melt-flow causality is claimed."
+  ]
+}

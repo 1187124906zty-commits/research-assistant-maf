@@ -1,0 +1,23 @@
+{
+  "summary": "Recommend acceptance as a bounded Results and Discussion input with one minor scope repair. The actual outputs/results-discussion.md exists and contains 1500 whitespace-delimited words of manuscript text before separate source notes. Displayed geometry values, uncertainty-normalized differences, B/C percentage contrasts, passage times, cooling rates, four-corner effects, matched-temperature properties and numerical-sensitivity values follow the supplied evidence. The section leads with model discrepancy, preserves nonblind data roles and separate experimental operators, and does not promote calibration or numerical acceptance to physical validation. No consequential numerical defect was found. The review was written to reviews/AMMT_WRITING/attempt-1.json and verified to parse successfully; it contains one nonblocking finding.",
+  "findings": [
+    {
+      "blocking": false,
+      "claim_ids": [],
+      "reason": "Minor scientific scope defect at outputs/results-discussion.md:15: 'Within this model, faster scanning therefore preferentially reduces penetration relative to lateral extent.' This follows the three A/B/C aspect ratios and can imply a speed-only explanation of the whole sequence. The dossier explicitly states that A→B changes power and speed simultaneously; only B→C holds power fixed. The ratios themselves are correct. Repair without new calculations: replace the sentence with 'For the fixed-power B-to-C comparison, increasing speed preferentially reduces modeled penetration relative to lateral extent.' Keep A as a descriptive condition comparison. This finding affects only the speed attribution, not the observed geometry discrepancy, passage-time calculations or fixed-B factorial.",
+      "evidence_paths": [
+        "outputs/results-discussion.md:15",
+        "inputs/evidence-dossier.md#Condition trends and mechanism evidence",
+        "inputs/verified-data.json#/research_case_metrics",
+        "inputs/verified-data.json#/B_C_descriptive_trends"
+      ]
+    }
+  ],
+  "limitations": [
+    "Reviewed the actual assigned original inputs inputs/evidence-dossier.md and inputs/verified-data.json before reading the manuscript. The evidence dossier itself contains prior interpretation, so this is not a blind review of raw simulations. The task packet also exposed producer summaries before inspection; numerical and scope judgments were checked against the supplied files rather than accepted from those summaries.",
+    "Original Lane and Kollmannsberger sources, executed solver snapshots, raw retained arrays, calibration manifests and primary NIST artifacts were not independently reopened in this review. Their numerical provenance and original-source comparisons remain conditional on the supplied dossier and verified-data extraction. No simulation, measurement replay or new physical validation was performed.",
+    "Raw AMMT thermography, microscope boundary picks, cross-condition covariance, combined prediction uncertainty and branch-specific multidirectional convergence are unavailable in the supplied evidence. The draft names or respects these limits; they do not block the present descriptive section.",
+    "Journal submission requirements, contemporary novelty and bibliographic entries were not independently verified. Source file locators are suitable audit notes for coordinator input; the original numerical-paper comparison still needs a verified bibliographic citation before journal submission.",
+    "No claim IDs were supplied. The finding therefore identifies the exact affected sentence and location while leaving claim_ids empty."
+  ]
+}

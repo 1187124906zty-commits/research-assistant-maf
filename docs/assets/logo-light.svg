@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="180" viewBox="0 0 660 180" role="img" aria-labelledby="title desc">
+  <title id="title">Research Assistant</title>
+  <desc id="desc">Three bounded task cards connected through a central coordination diamond. Built with Microsoft Agent Framework.</desc>
+  <rect x="16" y="20" width="144" height="144" rx="35" fill="#f5f2fb"/>
+  <path d="m53 52 76 31-66 50Z" fill="none" stroke="#dfd6ef" stroke-width="1.5" stroke-dasharray="3 7"/>
+  <path d="M54 53 88 92l40-9M88 92l-24 40" fill="none" stroke="#8264c5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m88 68 24 24-24 24-24-24Z" fill="#fff" stroke="#7655b7" stroke-width="5" stroke-linejoin="round"/>
+  <path d="m82 92 5 5 9-12" fill="none" stroke="#7655b7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="40" y="39" width="27" height="27" rx="7" fill="#fff" stroke="#7655b7" stroke-width="3"/>
+  <path d="M48 49h11m-11 7h7" stroke="#aa95d4" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="115" y="70" width="27" height="27" rx="7" fill="#fff" stroke="#7655b7" stroke-width="3"/>
+  <path d="M123 80h11m-11 7h7" stroke="#aa95d4" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="50" y="118" width="27" height="27" rx="7" fill="#fff" stroke="#c58145" stroke-width="3"/>
+  <path d="M58 128h11m-11 7h7" stroke="#c58145" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="191" y="94" fill="#2c3049" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="52" font-weight="700" letter-spacing="-1.4">Research Assistant</text>
+  <text x="194" y="126" fill="#6a6b83" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="2.2">BUILT WITH MICROSOFT AGENT FRAMEWORK</text>
+  <path d="M194 143h42" stroke="#7655b7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M245 143h19" stroke="#c58145" stroke-width="3" stroke-linecap="round"/>
+</svg>

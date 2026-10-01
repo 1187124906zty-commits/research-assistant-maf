@@ -1,141 +1,167 @@
-# Research Assistant · Microsoft Agent Framework
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/logo-light.svg">
+    <img src="docs/assets/logo-light.svg" width="640" alt="Research Assistant — Built with Microsoft Agent Framework">
+  </picture>
+</p>
 
-基于 Microsoft Agent Framework（MAF）的科研多智能体助手。系统由通用科研协调者组织专业角色，围绕不断更新的研究问题开展文献调查、证据生产、机制分析和论文论证。
+<h3 align="center">让科研协作进入可运行的工作流。</h3>
 
-这个仓库是独立重构。它使用 MAF 执行工作流，在应用层接入科研任务契约、证据状态和结果反馈；不修改 MAF 上游源码，也不安装或覆盖原来的 ResearchFlow、simulation-project-orchestrator 或 PaperSpine skills。
+<p align="center">用 Microsoft Agent Framework 组织专业角色，把任务、评阅与研究判断接到同一份证据状态。</p>
 
-## 系统要解决的问题
+<p align="center">
+  <a href="https://github.com/1187124906zty-commits/research-assistant-maf/actions/runs/36816023993"><img src="https://img.shields.io/badge/MAF_CI-4%2F4_passed-7656c7" alt="MAF CI: 4/4 passed"></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/version-0.1.0-7656c7" alt="Version 0.1.0"></a>
+  <a href="#依赖与兼容"><img src="https://img.shields.io/badge/Python-%E2%89%A53.11-3776ab" alt="Python 3.11 or higher"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-64748b" alt="MIT license"></a>
+  <a href="docs/COMMUNITY.md"><img src="https://img.shields.io/badge/QQ-871287830-6856c8" alt="QQ group 871287830"></a>
+</p>
 
-专业 agent 容易持续优化自己熟悉的指标：增加检索、细化网格、继续调参或反复润色，而这些投入未必改变研究认识。本项目让协调者明确每项任务要回答什么、结果影响哪个决策，以及什么情况下应返回；收到结果后，协调者解释其对整体研究的贡献，再安排后续工作。
+<p align="center">
+  <a href="#安装">安装</a> · <a href="#使用">使用</a> · <a href="#看看效果">案例与稿件</a> · <a href="docs/architecture.md">文档</a> · <a href="CONTRIBUTING.md">参与贡献</a> · <a href="#交流与反馈">交流群</a>
+</p>
 
-协调者不需要掌握所有领域的细节。它依靠专家说明证据、适用范围和不确定性，负责组织判断、选择下一行动和管理上下文。单位、物理一致性、数据真实性和原始来源等要求仍由证据约束，任务预算不能替代科学验证。
+## Research Assistant 是什么？
 
-## 快速开始
+基于 **Microsoft Agent Framework（MAF）** 的科研多 Agent 助手。科研协调者派发有限任务，文献、证据、机制、写作与评阅角色按需参与；MAF 执行派发、并行汇合和检查点，应用保存证据与研究判断。
 
-需要 Python 3.11 或更新版本。推荐为本项目建立独立虚拟环境，避免影响现有科研工具环境。在仓库目录中运行：
+- **从一个明确的问题开始。** 专业角色获得相关材料、论断范围、输出目录与返回条件。
+- **交付经过评阅再回到决策。** 负面结果可以作为有用回答接收，是否支持假设另行判断。
+- **中断后接着已有工作推进。** 科研状态和调用账本分开保存，完成的请求可复用，状态未知的调用须先核实。
 
-```bash
+这是 [ResearchFlow](https://github.com/1187124906zty-commits/research-workflow) 思路的独立 MAF 重构，包含 **实际工作流、状态 CLI、Codex SDK 提供者、离线演示和真实模型协作样例**。项目自带独立角色与 skills；既有工具可在任务中明确接入。实现与边界见 [架构说明](docs/architecture.md)。
+
+针对完整论文的协作方法见 [章节研究与全文论证](docs/manuscript-collaboration.zh.md) 和 [AMMT 实质修订案例](examples/ammt-deep-revision/README.md)。本次已实际开展近邻文献学习、原生 MAF 分章写作、Codex 章节交叉审阅与全文整合；原生写作批次的讨论返回超时，后续由主协调者接收实际文件并组织独立评阅。它验证了有人工协调的研究路径，尚未实现完整论文的自主编辑调度。
+
+## 安装
+
+需要 **Python ≥3.11**。推荐使用项目虚拟环境，Windows PowerShell：
+
+```powershell
+git clone https://github.com/1187124906zty-commits/research-assistant-maf.git
+cd research-assistant-maf
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[codex]"
 ```
 
-`[codex]` 安装可选的 Codex Python SDK。只运行离线演示时，可以使用 `python -m pip install -e .`。
+`[codex]` 安装可选 Codex Python SDK；只运行离线演示时使用 `python -m pip install -e .`。Linux 可用 `source .venv/bin/activate` 激活环境，其他安装命令相同。
 
-先运行不需要模型账户的演示：
+真实任务需要当前主机上可用的 Codex 账户与环境，首次使用按其官方方式登录。本项目采用 SDK 默认模型与会话设置；每个角色请求启动独立 SDK 线程，审批策略按提供者实际设置核对。
 
-```bash
+## 使用
+
+| 你想做什么 | 从这里开始 |
+|---|---|
+| 先检查安装与工作流 | 执行离线 `demo`，查看生成状态与报告 |
+| 开展真实协作 | 通过 `run --provider codex` 提交研究目标、材料位置和可用工具 |
+| 查看或恢复已有项目 | `status` 与 `resume`；未知调用先查原会话和产物 |
+| 查看实际产物 | [AMMT 研究稿](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.pdf)与[有限模型协作样例](examples/live-coordination/README.md) |
+
+先运行无需模型账户的演示：
+
+```powershell
 research-assistant demo ./workspaces/demo-study
 research-assistant status ./workspaces/demo-study
 ```
 
-演示使用确定性提供者产生预设返回，同时执行实际 MAF 工作流和科研状态转换。它用于检查组织协议与软件路径，不是数值实验或科研效果评估。
+演示通过实际 MAF 工作流执行预设提供者返回，检查协议与状态转换。开展真实任务时：
 
-开展真实任务时，使用当前主机的 Codex 环境：
-
-```bash
-research-assistant run ./workspaces/my-study --brief "调查一个明确问题，设计能够区分解释的验证方案，并根据实际证据形成研究报告。" --max-cycles 4 --parallel 2 --provider codex
-```
-
-`--brief` 可以使用中文，包含研究目标、已有材料位置、可用软件和当前限制。路径可使用 Windows 绝对路径；建议为每项研究建立独立项目目录。
-
-`--max-cycles` 限制协调与执行循环，`--parallel` 在 1–4 之间限制工作流同时派发的专业任务数量。它们不能直接限制一次 Codex 调用内部的 shell 命令、求解器启动次数或计算时长。
-
-Codex 提供者保留 SDK 的默认模型选择与会话设置，每次角色请求启动独立的 SDK 线程；SDK 的默认审批策略不等于继承当前桌面线程的审批设置。安装本包不会配置模型账户、改变全局 Codex 设置或读取并转移浏览器登录凭据。首次使用 Codex 时，应通过其官方登录方式完成登录；已有可用登录可以继续使用。具体账户权限以当前 Codex 主机环境为准。
-
-查询和恢复已有项目：
-
-```bash
+```powershell
+research-assistant run ./workspaces/my-study --brief "调查项目中的研究问题，核对已有证据与方法条件，安排有限验证并形成有来源的报告。材料与代码位于项目目录。" --max-cycles 4 --parallel 2 --provider codex
 research-assistant status ./workspaces/my-study
-research-assistant resume ./workspaces/my-study
 ```
 
-恢复从最新科研状态重新进入协调者，并复用账本中已完成的请求返回；当前不恢复旧图消息继续执行。若一次外部调用已经开始但完成状态未知，系统拒绝自动重放，避免重复启动可能仍在运行的计算。应先检查已有会话、进程和产物，确认其真实状态后再处置。已完成、需要用户输入或已到循环预算的项目会保留当前停止状态；`resume` 不自动追加预算或替用户提供缺少的信息。
+每项研究使用独立项目目录。`--max-cycles` 限制工作流循环，`--parallel` 在 1–4 之间限制同时派发的角色任务；一次角色调用内部的求解器运行与资源预算仍需单独约定。
 
-解决缺失前提或评估预算返回后，可以显式追加有限循环并重新进入协调者：
+<details>
+<summary><strong>恢复、追加有限工作与核实未知调用</strong></summary>
 
-```bash
+```powershell
+research-assistant resume ./workspaces/my-study
 research-assistant resume ./workspaces/my-study --additional-cycles 2
 ```
 
-这个选项只重开 `needs_input` 或 `budget_reached` 状态；已完成项目和完成状态未知的调用仍按原状态处理。追加工作流循环不自动扩大某个专业任务的尝试预算。
+恢复从最新科研状态重新进入协调者，并复用账本中的完成返回。已完成项目保留状态；`--additional-cycles` 只显式重开 `needs_input` 或 `budget_reached`，不自动扩大专业任务的尝试预算。
 
-如果已经核实了未知调用的实际结果，可以显式关联它的结构化返回，再恢复：
+外部调用已经开始但完成情况未知时，先核实原会话、进程与产物。确认实际返回后可关联结构化结果，再恢复：
 
-```bash
-research-assistant reconcile ./workspaces/my-study "worker:task-id:1" ./inspected-response.json --reason "已核实该会话和现有产物；此文件保留其实际返回。"
+```powershell
+research-assistant reconcile ./workspaces/my-study "worker:task-id:1" ./inspected-response.json --reason "已核实原会话与现有产物，此文件保存其实际返回。"
 research-assistant resume ./workspaces/my-study
 ```
 
-实际请求 ID 可从 `status` 输出查到；返回文件须符合该请求保存的输出 schema。`reconcile` 不重新调用模型、不补做实验，也不把导入结果直接判定为科学支持。
+实际请求 ID 从 `status` 查询，返回文件须符合该请求的输出 schema。导入返回与认定科学支持分开处理。
 
-## 角色怎样协作
+</details>
 
-角色表示责任，并不意味着始终启动一组固定数量的 agent。
+## 看看效果
 
-| 角色 | 要回答的问题 | 主要交付 |
-|---|---|---|
-| 科研协调者 | 当前最值得减少的认识不确定性是什么？ | 有限任务、相关上下文、结果处置与下一行动 |
-| 文献研究角色 | 已有研究支持什么、留下了什么条件和缺口？ | 有来源的研究线、方法依据与适用范围 |
-| 模拟证据角色 | 模型和计算能回答当前问题吗？ | 模型条件、可检查产物、核验、限制与专业建议 |
-| 机制分析角色 | 观察能区分哪些解释？ | 竞争解释、证据联系与下一项区分任务 |
-| 论证与写作角色 | 当前证据能够支持怎样的读者论证？ | 证据需求、研究报告或稿件，以及明确的未验证部分 |
-| 评阅角色 | 哪些问题影响当前结论和交付？ | 有范围的异议、受影响论断与修正建议 |
+**AMMT IN625 激光熔池：在真实研究产物上准备与评阅稿件。**
 
-专业角色接收任务所需的局部上下文、资料位置、论断范围、输出目录、预算和返回条件。它们可以按需读取原始资料；项目的完整事件历史不会默认塞入每次请求。当前每次新的专业结果返回都会经过独立评阅和协调者处置，评阅首先获得问题与证据，而不是生产者的完整解释。
+<p align="center">
+  <a href="https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.pdf">
+    <img src="docs/assets/ammt-operating-cases.png" width="900" alt="AMMT IN625 三工况的表面固相线等温轮廓与熔合区包络">
+  </a>
+</p>
 
-若协调者的处置违反可确定检查的规则，程序保留错误理由并退回一次修正机会，例如选中了不属于支持证据的索引。再次违反规则就返回待处理状态。模型调用失败或完成状态未知不会触发这个纠正循环，也不会重做专业任务。
+案例将公开 AMMT 实验条件、三维传导与相变计算、工况和高温物性对照，组织成有来源与适用范围的英文研究稿。本次 ResearchFlow / MAF 协作用于稿件准备与评阅，讨论计算观察能够支持哪些结论，以及哪些模型条件需要继续说明。
 
-一次负面结果可以作为有效交付被接收。接收意味着问题得到有用的回答，是否支持原假设仍需单独解释和登记。连续没有改变研究认识时，需要协调者重审策略，不能自动扩大计算，也不能因为预算已用完就判定证据充分。
+**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** B 工况长度参与有效热源因子标定，A/C 为固定参数非盲比较。R2 初稿使用 39 项相关引用和五幅科学图，区分几何标定、后部相界响应与派生材料时间；研究稿保存在 ResearchFlow 仓库，尚未经期刊同行评审。
 
-## 三类状态
+[阅读稿件 PDF →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.pdf) · [编辑 LaTeX 源文件 →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.tex) · [来源与交付范围 →](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study)
 
-| 状态 | 用途 | 责任 |
-|---|---|---|
-| `.research-assistant/research-state.json` | 保存研究理解、任务、论断、证据与处置 | 科学状态的权威来源；仅协调端导入和更新 |
-| `.research-assistant/checkpoints/` | MAF 原生检查点，保存执行位置与消息 | 当前用于执行诊断；不作为科学恢复的权威来源 |
-| `.research-assistant/execution.json` | 调用账本与会话执行信息 | 复用已完成返回，拒绝把未知调用直接重放 |
+[实际 MAF 执行记录](examples/ammt-manuscript/README.md)包含两项专业输出、独立评阅、一次局部归因修订、协调者处置和明确记录的证据路径恢复。该有限会话已完成；它检验本次协作路径，科研效率与发现质量尚需独立效果评价。
 
-恢复时，协调者重新读取最新科学状态，派发前检查当前输入、依赖和预算。证据绑定到文件版本；文件被修改后，旧支持不能直接继续使用。任务写入范围与角色身份是协议约束，不是操作系统权限隔离。
+[R2 分章写作与中断诊断](examples/ammt-deep-revision/README.md)展示更深入的研究修订：真实引言和讨论章稿、不同章节的论证责任、输入冻结及超时处置。该批次的原生 reviewer/requester 未执行；稿件的章节互审和全文审查由 Codex 研究队伍另行完成。两次运行的完成范围分别记录。
 
-专业角色可以引用自己声明写入范围内的产物，也可以引用任务中明确登记、版本未变的原始输入，包括项目外的文献文件。引用来源不会授予修改来源的权限，未声明的文件不能直接作为任务返回的证据导入。
+<details>
+<summary><strong>再看一个有限的真实模型协作样例</strong></summary>
 
-详细执行结构见 [架构与边界](docs/architecture.md)。
+[合成数值的分析与报告](examples/live-coordination/README.md)实际执行了 Codex 专业分析、写作、独立评阅和协调者处置。公开文件保留原始输入、分析与报告；开发中发现的交接问题、显式恢复及修正均有说明。
+
+输入是给定合成数值。样例完成描述性算术核对与文件交接，没有启动物理求解器，不能由 coarse/fine 标签推断收敛或精度提高。
+
+</details>
 
 ## 依赖与兼容
 
-| 层次 | 当前依赖或要求 | 范围 |
-|---|---|---|
-| Python 应用 | Python ≥3.11 | CLI、状态内核及工作流 |
-| 执行框架 | `agent-framework-core==1.19.0` | MAF 原生工作流、并行汇合与检查点 |
-| Codex 提供者 | 可选 `openai-codex==0.159.3` | 通过 SDK 执行真实角色任务 |
-| 构建 | `setuptools>=77` | 安装和分发；不是独立的科研运行能力 |
-| 模型服务 | 当前 Codex 环境中的可用账户与权限 | 本项目不提供模型额度 |
-| 专业软件 | 具体任务所需的求解器、许可、数据或设备 | 按项目接入；安装本包不会安装 COMSOL、MATLAB、DEM 或实验软件 |
-| PaperSpine 等写作产品 | 可选，独立安装 | 可以作为任务中明确声明的工具；当前不等于已接入其全部服务接口 |
+| 层次 | 当前条件与已检查范围 |
+|---|---|
+| Python 应用 | Python ≥3.11；安装构建使用 `setuptools>=77` |
+| 执行框架 | 固定 `agent-framework-core==1.19.0`；实际 MAF 工作流、并行汇合与检查点 |
+| Codex 提供者 | 可选 `openai-codex==0.159.3`；主机需有可用账户与权限 |
+| 专业工具 | 求解器、许可、实验数据、设备与其他写作产品按研究任务独立配置 |
+| 已检查平台 | Windows / Linux × Python 3.11、3.13 CI；真实 Codex 有限验收在 Windows / Python 3.12.14 完成。macOS 尚未测试 |
 
-仓库随包发布独立的角色说明和 `research-coordinator`、`simulation-evidence` skills。它们由本项目使用，无需复制到原有全局 skill 目录。既有 skills 可作为研究资料或已配置工具使用，系统不会自动改写它们。
+MAF 支持的其他提供者须在本应用中另行实现与验证。项目随包提供独立角色与 skills，既有全局 skills 继续由各自维护。科研状态、MAF 检查点和调用账本的职责见 [架构说明](docs/architecture.md)。
 
-不同提供者和科研软件的可用能力取决于主机。MAF 支持多种模型接入，不代表本仓库已经实现并验证所有提供者。当前重点是实际 MAF 执行与可选 Codex SDK 路径。
+任务契约、输出范围和角色身份是协议约束，宿主权限与工具适配器决定实际执行边界。默认上下文包上限为 60,000 字符，超限请求会拒绝；论文和科学解释仍需依据实际证据。
 
-## 能力边界
+## 验证与贡献
 
-- 程序检查任务契约、交接、文件绑定、预算处置和论断状态；专业 agent 仍需判断科学意义。
-- 声明输出目录有助于并行分工，但无法拦截任意文件编辑。必须结合执行提供者的权限与实际工具接口使用。
-- 工作流并行限制作用于角色调用，不直接约束 Codex 内部的工具并发或外部求解器资源。
-- 默认上下文包上限为 60,000 字符；超限时拒绝请求，不自动截断证据。这不是精确 token 配额。
-- 报告与稿件只能依据已获得证据。无法访问的数据、未执行的实验和尚未验证的解释应保留为缺口。
-- 框架不会保证科研发现、论文接收或更高效率；这些效果需要在真实研究任务中评价。
+[MAF CI](https://github.com/1187124906zty-commits/research-assistant-maf/actions/runs/36816023993) 四组环境通过，执行 66 项测试、实际离线工作流、构建与源码目录外的 wheel 安装检查。[验证记录](docs/validation.md)进一步区分软件路径、有限真实模型协作与尚未开展的科研效果评价。
 
-## 开发与验证
-
-```bash
+```powershell
 python -m unittest discover -s tests -v
-research-assistant demo ./workspaces/check-demo
+python -m research_assistant demo ./local-runs/check-demo
 ```
 
-验证应覆盖实际 MAF 工作流、结果导入、负面证据、陈旧文件、恢复和未知调用处理。离线测试通过不能代替 Codex 实际接入或物理模型验证。平台与真实任务验证以提交中的可复现记录为准。
+欢迎改进提供者、工具适配、状态恢复、研究案例和文档。可 [提交 Issue](https://github.com/1187124906zty-commits/research-assistant-maf/issues/new) 或按 [贡献指南](CONTRIBUTING.md) 提交 Pull Request，附可复现材料与实际验证范围。
 
-当前本地执行环境为 Windows、Python 3.12；离线演示已经走通实际 MAF 执行路径。其他平台的支持程度以对应 CI 和实际运行记录为准，不由依赖包的跨平台声明代替。
+## 交流与反馈
 
-检查方法与已验证边界见 [验证记录](docs/validation.md)；真实模型协作产生的合成数据报告和开发期修正见 [协作样例](examples/live-coordination/README.md)。
+**QQ 交流群：基米绿豆 研习群 · 871287830**
 
-项目采用 MIT 许可。状态实现来源与第三方依赖见 [THIRD_PARTY.md](THIRD_PARTY.md)，完整许可见 [LICENSE](LICENSE)。
+<p align="center">
+  <a href="docs/COMMUNITY.md"><img src="docs/assets/qq-community.jpg" width="260" alt="基米绿豆研习群 QQ 二维码，群号 871287830"></a>
+</p>
+
+欢迎交流多 Agent 科研、MAF 工作流、工具接入与使用反馈。需要跟踪的问题请同步到 Issue；二维码失效时可搜索群号。[社区说明 →](docs/COMMUNITY.md)
+
+## 继续了解
+
+[架构与边界](docs/architecture.md) · [验证记录](docs/validation.md) · [真实模型协作样例](examples/live-coordination/README.md) · [ResearchFlow](https://github.com/1187124906zty-commits/research-workflow) · [贡献指南](CONTRIBUTING.md)
+
+项目采用 [MIT 许可](LICENSE)。状态实现来源、上游软件与案例材料范围见 [第三方说明](THIRD_PARTY.md)。

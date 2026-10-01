@@ -1,0 +1,104 @@
+{
+  "date": "2026-10-01",
+  "status": "complete",
+  "cycles": 2,
+  "framework": "agent-framework-core==1.19.0",
+  "provider": "CodexProvider / openai-codex==0.159.3",
+  "worker_parallelism": 2,
+  "brief": "Prepare two evidence-bound English manuscript inputs for an Additive Manufacturing-style first draft. Original simulations were performed by SimAgent. This is a prospective manuscript-assistance run. Read inputs/evidence-dossier.md and inputs/verified-data.json selectively. Deliver only outputs/mechanism-analysis.md and outputs/results-discussion.md, then independent review and requester disposition. Do not run simulations, browse for papers, alter sources or invent citations/authors. Never promote manuscript prose as physical validation. Tasks have no claim IDs. After both outputs and their reviews are delivered, complete this bounded assistance session; root assembles and compiles the article separately. Use source-linked facts and preserve calibration/nonblind/operator/uncertainty limits. You are not alone in the workspace: write only the assigned paths and never revert other edits.",
+  "deliverables": [
+    "outputs/mechanism-analysis.md",
+    "outputs/results-discussion.md"
+  ],
+  "message": "Both requested manuscript inputs exist and have been inspected alongside the supplied evidence and review records. AMMT_MECHANISM attempt 1 and AMMT_WRITING attempt 2 have accepted requester dispositions; their reviews identify no blocking scientific findings. The bounded manuscript-assistance session is therefore complete. No further delegation, simulation, literature search or manuscript-production attempt is warranted. Article assembly and compilation remain with the requesting root coordinator. Carry forward the accepted minor assembly correction: source note N4 should cite “Fixed-B 2×2 continuation contrast” under “Condition trends and mechanism evidence.” This completion establishes delivery adequacy only, without physical validation, unique mechanism identification, novelty or submission readiness.",
+  "calls": [
+    {
+      "request_id": "worker:AMMT_MECHANISM:1",
+      "role": "mechanism",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "worker:AMMT_WRITING:1",
+      "role": "writer",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "review:AMMT_MECHANISM:1",
+      "role": "reviewer",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "decide:AMMT_MECHANISM:1",
+      "role": "coordinator",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "review:AMMT_WRITING:1",
+      "role": "reviewer",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "decide:AMMT_WRITING:1",
+      "role": "coordinator",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "worker:AMMT_WRITING:2",
+      "role": "writer",
+      "status": "completed",
+      "reconciled": true
+    },
+    {
+      "request_id": "review:AMMT_WRITING:2",
+      "role": "reviewer",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "decide:AMMT_WRITING:2",
+      "role": "coordinator",
+      "status": "completed",
+      "reconciled": false
+    },
+    {
+      "request_id": "plan:18:2:0",
+      "role": "coordinator",
+      "status": "completed",
+      "reconciled": false
+    }
+  ],
+  "protocol_audit": {
+    "schema_version": 1,
+    "revision": 18,
+    "protocol_ok": true,
+    "scientific_validity": "not_judged",
+    "risks": [
+      {
+        "code": "stale_evidence",
+        "message": "Evidence is missing or changed: outputs/results-discussion.md",
+        "blocking": false,
+        "task_id": "AMMT_WRITING",
+        "attempt": 1,
+        "claim_ids": []
+      },
+      {
+        "code": "stale_input",
+        "message": "Input is missing or changed: outputs/results-discussion.md",
+        "blocking": false,
+        "task_id": "review-AMMT_WRITING-1"
+      }
+    ]
+  },
+  "limits": [
+    "No PDE reruns; original simulation case produced with SimAgent",
+    "One explicit path-binding reconciliation; original completed response preserved",
+    "First mechanism review checked evidence before producer output; full article reviewed separately",
+    "Protocol audit is not scientific validity or research-effectiveness benchmark"
+  ]
+}

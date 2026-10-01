@@ -1,0 +1,36 @@
+{
+  "model_turns_started": 0,
+  "workspace": "local-runs/ammt-deep-revision/drafts",
+  "ledger_status": "attention",
+  "calls": {
+    "worker:R2_INTRODUCTION:1": {
+      "ledger_status": "completed",
+      "thread_status": "notLoaded",
+      "turn_statuses": [
+        {
+          "status": "completed",
+          "item_count": 43
+        }
+      ],
+      "structured_response_recovered": true,
+      "response_turn_status": "completed",
+      "evidence_paths": [
+        "sections/introduction/r001/draft.tex",
+        "sections/introduction/r001/argument.md",
+        "sections/introduction/r001/memory.md"
+      ],
+      "local_response_filename": "r2_introduction-recovered.json"
+    },
+    "worker:R2_DISCUSSION:1": {
+      "ledger_status": "failed",
+      "thread_status": "notLoaded",
+      "turn_statuses": [
+        {
+          "status": "interrupted",
+          "item_count": 98
+        }
+      ],
+      "structured_response_recovered": false
+    }
+  }
+}
