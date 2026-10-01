@@ -32,7 +32,7 @@
 
 这是 [ResearchFlow](https://github.com/1187124906zty-commits/research-workflow) 思路的独立 MAF 重构，包含 **实际工作流、状态 CLI、Codex SDK 提供者、离线演示和真实模型协作样例**。项目自带独立角色与 skills；既有工具可在任务中明确接入。实现与边界见 [架构说明](docs/architecture.md)。
 
-针对完整论文的协作方法见 [章节研究与全文论证](docs/manuscript-collaboration.zh.md) 和 [AMMT 实质修订案例](examples/ammt-deep-revision/README.md)。本次已实际开展近邻文献学习、原生 MAF 分章写作、Codex 章节交叉审阅与全文整合；原生写作批次的讨论返回超时，后续由主协调者接收实际文件并组织独立评阅。它验证了有人工协调的研究路径，尚未实现完整论文的自主编辑调度。
+针对完整论文的协作方法见 [章节研究与全文论证](docs/manuscript-collaboration.zh.md) 、[论文审查模式](docs/manuscript-audit.zh.md) 和 [AMMT 实质修订案例](examples/ammt-deep-revision/README.md)。本次已实际开展近邻文献学习、原生 MAF 分章写作、Codex 章节交叉审阅与全文整合；原生写作批次的讨论返回超时，后续由主协调者接收实际文件并组织独立评阅。它验证了有人工协调的研究路径，尚未实现完整论文的自主编辑调度。
 
 ## 安装
 
