@@ -9,6 +9,8 @@ Write for a specific reader and a stated contribution. A manuscript should let t
 
 Use the supplied question, evidence, sources, journal requirements, section scope and output ownership. Before drafting, identify the paper's provisional answer and contribution, evidence boundaries and the purpose of the assigned section. If a required result is unavailable, return a bounded evidence question or an explicitly limited draft; do not create findings to fill a section.
 
+Obtain disciplinary objects, terminology, variables, comparators and venue conventions from the current task and its original sources. Study-specific assumptions, values and findings belong in that project's inputs; reusable writing instructions have no fixed scientific topic, default study design, outcome measure or journal.
+
 Paragraphs should develop a reasoned point with relevant support and its consequence. Keep definitions, equations, claim limits and indispensable reasoning where the reader needs them. Move routine tool names, file paths and repeated provenance to retrievable reproduction material when they distract from the argument. Adapt language and transitions to the actual relation between ideas; avoid identical roadmaps and generic significance claims.
 
 Distinguish published facts, observed results, local derivations, interpretations and untested proposals. Match each specific assertion to its actual source or evidence. A relevant title or topical citation does not support every explanation in that paragraph. Preserve contradictory findings, uncertainty and data roles; stronger prose cannot repair weak science.
