@@ -4,7 +4,7 @@
 
 本方案针对 AMMT 初稿的实质性反馈制定。它以现有 MAF 应用、ResearchFlow 治理方法和 PaperSpine 写作方法为基础，不修改安装的原始 skills，不 fork Microsoft Agent Framework。R2 实际运行了文献/期刊/证据专家、冻结论证地图、原生 MAF 引言与讨论写作、定向章节互审、协调者合成以及新上下文全文评阅。原生讨论 writer 已写出章稿但最终结构化返回超时，批内 reviewer/requester 未执行；协调者依据真实文件和另行审查完成交接。下述稳定章节负责人、原生编辑问题账本和完整自动完成条件仍需应用层实现。文件存在或协议通过不证明论文达到了期刊水平。
 
-修订稿与具体意见见 [ResearchFlow R2 案例](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study/revision-r2)。本次近邻和来源学习覆盖至 2026-10-01，历史 R2 稿实际引用 39 项来源，并以五幅图承担物性定义、几何比较、场形态、尾部因子分解与材料时间的不同职责。以下关于旧稿 13 引文、未追踪新文献的诊断描述的是修订起点，不是当前稿件状态。R3 针对实现细节、逐句来源与章节流转另行修订，当前版本见 [R3 记录](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study/revision-r3)。
+修订稿与具体意见见 [ResearchFlow R2 案例](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study/revision-r2)。本次近邻和来源学习覆盖至 2026-10-01，历史 R2 稿实际引用 39 项来源，并以五幅图承担物性定义、几何比较、场形态、尾部因子分解与材料时间的不同职责。以下关于旧稿 13 引文、未追踪新文献的诊断描述的是修订起点，不是当前稿件状态。R3 针对实现细节、逐句来源与章节流转另行修订；当前 [R4 记录](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study/revision-r4)进一步提供有来源的章节技能、实际元数据分发、评阅反馈和进度治理，并完成新的整合稿。以下尚未实现的稳定章节记忆与全篇自主编辑条件仍保持设计身份。
 
 ## 1. 先把问题定义正确
 

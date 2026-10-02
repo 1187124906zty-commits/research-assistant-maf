@@ -21,6 +21,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from .guidance import writing_selection
+
 
 LEVELS = {"observation", "numerical_verification", "physical_validation"}
 KINDS = {"observation", "support", "negative", "counterevidence"}
@@ -334,6 +336,12 @@ def _propagate_invalidations(state: dict, changed_claims: set[str], reason: str)
 
 def _prepare_task(root: Path, state: dict, contract: dict) -> dict:
     value = copy.deepcopy(contract)
+    if "writing" in value:
+        try:
+            value["writing"] = writing_selection(value["writing"])
+        except ValueError as exc:
+            raise GovernanceError(str(exc)) from exc
+        _require(value["writing"] is not None, "Omit task.writing rather than setting it null")
     tid = _text(value.get("id"), "task.id")
     _require(SAFE_ID.fullmatch(tid) is not None and tid not in state["tasks"], "Task id is invalid or already exists")
     for field in ("role", "question", "purpose"):

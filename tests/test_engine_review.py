@@ -345,7 +345,7 @@ class EngineHandoffReview(unittest.IsolatedAsyncioTestCase):
         skill_dir.mkdir(parents=True)
         (role_dir / "simulation.md").write_text("Packaged simulation role", encoding="utf-8")
         (skill_dir / "SKILL.md").write_text("Packaged skill instructions", encoding="utf-8")
-        with patch.object(engine, "__file__", str(package / "engine.py")):
+        with patch.object(engine.guidance, "__file__", str(package / "guidance.py")):
             text = role_text("simulation")
         self.assertIn("Packaged simulation role", text)
         self.assertIn("Packaged skill instructions", text)

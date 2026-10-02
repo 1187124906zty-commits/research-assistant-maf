@@ -15,3 +15,11 @@ Neither upstream project is copied into this repository.
 
 PaperSpine is an independently installed optional research/writing capability:
 https://github.com/WUBING2023/PaperSpine. Its product is not redistributed.
+
+The seven project writing skills contain independently written synthesis of
+public academic writing pedagogy and project editorial judgments. Original
+sources, short attributed quotations, read scope and applicable license notes
+are recorded in `skills/scientific-writing/references/source-ledger.md`.
+MIT CommKit pages state CC BY-NC 4.0; this project's MIT license does not
+relicense third-party quotations or grant rights to republish those guides.
+Full university-page extracts and publisher/author PDFs are not distributed.

@@ -1,0 +1,18 @@
+---
+name: paper-writing-review
+description: Review a scientific manuscript or section against its question, evidence, readers and writing purpose, returning located actionable findings rather than generic praise or unlimited polish requests.
+---
+
+# Writing Review
+
+For consequential handoffs use [located review and repair](../scientific-writing/references/review-and-handoffs.md): identify lost reader meaning, original evidence, affected inference, responsible role, smallest adequate repair and actual recheck. An abstract can preserve every number yet fail to convey the comparative finding; evaluate the whole argument, not only individual sentence correctness.
+
+Inspect the assigned question, methods and original evidence before the producer's persuasive interpretation when possible; disclose exposure and missing evidence. Evaluate the actual section/artifact, not a worker's description of it. Identify paper type and audience before judging structure.
+
+Check the argument chain, section purpose/order, definitions, paragraph continuity, figure/table explanations, source support and bounded implications. Check title/abstract consistency and journal requirements only when included in scope. Distinguish a scientific defect, a reader-understanding defect, an official format requirement and optional style.
+
+For each consequential finding name the affected passage, issue, located evidence, claim consequence and smallest feasible repair. An unevaluated design should not be rejected for honestly lacking results, but must not claim measured efficacy. Do not impose a single paragraph template, universal numerical tolerance or novelty criterion.
+
+Route missing factual support to source work, domain adequacy to specialists, competing explanations to mechanism analysis and text/structure repair to the writer/editor. A recheck inspects the actual revised version and retained limitations. Accepted prose changes do not promote scientific claims. Preserve unresolved issues and avoid unlimited rewriting when reader understanding has stopped improving.
+
+Read shared [source-use.md](../scientific-writing/references/source-use.md) and [argument-and-readers.md](../scientific-writing/references/argument-and-readers.md) as needed, and [the source-grounded section guide](../scientific-writing/references/section-specific-guidance.md) only at the selected section. For continuity findings use [the paragraph diagnosis](../scientific-writing/references/section-specific-guidance.md#continuity). Return actionable findings and limits; successful software tests do not establish literary or journal quality.

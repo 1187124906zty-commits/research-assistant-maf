@@ -27,6 +27,13 @@ CONTRACT = obj({"id": TEXT, "role": {"type": "string", "enum": ROLES},
                 "acceptance": STRINGS,
                 "budget": obj({"max_attempts": INTEGER, "max_no_progress": INTEGER}),
                 "depends_on": array(DEPENDENCY)})
+# Explicit optional metadata preserves existing contracts and compact non-writing
+# requests. Section selection is not inferred from a task's prose.
+WRITING = obj({"mode": {"type": "string", "enum": ["draft", "revise", "audit"]},
+               "sections": array({"type": "string", "enum": [
+                   "title_abstract", "introduction", "methods_results",
+                   "discussion_conclusions", "full_manuscript"]})})
+CONTRACT["properties"]["writing"] = WRITING
 PLAN_UPDATE = obj({"reason": TEXT, "facts": STRINGS, "hypotheses": STRINGS,
                    "uncertainties": STRINGS, "next_decision": TEXT,
                    "claims": array(CLAIM)})

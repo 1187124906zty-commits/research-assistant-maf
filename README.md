@@ -34,6 +34,8 @@
 
 针对完整论文的协作方法见 [章节研究与全文论证](docs/manuscript-collaboration.zh.md) 、[论文审查模式](docs/manuscript-audit.zh.md) 和 [AMMT 实质修订案例](examples/ammt-deep-revision/README.md)。本次已实际开展近邻文献学习、原生 MAF 分章写作、Codex 章节交叉审阅与全文整合；原生写作批次的讨论返回超时，后续由主协调者接收实际文件并组织独立评阅。它验证了有人工协调的研究路径，尚未实现完整论文的自主编辑调度。
 
+新增[按章节分发的科研写作技能](docs/writing-skills.zh.md)：协调者以任务元数据选择标题/摘要、引言、方法/结果或讨论/结论指南，reviewer 接收相同章节的审查方法，后续修订获得带版本与原文位置的反馈。七项写作技能共享一套有原始来源定位的知识，依据 MIT、Manchester、UNC 等机构和学者的公开指导，按需加载。方法的实际应用及中断处置见 [R4 写作案例](examples/ammt-writing-skills/README.md)。
+
 ## 安装
 
 需要 **Python ≥3.11**。推荐使用项目虚拟环境，Windows PowerShell：
@@ -75,6 +77,8 @@ research-assistant status ./workspaces/my-study
 
 每项研究使用独立项目目录。`--max-cycles` 限制工作流循环，`--parallel` 在 1–4 之间限制同时派发的角色任务；一次角色调用内部的求解器运行与资源预算仍需单独约定。
 
+`--timeout` 当前表示[公开进度询问的间隔](docs/agent-progress.zh.md)。活动角色先回答当前工作、候选和剩余问题；慢推理继续，有依据的重复润色先交付候选供其他角色评阅。问题、报告和处置写入对应调用账本。启动传输超时及明确取消分别处理。
+
 <details>
 <summary><strong>恢复、追加有限工作与核实未知调用</strong></summary>
 
@@ -108,13 +112,15 @@ research-assistant resume ./workspaces/my-study
 
 案例将公开 AMMT 实验条件、三维传导与相变计算、工况和高温物性对照，组织成有来源与适用范围的英文研究稿。本次 ResearchFlow / MAF 协作用于稿件准备与评阅，讨论计算观察能够支持哪些结论，以及哪些模型条件需要继续说明。
 
-**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** B 工况长度参与有效热源因子标定，A/C 为固定参数非盲比较。R2 初稿使用 39 项相关引用和五幅科学图，区分几何标定、后部相界响应与派生材料时间；研究稿保存在 ResearchFlow 仓库，尚未经期刊同行评审。
+**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** B 工况长度参与有效热源因子标定，A/C 保留同一因子用于公开参考数据下的比较。R4 用机构来源支持的章节指南重建摘要和引言，修订方法与讨论中的叙述，再检查实际全文和页面。五幅科学图及既有六个生产解继续支撑稿件；研究稿保存在 ResearchFlow 仓库，尚未经期刊同行评审。
 
 [阅读稿件 PDF →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.pdf) · [编辑 LaTeX 源文件 →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.tex) · [来源与交付范围 →](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study)
 
 [实际 MAF 执行记录](examples/ammt-manuscript/README.md)包含两项专业输出、独立评阅、一次局部归因修订、协调者处置和明确记录的证据路径恢复。该有限会话已完成；它检验本次协作路径，科研效率与发现质量尚需独立效果评价。
 
 [R2 分章写作与中断诊断](examples/ammt-deep-revision/README.md)展示更深入的研究修订：真实引言和讨论章稿、不同章节的论证责任、输入冻结及超时处置。该批次的原生 reviewer/requester 未执行；稿件的章节互审和全文审查由 Codex 研究队伍另行完成。两次运行的完成范围分别记录。
+
+[R4 技能分发与前向应用](examples/ammt-writing-skills/README.md)在旧稿上派发真实写作任务，记录所加载的方法、实际章稿、返回阻滞和协调者处置。它与最终稿的独立评阅分别记录，用真实缺陷修订指南；运行状态和软件测试不充当文稿质量评分。
 
 <details>
 <summary><strong>再看一个有限的真实模型协作样例</strong></summary>
@@ -142,6 +148,8 @@ MAF 支持的其他提供者须在本应用中另行实现与验证。项目随�
 ## 验证与贡献
 
 [MAF CI](https://github.com/1187124906zty-commits/research-assistant-maf/actions/runs/36816023993) 四组环境通过，执行 66 项测试、实际离线工作流、构建与源码目录外的 wheel 安装检查。[验证记录](docs/validation.md)进一步区分软件路径、有限真实模型协作与尚未开展的科研效果评价。
+
+2026-10-02 的本地 R4 验证完成 93 项测试、九项项目技能校验、安装包构建与源码目录外的实际演示。新增章节技能选择、定位反馈和进度询问均有真实调用记录；当前论文为 19 页研究初稿。历史 CI 与本地新增验证的范围分别记录。
 
 ```powershell
 python -m unittest discover -s tests -v

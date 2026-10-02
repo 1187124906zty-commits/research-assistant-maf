@@ -8,6 +8,7 @@ from __future__ import annotations
 import asyncio
 import copy
 from contextlib import contextmanager
+import inspect
 import json
 import os
 from pathlib import Path
@@ -15,7 +16,7 @@ from typing import Any
 
 from agent_framework import Executor, FileCheckpointStorage, WorkflowBuilder, WorkflowContext, handler
 
-from . import schemas, state
+from . import schemas, state, guidance
 
 
 class ExecutionError(RuntimeError):
@@ -87,19 +88,54 @@ def execution_lock(directory: Path):
         stream.close()
 
 
-def role_text(role: str) -> str:
-    resource = Path(__file__).parent / "resources" / "roles" / f"{role}.md"
-    if not resource.is_file():
-        resource = Path(__file__).resolve().parents[2] / "roles" / f"{role}.md"
-    if not resource.is_file():
-        raise ExecutionError(f"Missing role charter {role}")
-    content = resource.read_text(encoding="utf-8")
-    skill = {"coordinator": "research-coordinator", "simulation": "simulation-evidence"}.get(role)
-    if skill:
-        skill_path = resource.parent.parent / "skills" / skill / "SKILL.md"
-        content += f"\nApplicable skill source: {skill_path}. Resolve linked references relative to that skill directory.\n"
-        content += skill_path.read_text(encoding="utf-8")
-    return content
+def role_text(role: str, writing: dict | None = None) -> str:
+    try:
+        return guidance.load_role(role, writing)
+    except ValueError as exc:
+        raise ExecutionError(str(exc)) from exc
+
+
+def packet_writing(packet: dict) -> dict | None:
+    """Scope is explicit metadata; no keyword guessing or manuscript inspection."""
+    if "writing" in packet:
+        return packet["writing"]
+    if isinstance(packet.get("task"), dict):
+        return packet["task"].get("writing")
+    if isinstance(packet.get("handoff"), dict):
+        return packet_writing(packet["handoff"])
+    return None
+
+
+@contextmanager
+def progress_journal(session):
+    """Persist public checkpoint events while keeping caller decision callbacks.
+
+    One runner owns this provider during a project run. Parallel role events
+    bind to their request IDs; progress does not mutate scientific evidence.
+    """
+    provider = session.provider
+    if not hasattr(provider, "progress_callback"):
+        yield
+        return
+    original = provider.progress_callback
+
+    async def record(event):
+        key = event["request_id"]
+        if key in session.data["calls"]:
+            call = session.data["calls"][key]
+            call.setdefault("progress", []).append(copy.deepcopy(event))
+            call["thread_id"] = event.get("thread_id")
+            session.save()
+        if original is not None:
+            result = original(copy.deepcopy(event))
+            return await result if inspect.isawaitable(result) else result
+        return None
+
+    provider.progress_callback = record
+    try:
+        yield
+    finally:
+        provider.progress_callback = original
 
 
 class Session:
@@ -139,9 +175,15 @@ class Session:
         prompt = json.dumps(packet, ensure_ascii=False, indent=2)
         if len(prompt) > self.max_context_chars:
             raise ExecutionError("Context exceeds the configured bound; narrow the packet without dropping evidence")
-        return {"role": role, "instructions": role_text(role) +
+        writing = packet_writing(packet)
+        instructions = role_text(role, writing)
+        if role == "reviewer" and packet.get("writing_review") is True and writing is None:
+            instructions += guidance.skill_text("scientific-writing")
+            instructions += guidance.skill_text("paper-writing-review")
+        return {"role": role, "instructions": instructions +
                 "\nUse only the assigned writes. Never edit .research-assistant shared state. "
                 "Read consequential original inputs; return one JSON object matching the supplied schema. "
+                "Evidence.path must name the exact actual file path; put page, line and JSON-pointer locators in its summary, not appended to the filename. "
                 "Keep facts, assumptions and scientific support separate.",
                 "prompt": prompt, "cwd": str(self.root), "output_schema": schema, "request_id": request_id}
 
@@ -156,7 +198,10 @@ class Session:
                 def binding(item):
                     body = json.loads(item["prompt"])
                     body.pop("revision", None)
-                    return {**item, "prompt": body}
+                    # Saved calls retain the instructions actually used. New skill
+                    # versions apply to new calls, not to replayed cached responses.
+                    return {key: value for key, value in {**item, "prompt": body}.items()
+                            if key not in {"instructions", "output_schema"}}
                 if binding(call["request"]) != binding(request):
                     raise ExecutionError(f"Call {key} context changed; its cached response is not current")
                 for artifact in call.get("artifacts", []):
@@ -175,10 +220,12 @@ class Session:
             calls[key]["error_type"] = type(exc).__name__
             calls[key]["status"] = "interrupted" if isinstance(exc, (asyncio.CancelledError, KeyboardInterrupt)) else "failed"
             calls[key]["thread_id"] = getattr(self.provider, "thread_ids", {}).get(key)
+            calls[key]["progress"] = copy.deepcopy(getattr(self.provider, "progress_records", {}).get(key, calls[key].get("progress", [])))
             self.save()
             raise
         calls[key].update(status="completed", response=response, artifacts=artifacts,
                           thread_id=getattr(self.provider, "thread_ids", {}).get(key))
+        calls[key]["progress"] = copy.deepcopy(getattr(self.provider, "progress_records", {}).get(key, calls[key].get("progress", [])))
         self.save()
         self.event("role_completed", role=role, request_id=key)
         return response
@@ -196,7 +243,27 @@ class Session:
             raise ExecutionError(f"Task {tid} exhausted its attempt budget")
         packet["brief"] = self.data["brief"]
         packet["instruction"] = "Answer the bounded task, create its output artifacts, report contribution and cost; return at its budget."
+        feedback = self.review_feedback(tid)
+        if feedback is not None:
+            packet["review_feedback"] = feedback
+            packet["instruction"] += " Inspect located reviewer findings and return specific repairs or evidence-based disagreements within this task's scope."
         return packet
+
+    def review_feedback(self, tid: str) -> dict | None:
+        """Located, version-checked feedback for continued or newly routed work."""
+        current = state._read(self.root)[2]
+        entry = current["tasks"][tid]
+        if not entry["attempts"]:
+            return None
+        rid = f"review-{tid}-{len(entry['attempts'])}"
+        review_entry = current["tasks"].get(rid)
+        if not review_entry or not review_entry["attempts"]:
+            return None
+        artifact = review_entry["attempts"][-1]["evidence"][0]
+        if not state._fresh(self.root, artifact):
+            raise ExecutionError(f"Task {tid} reviewer feedback changed; inspect before reuse")
+        return {"path": artifact["path"], "revision": artifact["revision"],
+                "report": state._load(self.root / artifact["path"])}
 
     async def review(self, tid: str) -> dict:
         packet = state.context(self.root, tid)
@@ -220,6 +287,13 @@ class Session:
                              "evidence": report["evidence"], "outputs": packet["task"]["outputs"],
                              "write_path": str(review_path.relative_to(self.root)),
                              "instruction": "Read the actual evidence. Producer interpretation is withheld from this first-pass review. Findings name exact affected claims; disclose unavailable evidence."}
+            if packet["task"].get("writing") is not None:
+                review_packet["writing"] = {**packet["task"]["writing"], "mode": "audit"}
+            elif packet["task"]["role"] == "writer":
+                # Legacy writer tasks get compact common review guidance without
+                # selecting every section of an unspecified manuscript.
+                review_packet["instruction"] += " Audit reader logic, evidence scope and located source support."
+                review_packet["writing_review"] = True
             review = await self.ask("reviewer", review_packet, schemas.REVIEW, f"review:{tid}:{attempt}")
             review_path.parent.mkdir(parents=True, exist_ok=True)
             state._atomic(review_path, review)
@@ -306,10 +380,11 @@ class Coordinator(Executor):
             packet["remaining_cycles"] = session.data["max_cycles"] - session.data["cycles"]
             packet["max_ready_tasks"] = len(self.workers)
             packet["returns"] = [{"task_id": tid, "contribution": entry["attempts"][-1].get("contribution"),
-                                   "decision": entry["decisions"][-1] if entry["decisions"] else None}
+                                   "decision": entry["decisions"][-1] if entry["decisions"] else None,
+                                   "review_feedback": session.review_feedback(tid)}
                                   for tid, entry in current["tasks"].items()
                                   if entry["attempts"] and entry["contract"]["role"] != "reviewer"]
-            packet["instruction"] = "Choose the next informative action. Delegate only ready tasks, up to max_ready_tasks. Add new claim IDs only; preserve facts/uncertainties. Work can be literature, simulation, mechanism or writer. Complete only with actual requested deliverables; otherwise return needs_input with the specific missing prerequisite."
+            packet["instruction"] = "Choose the next informative action. Delegate only ready tasks, up to max_ready_tasks. Add new claim IDs only; preserve facts/uncertainties. Work can be literature, simulation, mechanism or writer. For manuscript work, set optional task.writing with mode draft/revise/audit and explicit sections title_abstract/introduction/methods_results/discussion_conclusions/full_manuscript. Treat reviewer feedback as bounded new repair tasks with source locators, rather than replaying saved calls; choose literature for source support, mechanism for explanatory scope, writer for repairs and reviewer for recheck. Complete only with actual requested deliverables; otherwise return needs_input with the specific missing prerequisite."
             proposal = await session.ask("coordinator", packet, schemas.PLAN,
                                          f"plan:{current['revision']}:{session.data['cycles']}:{session.data.get('generation', 0)}")
             if proposal["action"] != "work":
@@ -435,14 +510,15 @@ async def run_project(project, provider, *, brief=None, max_cycles=4, parallel=2
             # Re-enter through the coordinator so changed scientific state is always read.
             # Native checkpoints are saved as execution diagnostics; the durable call
             # ledger and state reconcile effects instead of replaying stale graph messages.
-            async for event in workflow.run(message={"phase": "resume" if resume else "start"}, stream=True):
-                if event.type == "superstep_completed":
-                    latest = await storage.get_latest(workflow_name=workflow.name)
-                    if latest:
-                        session.data["checkpoint"] = latest.checkpoint_id
-                        session.save()
-                if event.type == "output":
-                    break
+            with progress_journal(session):
+                async for event in workflow.run(message={"phase": "resume" if resume else "start"}, stream=True):
+                    if event.type == "superstep_completed":
+                        latest = await storage.get_latest(workflow_name=workflow.name)
+                        if latest:
+                            session.data["checkpoint"] = latest.checkpoint_id
+                            session.save()
+                    if event.type == "output":
+                        break
             if session.data["status"] == "running":
                 raise ExecutionError("Workflow stopped before a disposition or bounded return")
         except Exception as exc:

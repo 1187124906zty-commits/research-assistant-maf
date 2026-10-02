@@ -1,0 +1,44 @@
+{
+  "summary": "Recommend focused editorial revision before accepting the frontmatter as the requested synthesized presentation; accept its bounded scientific scope and checked evidence use. The attempt-1 title is clear and appropriately limited. The abstract and Introduction establish a coherent calibration-to-tail-position-to-material-time argument, but the abstract's collective evidence burden and I8's allocation of detail still obscure the emphasis of that argument. Two medium editorial findings below block final presentation acceptance only; neither is a scientific blocker or a request for new simulations. Checked numerical anchors, retained-field passage-time reconstructions and consequential original-source passages support the claims examined. No fabricated accuracy gain, latent measurement, held-out validation or unique causal mechanism was identified. The located editorial note separates repairs from source uncertainty and evidence gaps. This disposition does not certify candidate-specific rendering or journal readiness. The structured review was saved to reviews/R4_FRONTMATTER/attempt-1.json.",
+  "findings": [
+    {
+      "blocking": true,
+      "claim_ids": [],
+      "reason": "EDITORIAL / READER UNDERSTANDING, medium; outputs/frontmatter.tex, attempt 1, abstract lines 9–15. Affected content: 'condition B' and 'four-corner comparison'; the wide/shallow residual; opposing continuation responses; '98.3%' rear-solidus contribution; and the near-80 micrometre span with two speeds and two passage times. Each checked quantity is supported, and lines 14–15 do state the answer. The defect is collective selection: the reader must keep several comparison baselines and translate an opaque condition label while decoding residuals, finite effects, displacement fraction and spatial/time pairs. In particular, the speed and time pairs make the reader calculate the comparative implication that the abstract is intended to convey. This is a moderate emphasis problem, not an absent argument or incorrect numerical result. Smallest repair, owned by the writer: organize the evidence around the opposing property responses, dominant joint rear-boundary displacement, persistent shape discrepancy and speed-dependent material time; consolidate redundant numerical representations and state their comparative meaning directly. Define or replace the opaque B label if retained. Preserve the necessary conditions, negative result and independent-thermal-validation boundary; unchanged detailed quantities can remain in the body and evidence note. No fixed number quota, new result or prescribed replacement wording is required. Recheck the revised abstract as a whole: a neighboring heat-transfer/materials reader should be able to explain the central finding and consequence without assembling them from an inventory. Recommended disposition: revise abstract selection before final presentation acceptance; scientific support unchanged.",
+      "evidence_paths": [
+        "outputs/frontmatter.tex:9",
+        "outputs/frontmatter.tex:13",
+        "outputs/editorial-note.md",
+        "inputs/verified-data.json#/comparison_rows",
+        "inputs/verified-data.json#/factorial/rows",
+        "inputs/verified-data.json#/factorial/effects",
+        "inputs/verified-data.json#/research_case_metrics",
+        "C:/Users/Administrator/Documents/ChatGPT/skill开发/research-workflow/paper/ammt-study/revision-r4/forward-use/coordinator-evaluation.md"
+      ]
+    },
+    {
+      "blocking": true,
+      "claim_ids": [],
+      "reason": "EDITORIAL / SECTION PURPOSE, medium; outputs/frontmatter.tex, attempt 1, Introduction I8, line 47, especially 'All reference targets were available during development', 'Model length is a two-solidus-crossing surface proxy', and 'The reference imaging length and metallographic cross-section means are separate condition-level observations'. The closing paragraph supplies a valid objective and a design that answers it, but it embeds these statements among calibration exclusions, development-data availability, observation operators, populations, branch rules and diagnostic definitions. I7 has already explained position, span and time, and the original Methods already records the detailed data roles and observation mapping. The added inventory interrupts the transition from the established question to the contribution. Smallest repair, owned by the writer: foreground the question and why fixed-source, independently varied property continuations with rear-boundary decomposition answer it. Retain B-only calibration, the fixed source/latent law and the essential model/validation scope; allocate the detailed proxy/population definitions and full retrospective/nonblind disclosure to their existing Methods locations rather than repeat them in the objective paragraph. Preserve required citation identities and scientific facts in the manuscript. I do not endorse wholesale deletion of I2–I5 ending qualifications: I4's fitted-factor interpretation and I5's transfer limit serve different inferential roles. Recheck the revised I7-to-I8 transition and closing paragraph for a readily identifiable objective, comparison rationale and contribution. Recommended disposition: revise I8's information allocation before final presentation acceptance; no scientific or source blocker established.",
+      "evidence_paths": [
+        "outputs/frontmatter.tex:44",
+        "outputs/frontmatter.tex:47",
+        "inputs/manuscript-r3.tex:76",
+        "inputs/verified-data.json#/calibration/data_roles",
+        "inputs/verified-data.json#/experimental_roles",
+        "inputs/support-ledger.json#/derived",
+        "outputs/editorial-note.md",
+        "C:/Users/Administrator/Documents/ChatGPT/skill开发/research-workflow/paper/ammt-study/revision-r4/forward-use/coordinator-evaluation.md"
+      ]
+    }
+  ],
+  "limitations": [
+    "Exposure: the user-supplied evidence summaries were visible from the outset. I read the original manuscript, verified-data dossier and support ledger before the candidate's editorial note. After forming an initial assessment, I read the separate coordinator evaluation at the user's request and reassessed its abstract-selection and Introduction-objective findings against the actual candidate. This is an automated review within the same model family, not statistically independent corroboration.",
+    "Rendering: no matching rendered PDF for outputs/frontmatter.tex was supplied or inspected. The archived revision-r4/review/manuscript-reviewed.pdf has a different title and abstract and cannot verify this candidate. No candidate compilation or layout certification is given.",
+    "Evidence checks used existing records: the original fixed-B constitutive-factorial JSON was opened; B/C rear crossings and passage times were independently reconstructed from retained fields.npz centerline arrays. No PDE was rerun, and this review does not certify branch-specific precision, full three-dimensional convergence or the physical cooling histories.",
+    "Consequential originals inspected include the supplier bulletin p. 2, Kollmannsberger author-preprint pp. 9–10, Myers published pp. 7–9, and located pages of the reliability, Yang sensitivity and depth-inversion papers; Lane's existing full-text extract was checked for observation definitions and cooling-rate limitations. Van Elsen's retained PDF and the supplied derivation ledger informed the storage/time assessment. Not every retained background reference received a new full-text audit; Ross and Promoppatum remain abstract-limited in the supplied source coverage.",
+    "Coupon-specific liquid properties, the rapid-freezing path/latent law and an independently measured trajectory over the adopted 1350–1290 degrees C interval remain unavailable. These gaps restrict stronger physical claims; the candidate appropriately treats the reported time and cooling quantities as dependent model diagnostics.",
+    "All 22 original Introduction citation keys were retained, and the added nist2018 key was found in the archived bibliography. These integrity checks establish neither effective evidence selection nor compliance with current Additive Manufacturing submission requirements.",
+    "No canonical manuscript or shared research state was edited. Claim IDs were not supplied in the assignment; the findings therefore identify their exact affected content and locations in reason fields."
+  ]
+}

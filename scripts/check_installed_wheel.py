@@ -21,11 +21,20 @@ def main():
         environment = {**os.environ, "PYTHONPATH": str(target)}
         code = (
             "from pathlib import Path; import research_assistant.engine as e; "
+            "import research_assistant.guidance as g; import re; "
             "from research_assistant.cli import main; "
             "assert Path(e.__file__).is_relative_to(Path.cwd()/'installed'); "
             "assert '# Simulation Evidence' in e.role_text('simulation'); "
             "assert '# Research Coordinator' in e.role_text('coordinator'); "
             "assert (Path(e.__file__).parent/'resources/skills/research-coordinator/references/execution.md').is_file(); "
+            "scope={'mode':'audit','sections':['full_manuscript']}; "
+            "text=e.role_text('writer',scope); "
+            "assert '# Introduction' in text and '# Writing Review' in text; "
+            "assert '# Scientific Writing Core' not in e.role_text('literature'); "
+            "root=g.resource_root(); "
+            "paths=[root/'skills'/s/'SKILL.md' for s in g.selected_skills('writer',scope)]; "
+            "assert all((p.parent/link.split('#')[0]).is_file() for p in paths for link in re.findall(r'\\]\\(([^)]+)\\)',p.read_text(encoding='utf-8'))); "
+            "assert all((root/'skills/scientific-writing/references'/name).is_file() for name in ['institution-guidance.md','source-ledger.md']); "
             "raise SystemExit(main(['demo',str(Path.cwd()/'demo')]))"
         )
         subprocess.run([sys.executable, "-c", code], cwd=workspace, env=environment, check=True)

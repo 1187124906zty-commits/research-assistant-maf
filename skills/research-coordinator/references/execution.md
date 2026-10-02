@@ -14,6 +14,8 @@ Cycle and concurrency limits control execution cost. They are not evidence thres
 
 ## Interrupted work
 
+An active-turn time checkpoint first requires a progress inquiry. Ask why the return is pending, the current concrete activity, the candidate already available, the remaining evidence question and the value of continuing. Request task status, not private reasoning. Elapsed time alone cannot establish a loop. Continue substantive slow work or consequential source checking; when concrete repeated polishing adds no new evidence, request the best current candidate and its limitations for another agent's review. Further revisions use that feedback. Missing or ambiguous status remains visible and requires coordinator reassessment, not silent cancellation. Explicit user cancellation and transport startup failure are different events.
+
 Do not automatically replay an in-flight assignment after interruption. Inspect execution records, external job/process identity and produced outputs. Reconcile a completed job, explicitly abandon an unusable assignment, or submit a new bounded task. Recovering a framework checkpoint does not guarantee exactly-once external execution or cancel an existing solver.
 
 Before reusing restored context, check current claims and input bindings. A stale checkpoint cannot restore a conclusion invalidated by later evidence. Preserve the current scientific state and the interruption history.

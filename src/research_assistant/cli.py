@@ -32,11 +32,13 @@ def main(argv=None):
     run.add_argument("--parallel", type=int, default=2)
     run.add_argument("--provider", choices=["codex"], default="codex")
     run.add_argument("--codex-bin")
-    run.add_argument("--timeout", type=float, default=600)
+    run.add_argument("--timeout", type=float, default=600,
+                     help="Seconds between non-cancelling active-agent progress checkpoints (not a hard turn deadline)")
     resume = sub.add_parser("resume", help="Reconcile current state; do not replay unknown calls")
     resume.add_argument("project", type=Path)
     resume.add_argument("--codex-bin")
-    resume.add_argument("--timeout", type=float, default=600)
+    resume.add_argument("--timeout", type=float, default=600,
+                        help="Seconds between non-cancelling active-agent progress checkpoints (not a hard turn deadline)")
     resume.add_argument("--additional-cycles", type=int, default=0,
                         help="Explicitly reopen a budget/needs-input return after its prerequisites are handled")
     for name in ("demo", "status"):
