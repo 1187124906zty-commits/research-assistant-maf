@@ -42,6 +42,10 @@
 
 多个角色共享同一知识来源，避免复制多份越来越长的规则。请求会给出 `SKILL.md` 的实际绝对路径；链接相对该技能目录解析。完整参考不会默认塞入所有请求，agent 应根据当前问题读取需要的原始资料。wheel 将这些 Markdown 技能及参考一起发布到包内资源，安装后无需依赖开发者机器上的原仓库路径。
 
+R5 对显式 `writing` 请求直接加载一份[科学对象与句间衔接短指南](../skills/scientific-writing/references/object-and-continuity.md)，覆盖对象来源、比较身份、主语/动作、旧新信息、唯一前件，以及相邻句衔接与整段论证的分别核验。协调者和 `full_manuscript` 请求还直接获得[章节依赖方法](../skills/scientific-writing/references/chapter-contracts.md)，包含按证据类型组织引言、Methods–Results 共同责任、全稿标题/摘要和目录反向审查。其余细节仍按需读取；无选择的非写作任务保持原来的窄上下文。载入保证方法到达提示，实际采用和内容质量仍由产物评阅判断。
+
+新增句子方法实读 [Duke Graduate School Lessons 1–2](https://sites.duke.edu/scientificwriting/) 与 Purdue 等原始指导，[精确来源与许可](../skills/scientific-writing/references/cohesion-source-ledger.md)单独保留。章节责任与比较身份核对是项目科学编辑方法，未冒称大学规定的多智能体分工。Gopen/Swan 原网页本轮未取得，未把 Duke 的教学综合写成已读该原文。
+
 ## 评阅反馈如何返回
 
 实际流程为：有选择的 worker 请求 → 对原始产物的 reviewer 请求 → coordinator 的结果处置。评阅请求继承对应章节并转为 audit 模式；协调者收到同一任务的写作范围与审阅结果，决定接收、继续、缩小范围或暂缓。

@@ -46,6 +46,24 @@ class GuidanceTests(unittest.TestCase):
         self.assertNotIn("# Discussion and Conclusions", instructions)
         self.assertNotIn("# Writing Review", instructions)
         self.assertNotIn("# Argument and intended readers", instructions)
+        self.assertIn("# Scientific objects and sentence continuity", instructions)
+        self.assertNotIn("# Chapter responsibilities and evidence-dependent writing", instructions)
+
+    def test_compact_methods_are_delivered_to_scoped_roles_only(self):
+        for role in ("writer", "reviewer", "literature", "mechanism", "simulation", "coordinator"):
+            with self.subTest(role=role):
+                scoped = guidance.load_role(role, SCOPE)
+                self.assertIn("Assigned writing method source:", scoped)
+                self.assertIn("# Scientific objects and sentence continuity", scoped)
+                self.assertNotIn("# Scientific objects and sentence continuity", guidance.load_role(role))
+        full = {"mode": "audit", "sections": ["full_manuscript"]}
+        self.assertIn("# Chapter responsibilities and evidence-dependent writing", guidance.load_role("reviewer", full))
+        self.assertIn("# Chapter responsibilities and evidence-dependent writing", guidance.load_role("coordinator", SCOPE))
+
+    def test_missing_reference_fails_instead_of_silent_skipping(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, "Missing bundled writing reference"):
+                guidance.reference_text("object-and-continuity.md", Path(directory))
 
     def test_nonwriting_roles_are_compact_and_do_not_infer_keywords(self):
         for role in ("coordinator", "simulation", "literature", "mechanism", "reviewer"):
@@ -184,6 +202,7 @@ class GuidanceWorkflowTests(unittest.IsolatedAsyncioTestCase):
             for request in (worker, review, disposition):
                 self.assertIn("# Introduction", request["instructions"])
                 self.assertNotIn("# Methods and Results", request["instructions"])
+                self.assertIn("# Scientific objects and sentence continuity", request["instructions"])
             self.assertIn("# Writing Review", review["instructions"])
             self.assertIn("# Scientific Editor", disposition["instructions"])
             self.assertNotIn("# Scientific Editor", review["instructions"])

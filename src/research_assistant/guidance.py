@@ -70,6 +70,25 @@ def skill_text(skill: str, root: Path | None = None) -> str:
             + path.read_text(encoding="utf-8"))
 
 
+def selected_references(role: str, writing: dict | None = None) -> list[str]:
+    """Deliver consequential short methods, rather than relying only on links."""
+    scope = writing_selection(writing)
+    if scope is None:
+        return []
+    names = ["object-and-continuity.md"]
+    if role == "coordinator" or scope["sections"] == ["full_manuscript"]:
+        names.append("chapter-contracts.md")
+    return names
+
+
+def reference_text(name: str, root: Path | None = None) -> str:
+    path = (root or resource_root()) / "skills" / "scientific-writing" / "references" / name
+    if not path.is_file():
+        raise ValueError(f"Missing bundled writing reference {name}")
+    return (f"\nAssigned writing method source: {path}. Resolve its links relative to "
+            f"{path.parent}.\n" + path.read_text(encoding="utf-8"))
+
+
 def load_role(role: str, writing: dict | None = None) -> str:
     if role not in {"coordinator", "literature", "simulation", "mechanism", "writer", "reviewer"}:
         raise ValueError(f"Unknown role {role}")
@@ -80,6 +99,8 @@ def load_role(role: str, writing: dict | None = None) -> str:
     content = path.read_text(encoding="utf-8")
     for skill in selected_skills(role, writing):
         content += skill_text(skill, root)
+    for name in selected_references(role, writing):
+        content += reference_text(name, root)
     if writing is not None:
         scope = writing_selection(writing)
         content += f"\nAssigned writing mode: {scope['mode']}; sections: {', '.join(scope['sections'])}. "

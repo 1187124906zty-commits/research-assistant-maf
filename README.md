@@ -36,6 +36,8 @@
 
 新增[按章节分发的科研写作技能](docs/writing-skills.zh.md)：协调者以任务元数据选择标题/摘要、引言、方法/结果或讨论/结论指南，reviewer 接收相同章节的审查方法，后续修订获得带版本与原文位置的反馈。七项写作技能共享一套有原始来源定位的知识，依据 MIT、Manchester、UNC 等机构和学者的公开指导，按需加载。方法的实际应用及中断处置见 [R4 写作案例](examples/ammt-writing-skills/README.md)。
 
+R5 为显式写作任务直接加载[科学对象与句间衔接](skills/scientific-writing/references/object-and-continuity.md)短方法，协调者与整稿任务再加载[章节依赖](skills/scientific-writing/references/chapter-contracts.md)。来源谱系、比较身份、主语/动作与唯一前件进入真实稿件接收；Methods–Results 同科学责任，标题/摘要依据整稿，reviewer 检查完整目录和段落论证。具体应用见 [R5 熔池稿与交叉评阅](examples/ammt-writing-r5/README.md)。
+
 ## 安装
 
 需要 **Python ≥3.11**。推荐使用项目虚拟环境，Windows PowerShell：
@@ -112,7 +114,7 @@ research-assistant resume ./workspaces/my-study
 
 案例将公开 AMMT 实验条件、三维传导与相变计算、工况和高温物性对照，组织成有来源与适用范围的英文研究稿。本次 ResearchFlow / MAF 协作用于稿件准备与评阅，讨论计算观察能够支持哪些结论，以及哪些模型条件需要继续说明。
 
-**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** B 工况长度参与有效热源因子标定，A/C 保留同一因子用于公开参考数据下的比较。R4 用机构来源支持的章节指南重建摘要和引言，修订方法与讨论中的叙述，再检查实际全文和页面。五幅科学图及既有六个生产解继续支撑稿件；研究稿保存在 ResearchFlow 仓库，尚未经期刊同行评审。
+**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** B 工况热成像平均长度参与有效热源功率系数标定，A/C 保留该系数用于公开实验数据下的比较。R5 从具体前驱限制重建研究动机，用实际加载的句间与章节方法修订整稿，再检查来源、论证和页面。五幅科学图及既有六个生产解继续支撑稿件；研究稿保存在 ResearchFlow 仓库，尚未经期刊同行评审。
 
 [阅读稿件 PDF →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.pdf) · [编辑 LaTeX 源文件 →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.tex) · [来源与交付范围 →](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study)
 
@@ -149,7 +151,7 @@ MAF 支持的其他提供者须在本应用中另行实现与验证。项目随�
 
 [MAF CI](https://github.com/1187124906zty-commits/research-assistant-maf/actions/runs/36816023993) 四组环境通过，执行 66 项测试、实际离线工作流、构建与源码目录外的 wheel 安装检查。[验证记录](docs/validation.md)进一步区分软件路径、有限真实模型协作与尚未开展的科研效果评价。
 
-2026-10-02 的本地 R4 验证完成 93 项测试、九项项目技能校验、安装包构建与源码目录外的实际演示。新增章节技能选择、定位反馈和进度询问均有真实调用记录；当前论文为 19 页研究初稿。历史 CI 与本地新增验证的范围分别记录。
+2026-10-02 的本地 R5 验证完成 95 项测试、九项项目技能校验、安装包构建与源码目录外的实际演示。直接指南分发、章节互查与真实修稿分别核验；当前论文为 20 页研究初稿。R5 的文本应用由同任务 Codex 专家完成，未声称新的原生 MAF 模型批次或一般写作效能提升。历史 CI 与本地验证范围分别记录。
 
 ```powershell
 python -m unittest discover -s tests -v

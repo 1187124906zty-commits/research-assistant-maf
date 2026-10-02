@@ -30,11 +30,13 @@ def main():
             "scope={'mode':'audit','sections':['full_manuscript']}; "
             "text=e.role_text('writer',scope); "
             "assert '# Introduction' in text and '# Writing Review' in text; "
+            "assert '# Scientific objects and sentence continuity' in text; "
+            "assert '# Chapter responsibilities and evidence-dependent writing' in text; "
             "assert '# Scientific Writing Core' not in e.role_text('literature'); "
             "root=g.resource_root(); "
             "paths=[root/'skills'/s/'SKILL.md' for s in g.selected_skills('writer',scope)]; "
             "assert all((p.parent/link.split('#')[0]).is_file() for p in paths for link in re.findall(r'\\]\\(([^)]+)\\)',p.read_text(encoding='utf-8'))); "
-            "assert all((root/'skills/scientific-writing/references'/name).is_file() for name in ['institution-guidance.md','source-ledger.md']); "
+            "assert all((root/'skills/scientific-writing/references'/name).is_file() for name in ['institution-guidance.md','source-ledger.md','object-and-continuity.md','chapter-contracts.md','cohesion-source-ledger.md']); "
             "raise SystemExit(main(['demo',str(Path.cwd()/'demo')]))"
         )
         subprocess.run([sys.executable, "-c", code], cwd=workspace, env=environment, check=True)

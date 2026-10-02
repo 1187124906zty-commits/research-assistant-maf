@@ -11,6 +11,8 @@ Give the intended reader enough context to understand why the question matters a
 
 Read [the detailed source-grounded introduction workflow](../scientific-writing/references/section-specific-guidance.md#introduction) for synthesis, paragraph inference and return conditions; use its examples only when their factual premises hold.
 
+Choose background by the actual evidence route using [chapter contracts](../scientific-writing/references/chapter-contracts.md): experimental manipulation/measurement, numerical assumptions/observables, theoretical assumptions/consequences, or their justified combination. Trace the closest predecessor's result and specific remaining limit to the present design. Check the last paragraph against Methods/Results and Conclusions; it states the objective and answering route, while the abstract condenses the actual answer.
+
 Compare methods, assumptions, findings and limitations rather than listing papers in sequence. A gap can be an unresolved mechanism, uncertain applicability, incomplete comparison or a useful untested condition; do not manufacture a lack of algorithm novelty. Distinguish what literature actually shows from your proposed explanation.
 
 Keep the scope precise enough that the approach can answer the stated question. Describe the contribution without anticipating unsupported outcomes. A short roadmap may help a complex paper, but should not repeat the abstract or become a formulaic closing paragraph. Introduce necessary terms before relying on them and avoid broad significance claims detached from the study.

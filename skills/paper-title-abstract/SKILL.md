@@ -9,6 +9,8 @@ Preserving facts means that quantities, citations and conditions remain accurate
 
 Confirm the paper type, readers, contribution and available evidence. Choose a title that identifies the subject and useful distinction without overstating novelty, causality or generalization. Avoid an overloaded list of methods and an uninformative claim of excellence.
 
+Derive final wording from the whole paper's contribution and scope, checking Introduction and Conclusions as well as the abstract. An optional memorable name/acronym needs a distinct defined entity, useful reuse and a literature collision check; it cannot turn a sensitivity comparison into a new algorithm. See [object diagnosis](../scientific-writing/references/object-and-continuity.md).
+
 Read the source-grounded [title diagnosis](../scientific-writing/references/section-specific-guidance.md#title) and [abstract evidence selection](../scientific-writing/references/section-specific-guidance.md#abstract) for the assigned part. These are adaptable teaching methods, with original hypothetical examples, not universal journal formulas.
 
 Make the abstract self-contained: the relevant problem and unresolved issue, the approach, principal finding or design contribution, and bounded implication. Adapt order and length to the journal's structured/unstructured requirements. Quantitative findings belong here only when present and supported. For an unevaluated method or system, describe what is specified and why it may help, with the evaluation boundary visible; do not write anticipated gains as results.

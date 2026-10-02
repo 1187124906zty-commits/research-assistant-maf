@@ -23,3 +23,14 @@ are recorded in `skills/scientific-writing/references/source-ledger.md`.
 MIT CommKit pages state CC BY-NC 4.0; this project's MIT license does not
 relicense third-party quotations or grant rights to republish those guides.
 Full university-page extracts and publisher/author PDFs are not distributed.
+
+R5 sentence/cohesion guidance also cites the Duke University Graduate School
+Scientific Writing Resource, created by Nathan Sheffield, and Purdue OWL.
+Located original scopes and minimal quotations are recorded in
+`skills/scientific-writing/references/cohesion-source-ledger.md`.
+Duke's observed license is CC BY-NC-SA 4.0:
+https://sites.duke.edu/scientificwriting/ and
+https://creativecommons.org/licenses/by-nc-sa/4.0/.
+The project license does not relicense quoted or adapted third-party content;
+source-specific attribution, noncommercial and share-alike terms remain
+applicable where required. The project does not redistribute those lessons.
