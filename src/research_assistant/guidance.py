@@ -19,6 +19,16 @@ SECTION_ANCHORS = {
     "discussion_conclusions": ("results-discussion-conclusions",),
 }
 SECTION_REFERENCE = "section-specific-guidance.md"
+DISTILLATION_REFERENCE = "argument-distillation.md"
+LIBRARY_REFERENCE = "library-use.md"
+EXAMPLE_REFERENCE = "paragraph-examples.md"
+SOURCE_EXAMPLE_REFERENCE = "source-backed-exemplars.md"
+EXAMPLE_ANCHORS = {
+    "title_abstract": ("abstract-example",),
+    "introduction": ("introduction-example",),
+    "methods_results": ("methods-example", "results-example"),
+    "discussion_conclusions": ("results-example",),
+}
 
 
 def resource_root() -> Path:
@@ -68,13 +78,25 @@ def selected_skills(role: str, writing: dict | None = None) -> list[str]:
     return list(dict.fromkeys(selected))
 
 
-def skill_text(skill: str, root: Path | None = None) -> str:
+def skill_text(skill: str, root: Path | None = None, *, compact_section: bool = False) -> str:
+    """Read a standalone skill, or its named route to canonical section criteria.
+
+    Default behavior remains full text for existing callers. Role loading uses
+    compact section envelopes because its selected criteria already teach the
+    chapter job; standalone section skills remain available for other hosts.
+    """
     path = (root or resource_root()) / "skills" / skill / "SKILL.md"
     if not path.is_file():
         raise ValueError(f"Missing bundled skill {skill}")
+    body = path.read_text(encoding="utf-8")
+    if compact_section and skill in SECTIONS.values():
+        heading = next(line for line in body.splitlines() if line.startswith("# "))
+        body = (heading + "\n\nThis section skill is selected. Its compact, canonical "
+                "reader criteria and connected examples are supplied below for the assigned "
+                "scope. Read the standalone source only when additional detail is needed.\n")
     return (f"\nApplicable skill source: {path}. Resolve linked references relative to "
             f"{path.parent}; read originals and needed references, not every linked guide.\n"
-            + path.read_text(encoding="utf-8"))
+            + body)
 
 
 def selected_references(role: str, writing: dict | None = None) -> list[str]:
@@ -82,12 +104,48 @@ def selected_references(role: str, writing: dict | None = None) -> list[str]:
     scope = writing_selection(writing)
     if scope is None:
         return ["evidence-supplement.md"] if role == "writer" else []
-    names = ["object-and-continuity.md", SECTION_REFERENCE]
+    names = ["object-and-continuity.md", SECTION_REFERENCE, DISTILLATION_REFERENCE,
+             LIBRARY_REFERENCE, EXAMPLE_REFERENCE]
+    if source_example_reference_anchors(scope):
+        names.append(SOURCE_EXAMPLE_REFERENCE)
     if role in {"writer", "coordinator", "reviewer"}:
         names.append("evidence-supplement.md")
     if role == "coordinator" or scope["sections"] == ["full_manuscript"]:
         names.append("chapter-contracts.md")
     return names
+
+
+def distillation_reference_anchors(writing: dict) -> list[str]:
+    """Route reader decisions, not the source library's hundreds of entries."""
+    scope = writing_selection(writing)
+    if scope is None:
+        raise ValueError("Argument distillation needs an explicit writing selection")
+    sections = list(SECTIONS) if scope["sections"] == ["full_manuscript"] else scope["sections"]
+    anchors = ["reader-task", "language-and-trimming"]
+    if "introduction" in sections:
+        anchors.append("source-synthesis")
+    if any(section in sections for section in
+           ("title_abstract", "methods_results", "discussion_conclusions")):
+        anchors.append("comparison-and-inference")
+    if any(section in sections for section in ("methods_results", "discussion_conclusions")):
+        anchors.append("evidence-medium")
+    return anchors
+
+
+def library_reference_anchors(writing: dict) -> list[str]:
+    """Scope reader-position contracts without loading a phrase library."""
+    scope = writing_selection(writing)
+    if scope is None:
+        raise ValueError("Library decisions need an explicit writing selection")
+    sections = list(SECTIONS) if scope["sections"] == ["full_manuscript"] else scope["sections"]
+    anchors = ["selection-contract"]
+    if "title_abstract" in sections:
+        anchors.append("abstract-opening")
+    if "introduction" in sections:
+        anchors.append("introduction-bridge")
+    if any(section in sections for section in ("title_abstract", "introduction", "methods_results")):
+        anchors.append("model-introduction")
+    return anchors
 
 
 def section_reference_anchors(writing: dict) -> list[str]:
@@ -99,6 +157,31 @@ def section_reference_anchors(writing: dict) -> list[str]:
     anchors = ["continuity"]
     anchors.extend(anchor for section in sections for anchor in SECTION_ANCHORS[section])
     return list(dict.fromkeys(anchors))
+
+
+def example_reference_anchors(writing: dict) -> list[str]:
+    """Deliver connected illustrative prose for the explicit reading task.
+
+    Examples teach information order; their invented scientific content is not
+    evidence. Source-backed passages, when supplied, still require original
+    context and provenance checks through the optional library route.
+    """
+    scope = writing_selection(writing)
+    if scope is None:
+        raise ValueError("Paragraph examples need an explicit writing selection")
+    sections = list(SECTIONS) if scope["sections"] == ["full_manuscript"] else scope["sections"]
+    return list(dict.fromkeys(anchor for section in sections for anchor in EXAMPLE_ANCHORS[section]))
+
+
+def source_example_reference_anchors(writing: dict) -> list[str]:
+    """One source-backed move per supported section; remaining cards are optional."""
+    scope = writing_selection(writing)
+    if scope is None:
+        raise ValueError("Source examples need an explicit writing selection")
+    sections = list(SECTIONS) if scope["sections"] == ["full_manuscript"] else scope["sections"]
+    selected = {"introduction": "ctx-001", "methods_results": "ctx-003",
+                "discussion_conclusions": "ctx-004"}
+    return [selected[section] for section in sections if section in selected]
 
 
 def reference_text(name: str, root: Path | None = None, *, anchors: list[str] | None = None) -> str:
@@ -135,9 +218,13 @@ def load_role(role: str, writing: dict | None = None) -> str:
         raise ValueError(f"Missing role charter {role}")
     content = path.read_text(encoding="utf-8")
     for skill in selected_skills(role, writing):
-        content += skill_text(skill, root)
+        content += skill_text(skill, root, compact_section=True)
     for name in selected_references(role, writing):
-        anchors = section_reference_anchors(writing) if name == SECTION_REFERENCE else None
+        anchors = (section_reference_anchors(writing) if name == SECTION_REFERENCE else
+                   distillation_reference_anchors(writing) if name == DISTILLATION_REFERENCE else
+                   library_reference_anchors(writing) if name == LIBRARY_REFERENCE else
+                   example_reference_anchors(writing) if name == EXAMPLE_REFERENCE else
+                   source_example_reference_anchors(writing) if name == SOURCE_EXAMPLE_REFERENCE else None)
         content += reference_text(name, root, anchors=anchors)
     if writing is not None:
         scope = writing_selection(writing)

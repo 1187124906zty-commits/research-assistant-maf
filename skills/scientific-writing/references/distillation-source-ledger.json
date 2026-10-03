@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "method_status": "Independently authored editorial distillation from locally audited library records; no new full-text rereading claimed",
+  "library_snapshot": "Base provenance/validation.json plus expansion provenance/expansion/validation.json, 2026-10-03",
+  "runtime_dependency": "None; source library and full texts are not bundled",
+  "records": [
+    {
+      "id": "EXP-NPCMOA-P012",
+      "intended_section": "Methods",
+      "actual_source_section": "Results / Training and evaluating the model",
+      "function": "在解码输出上明确守恒对象",
+      "source_id": "NPCM-010",
+      "doi": "10.1038/s41524-026-01999-x",
+      "url": "https://www.nature.com/articles/s41524-026-01999-x",
+      "pdf_page": 2,
+      "block_id": 2,
+      "version": "Publisher version of record; actual PDF Article/ARTICLE, title, author line, journal citation, DOI and author-body sections inspected",
+      "transfer_boundary": "平均组成守恒不等于局部CH动力学/能量耗散完全正确；正文2D九与3D两组分，不依摘要增强。 周期性在FFT数据和训练标签隐含，图邻居学习周期行为，不是图结构硬强制周期边界。"
+    },
+    {
+      "id": "EXP-NATURECORE-P001",
+      "intended_section": "Abstract",
+      "actual_source_section": "Unheaded bold opening paragraph",
+      "function": "限定尚未解决的研究问题",
+      "source_id": "NC-NATUREPHYSICS-001",
+      "doi": "10.1038/nphys3424",
+      "url": "https://www.nature.com/articles/nphys3424",
+      "pdf_page": 1,
+      "block_id": 22,
+      "version": "Published advance-online research Letter; PDF header LETTERS, published online 10 August 2015; Methods included on PDF page 5",
+      "transfer_boundary": "此处是问题陈述，不是未研究过所有多孔材料的证据；原文随后采用启发式模型和谷物压缩试验。"
+    },
+    {
+      "id": "EXP-NATURECORE-P002",
+      "intended_section": "Introduction",
+      "actual_source_section": "Unheaded introduction",
+      "function": "指出尚未清楚的控制机制",
+      "source_id": "NC-NATUREPHYSICS-001",
+      "doi": "10.1038/nphys3424",
+      "url": "https://www.nature.com/articles/nphys3424",
+      "pdf_page": 1,
+      "block_id": 21,
+      "version": "Published advance-online research Letter; PDF header LETTERS, published online 10 August 2015; Methods included on PDF page 5",
+      "transfer_boundary": "作者对前人模型的解释性评价；不等于这些假设已被反证。"
+    },
+    {
+      "id": "EXP-NMI-P006",
+      "intended_section": "Results",
+      "actual_source_section": "Results / Inverse design of unseen stress–strain responses",
+      "function": "区分未见几何和未见响应的泛化测试",
+      "source_id": "exp-nc-nature-machine-intelligence-03",
+      "doi": "10.1038/s42256-023-00762-x",
+      "url": "https://www.nature.com/articles/s42256-023-00762-x",
+      "pdf_page": 4,
+      "block_id": 7,
+      "version": "Publisher version of record; actual PDF identity and Article type visually verified; author-body sections and Methods reviewed",
+      "transfer_boundary": "正文明确未见design的响应仍可与training分布相近；四个未近似覆盖的target例子展示best-of-10而非全部采样成功率。生成几何需重新FE验算，不把网络预测曲线当最终结构真值。"
+    },
+    {
+      "id": "EXP-NMI-P007",
+      "intended_section": "Methods",
+      "actual_source_section": "Discussion",
+      "function": "以重复采样处理逆映射非唯一性",
+      "source_id": "exp-nc-nature-machine-intelligence-03",
+      "doi": "10.1038/s42256-023-00762-x",
+      "url": "https://www.nature.com/articles/s42256-023-00762-x",
+      "pdf_page": 6,
+      "block_id": 9,
+      "version": "Publisher version of record; actual PDF identity and Article type visually verified; author-body sections and Methods reviewed",
+      "transfer_boundary": "来源2D机械UC的one-to-many逆映射；制造性是可追加检查，非已自动满足。作者建议候选可作经典优化初值，不证明全球最优、完整覆盖全部解或采样均满足PDE平衡。"
+    },
+    {
+      "id": "EXP-NMETHOD-P016",
+      "intended_section": "Discussion",
+      "actual_source_section": "Results / Synthetically produced liposomes",
+      "function": "显示部分可识别与参数互补性",
+      "source_id": "NMETHOD-021",
+      "doi": "10.1038/s41592-022-01460-z",
+      "url": "https://www.nature.com/articles/s41592-022-01460-z",
+      "pdf_page": 4,
+      "block_id": 7,
+      "version": "Publisher version of record; actual PDF title, DOI, journal citation, author-body sections and appended material visually/textually inspected",
+      "transfer_boundary": "来源脂质体shell RI与厚度互补，内液RI较稳健；给shell RI先验后才可报特定厚度。不能从三条等值面交会宣称所有参数同时唯一辨识，或把内液结果推广所有混合物。"
+    }
+  ],
+  "language_records": [
+    {
+      "id": "L002",
+      "expression": "although",
+      "source_id": "cross61",
+      "doi": "10.1038/s41524-026-02054-5",
+      "pdf_page": 4,
+      "block_id": 2,
+      "actual_source_section": "Author body; finer chapter not recorded in base library; not inferred here"
+    },
+    {
+      "id": "L004",
+      "expression": "whereas",
+      "source_id": "cross7",
+      "doi": "10.1038/nphys3424",
+      "pdf_page": 2,
+      "block_id": 52,
+      "actual_source_section": "Author body; finer chapter not recorded in base library; not inferred here"
+    },
+    {
+      "id": "L018",
+      "expression": "since",
+      "source_id": "lane2020-absorption",
+      "doi": "10.1016/j.addma.2020.101504",
+      "pdf_page": 4,
+      "block_id": 9,
+      "actual_source_section": "Author body; finer chapter not recorded in base library; not inferred here"
+    }
+  ],
+  "authored_teaching_material": {
+    "paragraph_chains": [
+      "PC01",
+      "PC02",
+      "PC04",
+      "PC06",
+      "PC07"
+    ],
+    "concise_rewrites": [
+      "CR01",
+      "CR03",
+      "CR06",
+      "CR10",
+      "CR12",
+      "CR14"
+    ],
+    "status": "Library-authored examples/navigation, not source-paper observations or quotations",
+    "section_navigation": [
+      "SEC-ABSTRACT",
+      "SEC-INTRODUCTION",
+      "SEC-METHODS",
+      "SEC-RESULTS"
+    ]
+  },
+  "limits": [
+    "Evidence locators refer to their named source extraction; block numbers are not interchangeable",
+    "Source findings do not become evidence for a downstream manuscript",
+    "Publication venue and corpus counts do not establish universal requirements"
+  ]
+}

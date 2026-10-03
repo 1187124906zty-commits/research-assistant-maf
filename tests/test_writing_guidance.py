@@ -73,8 +73,11 @@ class GuidanceTests(unittest.TestCase):
             session = Session(directory, None, brief="Authorized research-to-paper task")
             request = session.request("writer", {"question": "Draft the supplied analysis"}, schemas.REVIEW, "supplement-method")
             self.assertIn(marker, request["instructions"])
-            self.assertIn("create_thread", request["instructions"])
-            self.assertIn("human authorization", request["instructions"])
+            self.assertNotIn("create_thread", request["instructions"])
+            self.assertIn("host-scheduling.md", request["instructions"])
+            adapter = guidance.reference_text("host-scheduling.md")
+            self.assertIn("create_thread", adapter)
+            self.assertIn("human authorization", adapter)
 
     def test_transport_schema_strictifies_nested_optional_selection_without_public_changes(self):
         original = copy.deepcopy(schemas.PLAN)

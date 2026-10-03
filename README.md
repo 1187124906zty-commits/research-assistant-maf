@@ -40,6 +40,8 @@ R5 为显式写作任务直接加载[科学对象与句间衔接](skills/scienti
 
 ## 安装
 
+第二轮通用重构见[写作指导与上下文范例](docs/writing-craft-v2.zh.md)：默认 writer 指导按实际章节精简，完整教学段落与六篇来源范例用于学习论证和图表对照。案例物理条件保留在任务输入，特殊研究检查与工具接口按需读取。当前 111 项测试、demo 和安装包检查验证执行与资源交付；文稿阅读效果与科学贡献另由实际稿件和证据审查判断。
+
 需要 **Python ≥3.11**。推荐使用项目虚拟环境，Windows PowerShell：
 
 ```powershell
@@ -150,6 +152,8 @@ MAF 支持的其他提供者须在本应用中另行实现与验证。项目随�
 任务契约、输出范围和角色身份是协议约束，宿主权限与工具适配器决定实际执行边界。默认上下文包上限为 60,000 字符，超限请求会拒绝；论文和科学解释仍需依据实际证据。
 
 ## 验证与贡献
+
+新增[审核库论证蒸馏方法](docs/argument-distillation.zh.md)按读者任务分发实际对象、比较、语言选择与精简检查，[新AMMT案例](examples/argument-distillation/README.md)保留历史输出，提供段落候选、语义反例和可运行的Methods/Results/Discussion前向入口。软件验证与实际文稿评阅分别说明，句型数量或关键词不作为质量验收。
 
 [MAF CI](https://github.com/1187124906zty-commits/research-assistant-maf/actions/runs/36816023993) 四组环境通过，执行 66 项测试、实际离线工作流、构建与源码目录外的 wheel 安装检查。[验证记录](docs/validation.md)进一步区分软件路径、有限真实模型协作与尚未开展的科研效果评价。
 
