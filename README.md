@@ -116,7 +116,7 @@ research-assistant resume ./workspaces/my-study
 
 案例将公开 AMMT 实验条件、三维传导与相变计算、工况和高温物性对照，组织成有来源与适用范围的英文研究稿。本次 ResearchFlow / MAF 协作用于稿件准备与评阅，讨论计算观察能够支持哪些结论，以及哪些模型条件需要继续说明。
 
-**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** B 工况热成像平均长度参与有效热源功率系数标定，A/C 保留该系数用于公开实验数据下的比较。R5 从具体前驱限制重建研究动机，用实际加载的句间与章节方法修订整稿，再检查来源、论证和页面。五幅科学图及既有六个生产解继续支撑稿件；研究稿保存在 ResearchFlow 仓库，尚未经期刊同行评审。
+**数值计算原由 [SimAgent](https://github.com/1187124906zty-commits/simulation-agent-research) 执行。** 该仓库入口可能需要访问权限；完整原始求解环境不随本MAF安装包分发。B 工况热成像平均长度参与有效热源功率系数标定，A/C 保留该系数用于公开实验数据下的比较。ResearchFlow 当前公开 R11 稿为20页、4幅科学图、9张表和38个引用身份，另提供21页的[可编辑Word](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.docx)。R6补证增加三个匹配轴向精化解，后续写作由桌面多agent加载本仓库的通用指南完成，执行与科学验收范围分别记录。详细范围见[R11交付说明](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/revision-r11/README.md)；稿件尚未经期刊同行评审。
 
 [阅读稿件 PDF →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.pdf) · [编辑 LaTeX 源文件 →](https://github.com/1187124906zty-commits/research-workflow/blob/codex/researchflow-release/paper/ammt-study/manuscript.tex) · [来源与交付范围 →](https://github.com/1187124906zty-commits/research-workflow/tree/codex/researchflow-release/paper/ammt-study)
 
@@ -153,7 +153,7 @@ MAF 支持的其他提供者须在本应用中另行实现与验证。项目随�
 
 [MAF CI](https://github.com/1187124906zty-commits/research-assistant-maf/actions/runs/36816023993) 四组环境通过，执行 66 项测试、实际离线工作流、构建与源码目录外的 wheel 安装检查。[验证记录](docs/validation.md)进一步区分软件路径、有限真实模型协作与尚未开展的科研效果评价。
 
-2026-10-02 的本地 R5 验证完成 95 项测试、九项项目技能校验、安装包构建与源码目录外的实际演示。直接指南分发、章节互查与真实修稿分别核验；当前论文为 20 页研究初稿。R5 的文本应用由同任务 Codex 专家完成，未声称新的原生 MAF 模型批次或一般写作效能提升。历史 CI 与本地验证范围分别记录。
+2026-10-03 当前版本完成98项标准测试、安装包构建与源码目录外的安装/两轮离线演示，补证与文档交付指南的实际加载纳入检查。历史R5验证为95项测试与九项项目技能校验。指南分发、章节互查、真实修稿及Word转换的桌面执行另行核验；软件测试与确定性演示不等同于原生远程MAF自主完成整篇论文，也不代表一般科研效能已得到实证。
 
 ```powershell
 python -m unittest discover -s tests -v
