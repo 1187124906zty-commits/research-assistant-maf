@@ -1,111 +1,113 @@
-# 科研智能体的分节写作方法
+# Section decisions for scientific writing
 
-本文件把原始指南的思想变成诊断与修复步骤；是项目自行撰写的操作方法，不是任何大学或期刊的统一规范。来源ID对应[source-ledger.md](source-ledger.md)。下面英文小例子均为**原创、假定条件下的语言示例**，不报告新的实验或计算结果；只有当真实证据满足例子写明的前提时才能采用其句式。不得把占位变量、假设效果或未执行流程写入论文。
-
-<a id="title"></a>
-
-## 标题：主题、关系、范围与自然搭配
-
-**依据：MIT_CEE_TITLE、USC_TITLE、PLOS_STRUCTURE；精确语言依据UNC_SCIENTIFIC_STYLE。**
-
-先从证据写一句普通话：研究对象是什么，改变/比较/解释什么，在哪些条件下。然后选择标题形态：主题式用于描述明确问题/适用性，关系式用于表达受控比较，结论式用于一个可支持的发现。三种都可用，结果为负时不必伪装成问句或正向改善。
-
-检查时先读语法主干，再检查科学关系：
-
-1. 主名词或主语是什么？修饰语分别修饰哪个名词？堆叠多个名词后，能否有两种理解？
-2. 关系词是否准确？`effect of X on Y`需要说明X怎样被改变与控制；`association between X and Y`适用于关系分析；`prediction of Y`不自动意味验证；`validation of model`要有对应独立参照。`and`只说并列，不能代替真正研究的关系。
-3. 范围是否诚实且有必要？材料、模型、工况、数据设计等保留能防止关键误读的部分；不用把所有假设、软件和结论塞入标题。
-4. 术语是领域现有名称还是临时拼出来的抽象短语？检查最接近的原始论文正文和标题中该词的对象/搭配；拼写检查器只能判断形式，不能判断物理含义。新概念若确有必要，要定义并给依据。
-5. 删掉修饰语后，会失去什么事实？没有事实损失的`novel/advanced/comprehensive`或`A study of`通常可以删除。删到无法识别范围时停止。
-
-**关系选择。** 标题应让读者识别被研究的对象、对象间的关系和必要范围。若证据只建立相关性，采用相关关系表述；若设计支持干预效应，才采用相应效应表述。删去抽象修饰后检查名词之间是否仍有清楚关系。这里的变量句型用于诊断，最终标题须填入原件核对过的领域对象。
-
-**路由与返回。** 写作智能体给少量有不同科学含义的完整候选并说明含义差异；文献智能体核对陌生搭配和已有同方向工作；机制智能体检查关系词是否越过因果证据。候选一旦主干清楚、术语自然、范围匹配且所有关系可追证据就返回，不以词数或“听起来高级”评分。
-
-<a id="abstract"></a>
-
-## 摘要：问题—证据—回答—意义
-
-**依据：MIT_ABSTRACT、MIT_CEE_TITLE、PLOS_STRUCTURE。**
-
-从当前结果和讨论生成摘要，不从旧宣传性目标生成。先列每项可能结果及其作用：回答主要问题、区分解释、给出量级、展示反例、限定适用性。按作用合并，保留完成故事所需的内容。
-
-摘要的读者应能回答：这个具体问题为什么值得问，研究如何问它，得到什么答案，答案改变了什么认识或使用方式。背景应为问题作铺垫；方法只写理解比较所需的设计；结果与回答连接；结尾的意义应由答案导出。结构顺序可按期刊和研究类型调整。前后不必每次都“广—窄—广”，也不必出现固定Here we show。
-
-**数字选择。** 对每个数字问“没有它，读者会误判方向、量级、可信度还是适用范围吗？”选择能锚定核心回答的数值，同时保留该比较必要的基准、单位与条件。多个数值只有承担不同论证作用时才保留；不能规定两个数，也不能为了简洁移除决定性反证/不确定性。无统计检验时避免`significantly`；物理量和百分比混用时要说明各自对象。
-
-**正结果表达。** 用具名比较、评价量、方向和范围说明改进，意义由实际改善的能力推导。多个评价量可能给出不同结论，需保留这种差异。若只有部分条件成立，明确这些条件，不扩大为全部条件下的效果。
-
-**负结果表达。** 分别说明设计改变了什么响应，以及哪个待解决问题仍然存在。若二者不同，解释这种区分带来的认识；不要把响应变化自动写成准确性改善，也不要由一个方案的局限推出所有方案均无效。
-
-**非结论示例。** 若置信/误差范围仍含有无变化，写`The comparison did not resolve an improvement in X`并交代何种精度/样本限制；不能改成`X has no effect`。反方向结果应报告方向和条件，不把失败改成“robustness”。
-
-**返回条件。** 每句可标明问题、设计、发现、解释或意义；标题和摘要回答同一个问题；数值与正文一致；没有由助手工作流生成的“验证”。如果意义需要新实验才能成立，先收窄意义，返回那个实验问题，不用形容词填补。
-
-<a id="introduction"></a>
-
-## 引言：综合已有认识并推导研究问题
-
-**依据：MIT_INTRODUCTION、MANCHESTER_INTRODUCTION、PLOS_STRUCTURE、UNC_PARAGRAPHS。**
-
-先定义目前读者应接受的认识，再说明哪些证据建立了它、什么条件限制了它、这些条件为什么使本研究问题值得检验。按问题/机制/观察对象综合来源，不按作者年份轮流介绍。每个文献组应有共同作用：确立可行性、给出成功条件、揭示歧义、提出另一解释或说明测量范围。
-
-段内推理需要闭合：读者理解此段谈什么；看到与它直接相关的证据；理解证据怎样支持判断；看到判断和论文问题的关系。闭合可以是一个综合认识、条件界定、反例、尚未解决的问题或下一步定义，不要求每段都“仍然缺乏研究”。原文资料如果已经解释了该现象，新的引言必须承认并收窄问题。
-
-**文献综合诊断。** 对一组来源先写共同研究对象、各自已经建立的认识及可比条件，再解释它们共同支持什么判断、还留下什么具体问题。原件未建立的推论应标明其推断身份和依据；仅并列作者与方法名称不足以支持一个研究缺口。
-
-引言最终研究目的应匹配这条推理。承认前驱已解决的对象和条件，再限定本研究要判断的具体方面。可从适用范围、未判别解释、观察定义或尚待检验的假设推导问题，不能把已有成功改写成普遍失败。贡献要体现改变了哪个认识或比较，不自动称为新算法。
-
-**段间诊断。** 摘出各段关键判断，连读判断链。后一段是否使用了前段已经建立的词、条件或问题？如果新对象突然出现，补必要定义或调整顺序。引言首段可以直接从具体可理解问题开始；“应用很重要—研究很多—有挑战”不能代替动机。
-
-**路由与返回。** 文献智能体负责已有认识、可比条件和缺口；写作智能体负责把核对过的认识变成完整段落；协调者判断是否改变研究贡献。引言满足问题的合理来由与末段可兑现的目标就返回。若搜索没覆盖足够范围，写明实际未解决的问题，不使用first/no previous study。
+Use these compact criteria to diagnose and revise the assigned text. They are independently written project methods grounded in institutional teaching sources and transferable editorial principles learned from a real research exemplar; they are not journal requirements or the exemplar's scientific claims. Institutional teaching source IDs, original passages, reading scope and reuse limits remain in [source-ledger.md](source-ledger.md) and [cohesion-source-ledger.md](cohesion-source-ledger.md). Specific exemplar locations and decisions about transferring its editorial moves remain in the relevant task's existing reading and revision notes. Read the relevant original when a consequential interpretation is disputed. MAF delivers only the selected section criteria and the shared position criteria; other hosts should read the relevant anchors. Distinguish an official requirement, an observed practice and the editorial reason for adapting that practice.
 
 <a id="continuity"></a>
 
-## 段落与章节衔接：先有关系，再有语言
+## Position, scientific objects and retained evidence
 
-**依据：UNC_TRANSITIONS、UNC_PARAGRAPHS、MANCHESTER_TRANSITIONS、PLOS_STRUCTURE。**
+**Basis:** UNC_PARAGRAPHS, UNC_TRANSITIONS, PLOS_STRUCTURE and DUKE_COHESION_COHERENCE. The position distinctions and relation checks below are this project's editorial adaptations.
 
-反向提纲每段只写两项：此段的控制思想；它从前段接到什么、交给下段什么。这是临时诊断，不必把表格写进论文。相邻关系可以是范围收窄、补充证据、比较条件、反例、解释、假说判别或从空间量转向时间量。先让科学名词/指代稳定，再选择自然的连接语。
+Before polishing, identify the research question, evidence route and the job of this passage. Read a reverse outline containing the section/subsection headings and each paragraph's controlling point. A connected sequence of nouns can still wander away from the question. A new object earns its place through its role in the existing problem, design or inference; explain that relation before relying on its name or symbol.
 
-**桥接诊断。** 写出前段已经建立的判断，以及后段为何需要在它的基础上引入另一个量、条件或解释。若转换了观察尺度、分析对象或证据类型，先交代转换依据和所需条件，再引入新对象。仅宣布另一个主题重要，无法建立这层关系。
+| Position | Reader responsibility when needed | A closure can establish |
+| --- | --- | --- |
+| Section/chapter opening | Establish the capability, question or synthesis this section supplies to the whole argument; connect it to what the reader already knows | The section's bounded answer or the premise that the next section needs |
+| Subsection opening | Explain why this quantity, procedure, comparison or argument is needed and what it depends on | What this unit establishes, how its condition limits the answer, or why the next unit follows |
+| Paragraph opening/topic sentence | Make its controlling point and relation to adjacent reasoning recoverable | The recognition earned by its support: a definition, inference, qualification, unresolved issue or useful transition |
 
-使用`therefore`前，写出前提怎样推出结论；使用`however`前，确认两句存在真实对立。没有关系时移段/补证，而不添加更多副词。保留必要的显式路线，例如跨领域或长节切换，但上下文已经顺畅时无需每节重复总结。
+These are responsibilities, not required first/last sentences. The first substantive paragraph may already do the section or subsection work; do not add an empty roadmap. A topic sentence can follow a necessary link, and a closure can be implicit when the relation is clear. Supply an explicit premise or connection wherever the reader otherwise has to guess. Do not make every paragraph end in a gap or require identical opening and closing nouns.
 
-**返回条件。** 邻近读者能够准确复述前后两段的关系；指代不歧义；移除装饰连接词后逻辑仍然成立。若无法复述，应返回结构缺口而非继续同义词修饰。
+At a section boundary, use the preceding section's established premise and add the information assigned here. Where writers share a concept, agree on its main explanation location and what its next appearance adds: a design definition, evidence, qualification or synthesis. Brief recall and locally necessary conditions can remain; repeating the same route at the same level needs repair. Read the actual adjoining passages together, following the [chapter handoff method](chapter-contracts.md), rather than judging each section in isolation.
+
+Within a sentence group, normally place a familiar scientific object or established premise near the opening, then attach the new distinction or consequence where it receives emphasis. The inherited element may be a question, condition or result rather than the same grammatical subject. Make the relation recoverable: a cause, a retained condition, a concession, a contrast on a common quantity, or a reason the next comparison is needed. Choose a connector only after that relation is established. Repeated nouns and added transition words cannot repair a missing premise; active or passive voice is useful insofar as it makes this information order clear.
+
+Name scientific entities by their actual identity and design role. Establish what is measured, calculated, assumed, derived or interpreted; distinguish a source's definition from a local one. A comparator's name identifies its scientific object or scheme; its definition supplies the changed/retained factors and assessed response. Define scientific schemes before attaching inherited case codes; a code can maintain data/figure correspondence but cannot explain a comparison. Use established nomenclature where available. A new acronym needs a distinct reusable entity and a meaning/collision check. Apply [object diagnosis](object-and-continuity.md) when identity or continuity is unclear.
+
+Once defined, reuse a stable short scientific name or symbol when its referent is clear. Restore a qualifier when a changed comparison or condition needs it, rather than repeatedly packing the full identity into the subject. Keep distinct kinds of entity separately named. A familiar object or figure can supply a simple paragraph entry; the following predicate must still state a useful scientific relation.
+
+Preserve source-supported facts, contrary evidence and scope-changing qualifications. Preservation concerns their accurate, accessible role in the whole paper; it does not require every old number or citation in every section. Move a source to the equation, design decision or interpretation it supports, with retrievable provenance; do not discard it merely to simplify prose or pad the Introduction to reach a count. Distinguish manuscript evidence from editorial checks and archive status.
+
+<a id="title"></a>
+
+## Title: subject, relationship and necessary scope
+
+**Basis:** MIT_CEE_TITLE, USC_TITLE, PLOS_STRUCTURE and UNC_SCIENTIFIC_STYLE.
+
+State in plain language what is studied, what relation is investigated and under which consequential conditions. Choose a topical, relational or conclusion title to match that meaning and the evidence. Check the grammatical core and each modifier: can the relation be read in two ways? Check unusual technical combinations in closest original papers, rather than relying on grammatical plausibility.
+
+Effect, association, prediction and validation make different scientific commitments. Use the relationship actually established by the design; keep the scope that prevents an important misreading. A useful negative answer or applicability assessment does not need to masquerade as a new algorithm or improved performance. The title names the investigation or established relationship; the abstract develops its route and answer, and the conclusion explains the understanding earned. Do not make the title carry an execution history or an assessment claim justified only by one fitted endpoint. Remove words that add no scientific meaning, stopping before subject or scope becomes ambiguous. Return substantively different candidates only when a choice is needed; word counts and adjectives are not acceptance criteria.
+
+<a id="abstract"></a>
+
+## Abstract: required capability, method actions and classified findings
+
+**Basis:** MIT_ABSTRACT, MIT_CEE_TITLE and PLOS_STRUCTURE. Capability-to-action diagnosis and result grouping are project adaptations.
+
+Derive the final abstract from the current complete argument. State the concrete scientific difficulty and the capability or understanding needed to address it. Let the objective inherit that difficulty rather than introduce another general ambition. Then identify the actual research route and consequential method actions: what was adopted, constructed, derived, compared or evaluated, and why those actions can answer the question. Use verbs that match the work performed. Applying an existing formulation is not developing a new model; an unevaluated design is not an observed improvement.
+
+Organize the route by its answering work: which comparison distinguishes the unresolved alternatives, which observation carries that distinction, and which assessment changes confidence in the answer. This is more informative than listing operations in their execution order. Give a detail when it distinguishes the approach or changes interpretation; retain another necessary definition at its usable location in the body. The reader should recover the approach and main comparison without decoding settings, symbols or case codes.
+
+Group findings by what they establish: the main answer, a distinct response or competing explanation, magnitude, contrary evidence, and a consequential boundary. Select numerical anchors by the understanding their complete set adds; retain comparators, units and conditions needed for meaning. Several metrics can disagree and must not be collapsed into generic improvement. Unresolved effects within the available precision do not establish zero effect. Do not give each extracted quantity an equal sentence merely because it was computed.
+
+Close with the supported contribution or conditional use that follows from these findings. A prospective use remains prospective until evaluated. Check that a reader can state the problem, route, grouped answer and implication, and that these match the body. Adapt their order to the article type and actual journal format; no fixed sentence count, number quota or mandatory phrase follows.
+
+<a id="introduction"></a>
+
+## Introduction: narrow through the actual research paradigm
+
+**Basis:** MIT_INTRODUCTION, MANCHESTER_INTRODUCTION, PLOS_STRUCTURE and UNC_PARAGRAPHS. Evidence-route prioritization is this project's adaptation, elaborated in [chapter contracts](chapter-contracts.md).
+
+Identify the contribution, article type and primary evidence-producing or explanatory paradigm before selecting background. Numerical work needs the relevant prediction, closest models and the assumptions or comparisons that leave it uncertain; experimental work needs the observation, manipulation or sampling logic that distinguishes the question; original theoretical research needs the established result and unresolved assumptions or consequence, whereas an expository theory note needs the standard result, assumption roles and consequences it will clarify; a synthesis needs competing interpretations and its evidence scope. Mixed work explains the complementary roles and common quantities. These are prioritization questions, not fixed paragraph orders or a reason to exclude another evidence type when it serves the argument.
+
+Narrow from the consequential problem through what this paradigm already establishes to the specific unresolved aspect or explanatory need and present route. Original research retains a source-supported gap; exposition can address readers' understanding of known material without inventing a field-level gap or calling a standard derivation new. Synthesize sources by a shared scientific question, object or comparison condition. When claiming a predecessor limitation, admit its success and distinguish the author's stated limitation from an inference made here.
+
+Make the transition from prior success to present design specific: what object, scale, response or decision did that success resolve, and what does it still leave undecidable for the current purpose? Explain why the remaining distinction matters and which present comparison can address it. A general statement that a method is incomplete, followed by a list of new outputs, does not supply this bridge. The tension can concern two plausible readings of an existing result; it need not claim that an entire field lacks knowledge.
+
+Every paragraph should advance that narrowing in its controlling point and supported recognition. A new literature topic, method or observable must explain a needed role, rather than reopen a broad research line just because it is relevant to the field. Weight sources by their argumentative job: one establishes a success, another identifies a remaining assumption, and another motivates a discriminating quantity. If a string of citations only lists neighboring approaches, develop the source that changes the present decision and move the others to their point of use.
+
+Explain why the actual study unit, selection, scale or assumptions make the question distinguishable and constrain transfer. Application importance or an available dataset alone cannot supply this rationale. The closing study paragraph states the objective, chosen approach and main answering actions. It should follow from the preceding tension and make a promise Methods and Results can fulfill; it need not reproduce settings or the abstract's findings.
+
+Check the paragraph judgment chain and where new objects enter. Move an equation source or interpretation source to its useful section when it does not advance the introductory narrowing. Preserve actual bibliography functions across the manuscript. If reference coverage is disputed, investigate the omitted function and current venue requirements or comparable article sample; a sample count or project preference is not a universal quota. Return complete prose and located source questions, without manufacturing a gap from the available runs or incomplete search.
 
 <a id="methods"></a>
 
-## 方法：客观定义、参数角色与可复现配置
+## Methods: decisions, definitions and comparison design
 
-**依据：MIT_METHODS、MANCHESTER_METHODS、UNC_SCIENTIFIC_STYLE。**
+**Basis:** MIT_METHODS, MANCHESTER_METHODS and UNC_SCIENTIFIC_STYLE. Formula identity, parameter reuse and scheme naming are project scientific-editorial adaptations.
 
-先说明研究设计如何回答问题，再定义模型/样本/观察/比较和必要数值设置。方法并非每项结果后的免责声明，也不是软件功能清单。主动/被动语态由清楚的科学主语决定：`The model solves...`、`Samples were selected...`和`We calibrated...`都可客观；它们必须描述实际行为。时态按功能：已执行程序可用过去时，方程/定义可用现在时，当前论文目的另择清楚表述；不套用全节统一时态。
+Start from the capability the study needs and the approach actually used to obtain it. Explain why the study unit and design answer the question. A list of inputs or a sentence asserting that the method connects quantities is insufficient if it skips this rationale. Give controls, data roles and assessment choices that allow readers to judge validity and repeat the substantive work.
 
-对每个参数标明角色：材料/测量来源、数值控制、假设闭合、拟合参数或观察阈值。给相应依据：材料状态与单位；控制方程/边界条件；拟合数据、目标与约束；观测操作；网格/时间步与结论相关的敏感性。软件若影响算法行为就说明其作用；纯版本/命令/路径转到可访问的复现记录。若算法实现本身是论文贡献，细节应在正文充分展开。
+Explain what the adopted construction preserves, varies or makes assessable through its actual design. State operational assumptions where they define the procedure or quantity. Place broader validity, selection or transfer limitations beside the findings they affect, or in the closing synthesis, rather than appending an anticipatory defense to each method definition. This is a placement decision, not permission to hide a consequential assumption or adverse result. A generally expressible construction, a new method and an empirically demonstrated improvement require different evidence; positive wording cannot establish the latter two.
 
-**客观披露。** 陈述哪些观测或样本参与参数估计、哪些用于估计后的比较、比较中哪些设置保持不变。若全部目标在开发过程中已知，仍应客观说明回顾性和非盲性质。只使用真实设计支持的数据角色，不能为减少限定句而隐去这些事实。
+At a consequential equation or procedure, make the decision recoverable: required capability/adoption reason → assumptions and variables → formulation and source or derivation → its use in this design. This is a dependency check, not a rigid prose order; combine or reorder when the relation is already clear. Identify a borrowed model, local definition, derived identity, approximation or actual modification accurately. Explain unfamiliar theory to the intended readers; familiar standard details can point to the original source while local changes remain explicit. Where procedures are coupled, identify the information transferred and the consequence of the coupling assumption; naming the components alone does not explain what the combined approach can answer.
 
-**参数来源。** 对来源给定的参数或经验关系说明来源对象、条件、适用范围与当前用途。插值、外推、转换或重新估计改变了使用范围时，明确处理规则和依据；来源没有测得或验证的部分保留其假设身份。
+Define consequential parameters once in a useful main-text passage, table, appendix or linked reproduction record, with symbols, units, roles, values and sources/selection rationale as needed. Later passages recall the parameter's role or definition location. Repeat a value when a new local comparison, change or uncertainty requires it; do not force a parameter table on every manuscript or remove essential details to avoid numbers. Distinguish measured/input properties, numerical controls, assumptions, fitted quantities and observation rules. Interpolation, extrapolation or re-estimation retains its assumption or processing identity.
 
-**比较设计。** 明确各比较对象的改变项、保留项、共同评价量及观察规则。只有设计确实控制了影响解释的其他因素时，才说明某项效应被隔离；若同时改变处理或观察规则，应交代完整改动及其辨别能力。
+Define comparison schemes through the scientific question: changed factors, retained factors, common observations, baselines and what the contrasts can distinguish. Explain a retained choice when it protects that distinction, and state any alternative still inseparable under the design. A controlled model comparison identifies a response within its adopted assumptions; it does not establish that the changed component uniquely causes a physical discrepancy. Then introduce names/codes and use them consistently in body and displays. A table helps when readers need to compare several crossed or nested schemes; use prose or another design representation when clearer. Archive filenames and original table row numbers are provenance locators, not scientific object names. Calibration, retrospective comparison, independent validation, theoretical reference and numerical benchmark retain their actual roles.
 
-**信息分配诊断。** 此细节改变理解、推导、比较或误差判断吗？放正文。复现需要但会打断论证吗？附录/方法补充/代码说明并留关联位置。仅记录程序调试经过吗？开发/复现记录。不能仅凭“数字很多”或“软件”决定去留，也不能移动后让复现链断裂。
-
-**返回条件。** 读者可重建控制、参数、目标和观测的关系；新方法/改动足以评估并复现；重要材料/校准/验证事实仍公开客观；不存在用声明或库清单替代必要收敛证据的问题。无此证据时交给计算智能体一个命名比较，不盲目扩大测试。
+Methods explains how adequacy was assessed; Results reports the actual outcome. Put necessary evidence before or alongside the inference that depends on it, using precise references when details are elsewhere. Needed calibration, controls, convergence, a benchmark or independent comparison depends on the claim; neither execution success nor a planned check supplies it. Theory orders assumptions and derivations without invented experiments. Move routine commands, paths and debugging history to retrievable reproduction material, while keeping consequential assumptions, definitions and rationale where readers need them. Return the assigned text and the smallest missing comparison/evidence question.
 
 <a id="results-discussion-conclusions"></a>
 
-## 结果、讨论与结尾：让相同证据承担不同工作
+## Results, discussion and conclusions: evidence and its consequence
 
-**依据：PLOS_STRUCTURE、UNC_SCIENTIFIC_STYLE；证据层级采用项目研究方法，不是大学文体规则。**
+**Basis:** PLOS_STRUCTURE and UNC_SCIENTIFIC_STYLE. Related institutional guides are [MIT Results](https://mitcommlab.mit.edu/broad/commkit/journal-article-results/) (Purpose and logical narrative) and [MIT Discussion](https://mitcommlab.mit.edu/broad/commkit/journal-article-discussion/) (Purpose and comparison with existing results), both CC BY-NC 4.0. Their experimental terms and section layout are teaching conventions. Evidence-status and analysis-progression distinctions are project methods.
 
-结果提供问题所需的比较、方向、量级、异常和误差，避免逐面板复述。讨论解释这些证据改变的认识、与最近可比工作的一致/差异、仍存替代解释及真正限制。结尾提炼已回答的问题和重要含义，不增新机制或未测试的应用。
+Organize evidence by the scientific question and its dependencies. Connect a defined comparison and its purpose to the consequential observation, magnitude, uncertainty or counterexample, then the bounded answer. Interpretation explains that named evidence through a supported argument and genuinely comparable sources; distinguish an observed response from an explanatory hypothesis or unique cause. Joint changes do not identify a component's independent effect, and several derived quantities from one field are not several independent validation endpoints. Check whether sample selection, processing or observation definitions also changed before explaining a response. Failure of one scheme does not establish failure of all alternatives.
 
-负结果可说明某个具体控制方案不足，不能证明所有方法都失败；无变化可指出当前精度未分辨效应，不能证明零效应。一个联合变化改善了结果，不证明某部件独立导致改善。派生量可帮助理解同一场，但不应增加独立验证终点数。
+Progress to a new factor, scale or diagnostic because the previous result leaves a consequential distinction unresolved. A whole-object response can motivate analysis of the particular part that controls the downstream question; a negative response can delimit where an effect acts; an explanation's blind spot can require an additional observable. State that reason before the next evidence unit. Do not add a deeper analysis merely to accumulate plots, and do not imply an unperformed follow-up. Existing evidence can instead close with the distinction that remains unresolved.
 
-限制在它改变解释的地方说明：结果超出模型假设、数据覆盖或测量能力时，指出哪些推断受影响。若图像可能被误认作实测结果、计算结果或概念示意，图注应交代其真实身份，即使正文已有总体界限。无需在已限定的每个句子旁重复同一标签，但应保留影响局部解释的条件。
+When comparing deliberately varied inputs or factors, connect the imposed change to the response and to the interpretation needed to understand it. Observational associations and statistical latent factors retain their actual evidential roles and identifiability limits. For crossed designs, compare a factor at the relevant levels of its partner before generalizing its direction or calling the responses additive. Distinguish a whole-object response from a local response, and a baseline effect from a conditional interaction, when the question depends on those differences. If intervention magnitudes differ, a larger response ranks the tested changes, not the intrinsic importance of the factors. When a proposed explanation predicts a diagnostic, report the diagnostic's agreement or counterexample; preserve the alternatives that survive it. A supporting scalar alone may not identify a unique mechanism.
 
-**解释层级。** 检查结果变化是否还伴随样本选择、评价范围、处理流程或观察定义的变化。存在这些变化时，先说明观察到的关系和仍成立的替代解释，再提出能区分解释的证据。保留反证，避免由一个响应方向直接跳到唯一因果机制。
+A result unit can span paragraphs and displays. Body prose carries the question, consequential observation and inference; a self-contained caption supplies display identity, quantities, conditions and reading information. Avoid both caption-only findings and panel-by-panel repetition. Keep a qualification where it changes interpretation, including the actual identity of a potentially misleading image or data source.
 
-**返回条件。** 讨论较结果多做了综合/解释/条件比较；结尾与标题摘要同一认识；未检验机制仍为可检验解释；缺证据有明确问题和较便宜的判别替代。停止不改变读者认识的可选润色，交付完整段落或章节。
+Audit an extended analysis by the judgments it asks the reader to accept. If existing data have not been compared or analyzed sufficiently, add that analysis; if a consequential judgment lacks the needed evidence, request the discriminating measurement, computation or derivation. Shortening prose does not close an evidence gap. Merge repeated inferences and move background or prospective applications that do not change the interpretation. Let evidential and interpretive needs determine length.
+
+Select the representation from the recognition the reader needs. When an actual spatial, structural or temporal difference carries the finding, consider showing the original observation or calculated object in a direct, matched-scale comparison before its summary metrics. A metric plot remains primary when that is the evidence the claim needs. Compare matched objects with consistent coordinates, scale, encoding and labels; separate quantities that require different reading tasks. Do not manufacture an observed shape from a few dimensions, substitute an illustrative image for data, or import a published image as this study's validation. Exact inventories and secondary diagnostics can remain in a retrievable table or supplement. In a reference-led revision, name the exemplar's specific evidence-to-inference sequence and verify which moves the present evidence can support; visual similarity and figure counts are not acceptance criteria.
+
+Use combined Results and Discussion when local evidence and meaning should be read together; retain a separate Discussion for substantial cross-result synthesis, reconciled literature, implications or common limits. Printed architecture and number of writers are separate choices. Check quantities, design, data roles and evidence locators reciprocally with the Methods owner; select the existing MAF scopes according to the owned work, as explained in [chapter contracts](chapter-contracts.md).
+
+Conclude with the question answered and the understanding or conditional application it supports. Integrate the results that change the same scientific judgment instead of replaying the comparison itinerary or all reported values. Preserve contrary findings and alternatives that survive the actual evidence. A prospective application or discriminating future test must not become a demonstrated gain. Return complete prose with consequential unresolved questions; additional revision should respond to an actual defect in reader understanding or support.
+
+The linked teaching sources have source-specific licenses. Shared rules are original editorial synthesis with attributed links; full-source extracts remain private reading records. Source sentence recipes, voice preferences, section layouts and numerical suggestions are adaptable teaching conventions, not universal acceptance tests. In a substantive exemplar-led revision, retain the source locations and their connection to actual revision choices in the existing notes; a small edit does not require a new transfer-map file. The exemplar supplies neither the new study's research gap nor its evidence.

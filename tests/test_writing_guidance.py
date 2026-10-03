@@ -18,6 +18,64 @@ SCOPE = {"mode": "revise", "sections": ["introduction"]}
 
 
 class GuidanceTests(unittest.TestCase):
+    def test_section_criteria_routes_match_explicit_scopes(self):
+        expected = {
+            "title_abstract": ["continuity", "title", "abstract"],
+            "introduction": ["continuity", "introduction"],
+            "methods_results": ["continuity", "methods", "results-discussion-conclusions"],
+            "discussion_conclusions": ["continuity", "results-discussion-conclusions"],
+        }
+        self.assertEqual(set(guidance.SECTION_ANCHORS), set(guidance.SECTIONS))
+        for section, anchors in expected.items():
+            scope = {"mode": "draft", "sections": [section]}
+            with self.subTest(section=section):
+                self.assertEqual(guidance.section_reference_anchors(scope), anchors)
+                self.assertIn(guidance.SECTION_REFERENCE, guidance.selected_references("writer", scope))
+        combined = {"mode": "audit", "sections": ["methods_results", "discussion_conclusions"]}
+        self.assertEqual(guidance.section_reference_anchors(combined), expected["methods_results"])
+        full = {"mode": "audit", "sections": ["full_manuscript"]}
+        self.assertEqual(guidance.section_reference_anchors(full),
+                         ["continuity", "title", "abstract", "introduction", "methods", "results-discussion-conclusions"])
+        for role in ("writer", "coordinator", "reviewer", "literature", "simulation", "mechanism"):
+            self.assertNotIn(guidance.SECTION_REFERENCE, guidance.selected_references(role))
+
+    def test_excerpts_keep_provenance_and_selected_sections_and_fail_on_broken_anchor(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "skills/scientific-writing/references" / guidance.SECTION_REFERENCE
+            path.parent.mkdir(parents=True)
+            path.write_text('# Provenance\n\n<a id="common"></a>\nShared criterion.\n\n'
+                            '<a id="alpha"></a>\nUnassigned criterion.\n\n'
+                            '<a id="beta"></a>\nAssigned criterion.\n', encoding="utf-8")
+            excerpt = guidance.reference_text(guidance.SECTION_REFERENCE, root, anchors=["common", "beta"])
+            self.assertIn("# Provenance", excerpt)
+            self.assertIn("Shared criterion.", excerpt)
+            self.assertIn("Assigned criterion.", excerpt)
+            self.assertNotIn("Unassigned criterion.", excerpt)
+            self.assertNotIn('<a id="alpha">', excerpt)
+            with self.assertRaisesRegex(ValueError, "Missing or duplicate writing reference anchor"):
+                guidance.reference_text(guidance.SECTION_REFERENCE, root, anchors=["absent"])
+            with path.open("a", encoding="utf-8") as stream:
+                stream.write('\n<a id="beta"></a>\nAmbiguous criterion.\n')
+            with self.assertRaisesRegex(ValueError, "Missing or duplicate writing reference anchor"):
+                guidance.reference_text(guidance.SECTION_REFERENCE, root, anchors=["beta"])
+
+    def test_supplement_route_reaches_writer_and_decision_owners(self):
+        marker = "# Active evidence supplementation and return"
+        self.assertIn(marker, guidance.load_role("writer"))
+        for role in ("writer", "coordinator", "reviewer"):
+            with self.subTest(role=role):
+                self.assertIn(marker, guidance.load_role(role, SCOPE))
+        for role in ("literature", "mechanism", "simulation"):
+            self.assertNotIn(marker, guidance.load_role(role))
+            self.assertNotIn(marker, guidance.load_role(role, SCOPE))
+        with tempfile.TemporaryDirectory() as directory:
+            session = Session(directory, None, brief="Authorized research-to-paper task")
+            request = session.request("writer", {"question": "Draft the supplied analysis"}, schemas.REVIEW, "supplement-method")
+            self.assertIn(marker, request["instructions"])
+            self.assertIn("create_thread", request["instructions"])
+            self.assertIn("human authorization", request["instructions"])
+
     def test_transport_schema_strictifies_nested_optional_selection_without_public_changes(self):
         original = copy.deepcopy(schemas.PLAN)
         strict = _strict_output_schema(schemas.PLAN)
@@ -203,6 +261,14 @@ class GuidanceWorkflowTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIn("# Introduction", request["instructions"])
                 self.assertNotIn("# Methods and Results", request["instructions"])
                 self.assertIn("# Scientific objects and sentence continuity", request["instructions"])
+                self.assertIn("Selected criteria: continuity, introduction.", request["instructions"])
+                assigned_criteria = request["instructions"].split(
+                    "Selected criteria: continuity, introduction.", 1)[1].split(
+                    "Assigned writing method source:", 1)[0]
+                self.assertIn('<a id="continuity"></a>', assigned_criteria)
+                self.assertIn('<a id="introduction"></a>', assigned_criteria)
+                for omitted in ("title", "abstract", "methods", "results-discussion-conclusions"):
+                    self.assertNotIn(f'<a id="{omitted}"></a>', assigned_criteria)
             self.assertIn("# Writing Review", review["instructions"])
             self.assertIn("# Scientific Editor", disposition["instructions"])
             self.assertNotIn("# Scientific Editor", review["instructions"])

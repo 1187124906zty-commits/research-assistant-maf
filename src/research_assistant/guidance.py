@@ -12,6 +12,13 @@ SECTIONS = {
     "discussion_conclusions": "paper-discussion-conclusions",
 }
 MODES = {"draft", "revise", "audit"}
+SECTION_ANCHORS = {
+    "title_abstract": ("title", "abstract"),
+    "introduction": ("introduction",),
+    "methods_results": ("methods", "results-discussion-conclusions"),
+    "discussion_conclusions": ("results-discussion-conclusions",),
+}
+SECTION_REFERENCE = "section-specific-guidance.md"
 
 
 def resource_root() -> Path:
@@ -74,19 +81,49 @@ def selected_references(role: str, writing: dict | None = None) -> list[str]:
     """Deliver consequential short methods, rather than relying only on links."""
     scope = writing_selection(writing)
     if scope is None:
-        return []
-    names = ["object-and-continuity.md"]
+        return ["evidence-supplement.md"] if role == "writer" else []
+    names = ["object-and-continuity.md", SECTION_REFERENCE]
+    if role in {"writer", "coordinator", "reviewer"}:
+        names.append("evidence-supplement.md")
     if role == "coordinator" or scope["sections"] == ["full_manuscript"]:
         names.append("chapter-contracts.md")
     return names
 
 
-def reference_text(name: str, root: Path | None = None) -> str:
+def section_reference_anchors(writing: dict) -> list[str]:
+    """Select only the criteria relevant to the explicit section assignment."""
+    scope = writing_selection(writing)
+    if scope is None:
+        raise ValueError("Section criteria need an explicit writing selection")
+    sections = list(SECTIONS) if scope["sections"] == ["full_manuscript"] else scope["sections"]
+    anchors = ["continuity"]
+    anchors.extend(anchor for section in sections for anchor in SECTION_ANCHORS[section])
+    return list(dict.fromkeys(anchors))
+
+
+def reference_text(name: str, root: Path | None = None, *, anchors: list[str] | None = None) -> str:
     path = (root or resource_root()) / "skills" / "scientific-writing" / "references" / name
     if not path.is_file():
         raise ValueError(f"Missing bundled writing reference {name}")
-    return (f"\nAssigned writing method source: {path}. Resolve its links relative to "
-            f"{path.parent}.\n" + path.read_text(encoding="utf-8"))
+    content = path.read_text(encoding="utf-8")
+    if anchors is not None:
+        # The maintained Markdown anchors are also the public links used by skills.
+        # Keep provenance at the top; fail on a broken link instead of omitting it.
+        first = content.find('<a id="')
+        if first < 0 or not anchors:
+            raise ValueError(f"Missing section anchors in bundled writing reference {name}")
+        selected = [content[:first].rstrip()]
+        for anchor in anchors:
+            marker = f'<a id="{anchor}"></a>'
+            start = content.find(marker)
+            if start < 0 or content.find(marker, start + len(marker)) >= 0:
+                raise ValueError(f"Missing or duplicate writing reference anchor {name}#{anchor}")
+            end = content.find('<a id="', start + len(marker))
+            selected.append(content[start:end if end >= 0 else len(content)].strip())
+        content = "\n\n".join(selected) + "\n"
+    selection = f" Selected criteria: {', '.join(anchors)}." if anchors is not None else ""
+    return (f"\nAssigned writing method source: {path}.{selection} Resolve its links relative to "
+            f"{path.parent}.\n" + content)
 
 
 def load_role(role: str, writing: dict | None = None) -> str:
@@ -100,11 +137,12 @@ def load_role(role: str, writing: dict | None = None) -> str:
     for skill in selected_skills(role, writing):
         content += skill_text(skill, root)
     for name in selected_references(role, writing):
-        content += reference_text(name, root)
+        anchors = section_reference_anchors(writing) if name == SECTION_REFERENCE else None
+        content += reference_text(name, root, anchors=anchors)
     if writing is not None:
         scope = writing_selection(writing)
         content += f"\nAssigned writing mode: {scope['mode']}; sections: {', '.join(scope['sections'])}. "
-        content += "Apply only these sections; do not invent missing results or expand the assignment.\n"
+        content += "Write only these sections; request needed supplementary evidence within the authorized research scope and await actual results. Do not invent findings or silently expand the study.\n"
         if role == "literature":
             content += "For source synthesis and citation verification, read the scientific-writing reference source-use.md.\n"
     return content

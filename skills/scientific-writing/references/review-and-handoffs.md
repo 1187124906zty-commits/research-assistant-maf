@@ -4,6 +4,10 @@ Use this method when reviewing or returning manuscript findings. It is a project
 
 Identify the reader's intended understanding and the evidence that allows it. Read the relevant source passage, equation, figure or result before deciding that stronger language would help. Explain the lost meaning, unsupported relation or missing premise rather than merely labeling a passage vague or weak.
 
+For a repetition finding, locate both passages and distinguish repeated words from a repeated explanatory job. Identify the main explanation, the premise already established and the new information the next appearance should provide. Preserve useful recall, self-contained summaries and locally necessary conditions. Request the smallest consolidation, relocation or added definition/detail that makes the sections complementary, then reread the repaired boundary in the integrated text.
+
+When an opening carries a long qualified noun or a disclaimer, check the entity's earlier definition and the passage's job. Ask whether a stable short reference and a direct scientific predicate would carry the meaning, and whether a qualification defines the executed method or limits the interpretation of a finding. Repair the reference or placement without merging distinct entities, hiding counterevidence or substituting claimed novelty for demonstrated capability.
+
 For a consequential finding return:
 
 | Field | Content |
@@ -19,9 +23,9 @@ For a consequential finding return:
 Examples of distinct routes:
 
 - A dense abstract may report correct values yet leave the central finding unclear. Ask the writer to consolidate comparisons into their scientific answer and justify the set of retained numerical anchors. No additional solver run follows from this defect.
-- A causal explanation may be contradicted by integrated flux measured on a moving region. Ask the mechanism role to explain region dependence and surviving interpretations. A matched-region comparison is useful when isolating that explanation is required by the paper's claim.
-- A sentence may extend experimental verification to both materials when the original evaluated only one. Ask the source role to locate the populations; the writer then attributes the correct scope. More citations cannot repair the population error.
-- Methods may give equations but omit the executed transport discretization. Ask the evidence role for the executed snapshot and algorithm, then the writer for a concise scientific description and accessible reproduction locator. Debugging history can stay in the development record.
+- A causal explanation may conflict with a quantity evaluated over different comparison populations. Ask the mechanism role to identify the changed definition and surviving interpretations. A comparison on matched definitions is useful when isolating that explanation is required by the paper's claim.
+- A sentence may extend an empirical finding to populations the original did not evaluate. Ask the source role to locate the studied populations; the writer then attributes the correct scope. More citations cannot repair the population error.
+- Methods may state a conceptual procedure but omit a consequential step in its execution. Ask the evidence role for the executed record and procedure, then the writer for a concise scientific description and accessible reproduction locator. Debugging history can stay in the development record.
 
 The coordinator reads actual returns and closes findings as repaired, partially repaired with the remaining consequence, retained as a reasoned disagreement, or unresolved on a named claim. Accepted editing does not promote scientific evidence. Recheck the new source and, when layout matters, rendered pages; do not approve a producer's description of the fix.
 

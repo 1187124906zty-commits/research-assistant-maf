@@ -12,6 +12,8 @@ For inherited methods, trace predecessor object and result → its specific unre
 
 A new name/acronym is useful only when readers need to reuse a distinct, explicitly defined entity and it reduces effort. Check closest literature for collisions and meaning. A descriptive name is often enough. Define the long form first; keep it consistent across title/abstract/body. Naming cannot establish novelty, causality or effectiveness.
 
+After defining an entity and its consequential conditions, reuse the shortest stable name, code or symbol that identifies it unambiguously. Keep operating conditions, method variants, data populations and assessment levels distinct; one code should not silently change its referent. At a new comparison, restore the condition or definition that changes its meaning. Put the relation in the predicate rather than rebuilding a long qualified noun at every mention. A familiar object, a named figure or a brief warranted transition can open a paragraph when the following statement supplies its scientific point; do not impose one opening formula. Captions may repeat definitions needed to read the display independently.
+
 ## Repair the relation, then the wording
 
 For a difficult sentence, state its plain grammatical core: **object → action/relation → affected object**. Include the condition/comparator that changes its meaning. Check what each modifier modifies and what each pronoun refers to. An abstract noun chain can hide a missing relation even when each word is grammatical.
