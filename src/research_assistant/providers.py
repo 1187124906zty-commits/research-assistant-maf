@@ -155,7 +155,9 @@ class CodexProvider:
     async def _steer(self, turn, request_id: str, kind: str, text: str, **details):
         await self._progress_event(request_id, kind, question=text, **details)
         try:
-            await asyncio.wait_for(turn.steer(text), timeout=self.startup_timeout_seconds)
+            # Preserve caller cancellation at steering completion on Python 3.11.
+            async with asyncio.timeout(self.startup_timeout_seconds):
+                await turn.steer(text)
         except asyncio.CancelledError:
             raise
         except Exception as exc:
@@ -304,7 +306,10 @@ class CodexProvider:
                 return await thread.turn(request["prompt"],
                     output_schema=_strict_output_schema(request["output_schema"]))
             try:
-                turn = await asyncio.wait_for(startup(), timeout=self.startup_timeout_seconds)
+                # Keep startup in this task: Python 3.11 wait_for can lose a
+                # caller cancellation when its child finishes in the same tick.
+                async with asyncio.timeout(self.startup_timeout_seconds):
+                    turn = await startup()
             except TimeoutError as exc:
                 await self._progress_event(request["request_id"], "startup_timeout",
                                            timeout_seconds=self.startup_timeout_seconds)

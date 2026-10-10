@@ -25,6 +25,9 @@ class FakeSDK:
         self.start_delay = 0
         self.progress_reports = []
         self.steer_failure = None
+        self.steer_delay = 0
+        self.startup_started = asyncio.Event()
+        self.stream_started = asyncio.Event()
 
     def factory(self, *, config):
         sdk = self
@@ -35,6 +38,7 @@ class FakeSDK:
 
             async def thread_start(self, **kwargs):
                 self.start_kwargs = kwargs
+                sdk.startup_started.set()
                 await asyncio.sleep(sdk.start_delay)
                 self.id = f"thread-{len(sdk.clients)}"
                 return self
@@ -48,6 +52,8 @@ class FakeSDK:
 
             async def steer(self, text):
                 self.steers.append(text)
+                if sdk.steer_delay:
+                    await asyncio.sleep(sdk.steer_delay)
                 if sdk.steer_failure is not None:
                     raise sdk.steer_failure
                 if text.startswith("Progress checkpoint"):
@@ -62,6 +68,7 @@ class FakeSDK:
                     payload=SimpleNamespace(turn_id=self.id, item=item))
 
             async def stream(self):
+                sdk.stream_started.set()
                 finish = asyncio.create_task(asyncio.sleep(sdk.delay))
                 queued = None
                 try:
@@ -213,6 +220,18 @@ class CodexProviderTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(sdk.clients[0].interrupted)
         self.assertTrue(any(e["kind"] == "steer_error" for e in provider.progress_records["task-1"]))
 
+    async def test_status_transport_timeout_does_not_cancel_the_active_turn(self):
+        sdk = FakeSDK(delay=0.045)
+        sdk.steer_delay = 1
+        provider = CodexProvider(timeout_seconds=0.015, startup_timeout_seconds=0.01)
+        with self.sdk_patch(sdk):
+            result = await provider.ask(self.request)
+        self.assertEqual(result, {"finding": "unresolved"})
+        self.assertFalse(sdk.clients[0].interrupted)
+        self.assertTrue(sdk.clients[0].closed)
+        self.assertTrue(any(e["kind"] == "steer_error" and e["error_type"] == "TimeoutError"
+                            for e in provider.progress_records["task-1"]))
+
     async def test_evidenced_repetition_asks_question_before_candidate_handoff(self):
         sdk = FakeSDK(delay=0.065)
         repeated = self.report("repeated_polish", new_evidence=False,
@@ -276,8 +295,50 @@ class CodexProviderTests(unittest.IsolatedAsyncioTestCase):
         sdk = FakeSDK(delay=1)
         with self.sdk_patch(sdk):
             task = asyncio.create_task(CodexProvider().ask(self.request))
+            # Cancel on startup completion, before waiting for the stream.
+            # This exposes wait_for's cancellation race on Python 3.11.
             while not sdk.clients or not hasattr(sdk.clients[0], "turn_kwargs"):
                 await asyncio.sleep(0)
+            task.cancel()
+            with self.assertRaises(asyncio.CancelledError):
+                await task
+        self.assertTrue(sdk.clients[0].interrupted)
+        self.assertTrue(sdk.clients[0].closed)
+
+    async def test_cancellation_during_startup_closes_without_an_active_turn(self):
+        sdk = FakeSDK()
+        sdk.start_delay = 1
+        with self.sdk_patch(sdk):
+            task = asyncio.create_task(CodexProvider().ask(self.request))
+            await asyncio.wait_for(sdk.startup_started.wait(), timeout=1)
+            task.cancel()
+            with self.assertRaises(asyncio.CancelledError):
+                await task
+        self.assertFalse(hasattr(sdk.clients[0], "turn_kwargs"))
+        self.assertFalse(sdk.clients[0].interrupted)
+        self.assertTrue(sdk.clients[0].closed)
+
+    async def test_cancellation_during_active_stream_interrupts_and_closes(self):
+        sdk = FakeSDK(delay=1)
+        with self.sdk_patch(sdk):
+            task = asyncio.create_task(CodexProvider().ask(self.request))
+            await asyncio.wait_for(sdk.stream_started.wait(), timeout=1)
+            task.cancel()
+            with self.assertRaises(asyncio.CancelledError):
+                await task
+        self.assertTrue(sdk.clients[0].interrupted)
+        self.assertTrue(sdk.clients[0].closed)
+
+    async def test_cancellation_on_steer_completion_propagates_and_interrupts(self):
+        sdk = FakeSDK(delay=1)
+        provider = CodexProvider(timeout_seconds=0.01)
+        with self.sdk_patch(sdk):
+            task = asyncio.create_task(provider.ask(self.request))
+            async with asyncio.timeout(1):
+                while not sdk.clients or not getattr(sdk.clients[0], "steers", []):
+                    await asyncio.sleep(0)
+            # Fake steer returns without yielding after recording the request.
+            # Cancel at its completion, rather than after an arbitrary delay.
             task.cancel()
             with self.assertRaises(asyncio.CancelledError):
                 await task
