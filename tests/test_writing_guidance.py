@@ -18,6 +18,12 @@ SCOPE = {"mode": "revise", "sections": ["introduction"]}
 
 
 class GuidanceTests(unittest.TestCase):
+    def setUp(self):
+        # These original assertions exercise MAF's independent bundled fallback.
+        provider = patch.object(guidance, "canonical_writing_skill", return_value=None)
+        provider.start()
+        self.addCleanup(provider.stop)
+
     def test_section_criteria_routes_match_explicit_scopes(self):
         expected = {
             "title_abstract": ["continuity", "title", "abstract"],
@@ -186,6 +192,12 @@ class GuidanceTests(unittest.TestCase):
 
 
 class GuidanceWorkflowTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        # These original assertions exercise MAF's independent bundled fallback.
+        provider = patch.object(guidance, "canonical_writing_skill", return_value=None)
+        provider.start()
+        self.addCleanup(provider.stop)
+
     async def test_consequential_feedback_reaches_next_attempt_and_changed_report_blocks(self):
         class RepairProvider:
             def __init__(inner):

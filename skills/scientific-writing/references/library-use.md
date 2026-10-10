@@ -10,6 +10,8 @@ Before source selection identify section × position × purpose, the scientific 
 
 Read a candidate's original passage and neighbors, checking the object, preceding premise, supporting evidence and actual location. Keep intended target, observed source section/position and present adaptation separate. A suggested move is not a quotation or evidence for this study. Preserve uncertainty when original context is unavailable. In existing notes retain consequential candidate IDs, original locators, transfer limits and adoption/rejection reasons; small edits need no new form.
 
+For source learning and expression decisions, read the resource-selection guidance linked by the maintained `research-writing-skill` entry. This MAF reference retains only the bundled library route for standalone fallback.
+
 For the library's structural sidecar, slot statuses and query command read [library-adapter.md](library-adapter.md). A ready contract establishes supplied-field compatibility, not scientific truth or writing quality. Optional source-backed exemplars must retain passage identity, neighboring context, locator and transfer boundary. Use their reasoning only where the present evidence supports it.
 
 <a id="abstract-opening"></a>

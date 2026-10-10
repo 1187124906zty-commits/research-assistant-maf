@@ -19,6 +19,8 @@ Start from the user's motivation, earlier questions, resources and requested del
 
 Read [coordination.md](references/coordination.md) for contracts, contexts, contribution and disagreements. Read [execution.md](references/execution.md) when using the MAF carrier or recovering interrupted work. Load only the relevant detail.
 
+For manuscript assignments, keep the existing `task.writing` contract and use the maintained `research-writing-skill` through MAF’s [writing handoff](../scientific-writing/references/scientific-story.md). Writing decisions belong to that entry; research-state decisions remain with this coordinator.
+
 ## Roles and boundaries
 
 Activate only roles that can improve the current decision. Use literature, simulation, mechanism, writer and reviewer capabilities as needed; role names do not require that many simultaneous workers. Handle cheap deterministic work directly. Preserve configured model choices unless the user requests a change.

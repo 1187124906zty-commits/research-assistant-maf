@@ -19,6 +19,8 @@ A useful packet includes:
 
 Use an explanation rather than a numeric tolerance when adequacy requires expert assessment. The expert may propose a justified criterion before a consequential comparison. Changing a criterion after viewing results to rescue a failure is unacceptable.
 
+For an explicit manuscript assignment, retain `task.writing` with mode `draft`, `revise` or `audit` and sections `title_abstract`, `introduction`, `methods_results`, `discussion_conclusions` or `full_manuscript`. The role loader resolves the maintained `research-writing-skill` entry without adding the bundled writing stack. Supply task inputs, adjacent passages and owned outputs; the coordinator remains responsible for research-state decisions. If the implicit entry is unavailable, MAF retains its bundled routes for standalone operation.
+
 Workers receive sufficient context to act independently and may read linked originals or ask a precise missing-context question. Do not send unrelated history or compress away the condition that limits a conclusion. For independent first-pass review, provide the question and raw evidence before the producer's interpretation when possible.
 
 ## Contribution-bearing return

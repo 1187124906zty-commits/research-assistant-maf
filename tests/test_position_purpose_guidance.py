@@ -16,6 +16,12 @@ ROLES = ("writer", "reviewer", "coordinator", "literature", "simulation", "mecha
 
 
 class PositionPurposeGuidanceTests(unittest.TestCase):
+    def setUp(self):
+        # These original assertions exercise MAF's independent bundled fallback.
+        provider = patch.object(guidance, "canonical_writing_skill", return_value=None)
+        provider.start()
+        self.addCleanup(provider.stop)
+
     def test_actual_selected_bodies_follow_scope_without_expanding_other_jobs(self):
         root = guidance.resource_root()
         source = (root / "skills/scientific-writing/references" /

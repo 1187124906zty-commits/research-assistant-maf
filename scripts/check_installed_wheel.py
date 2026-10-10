@@ -18,7 +18,9 @@ def main():
         workspace = Path(temporary)
         target = workspace / "installed"
         subprocess.run([sys.executable, "-m", "pip", "install", "--no-deps", "--target", str(target), str(wheels[0])], check=True)
-        environment = {**os.environ, "PYTHONPATH": str(target)}
+        environment = {**os.environ, "PYTHONPATH": str(target),
+                       "CODEX_HOME": str(workspace / "standalone-codex")}
+        environment.pop("MAF_RESEARCH_WRITING_SKILL", None)
         code = (
             "from pathlib import Path; import research_assistant.engine as e; "
             "import research_assistant.guidance as g; import re; "
@@ -59,7 +61,7 @@ def main():
             "assert all((root/'skills/scientific-writing/references'/name).is_file() for name in ['institution-guidance.md','source-ledger.md','object-and-continuity.md','chapter-contracts.md','cohesion-source-ledger.md','section-specific-guidance.md']); "
             "raise SystemExit(main(['demo',str(Path.cwd()/'demo')]))"
         )
-        subprocess.run([sys.executable, "-c", code], cwd=workspace, env=environment, check=True)
+        subprocess.run([sys.executable, "-c", code.replace("; ", ";\n")], cwd=workspace, env=environment, check=True)
 
 
 if __name__ == "__main__":

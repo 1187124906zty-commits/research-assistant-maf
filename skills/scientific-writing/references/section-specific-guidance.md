@@ -42,6 +42,8 @@ Define parameters at usable locations with units, role, values and source/choice
 
 Organize evidence by questions and dependencies. Give the purpose of a defined comparison, consequential observation/uncertainty, and supported answer. Body prose carries judgments; captions identify displays and reading conditions. Move to another factor/diagnostic because a prior result leaves a distinction unresolved, not to accumulate outputs. Interpret named evidence with comparable literature and surviving alternatives. A pattern can support an explanation without uniquely identifying its mechanism.
 
+When the maintained `research-writing-skill` is available, its writing-craft reference owns section and figure/text decisions. MAF preserves these anchors for existing callers and standalone fallback; it does not add a second set of current writing criteria.
+
 Use [comparison checks](argument-distillation.md#comparison-and-inference) for fairness/scope and [evidence allocation](argument-distillation.md#evidence-medium) for purposeful displays. Combined Results and Discussion can keep local inference beside evidence; a separate Discussion adds cross-result synthesis, literature comparison, explanation or common limits. Printed architecture is independent of authorship.
 
 Conclude with what evidence changes about the question, integrating results that change the same judgment. Preserve contrary outcomes and alternatives. Conditional applications and future tests stay conditional. If interpretation needs absent evidence, identify the discriminating question instead of strengthening wording. Length follows the reasoning needed, not a quota of paragraphs, numbers or displays.

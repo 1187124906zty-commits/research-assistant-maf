@@ -1,7 +1,9 @@
 """Explicit, task-scoped role/skill loading from checkout or wheel resources."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
+import re
 from typing import Any
 
 
@@ -23,6 +25,7 @@ DISTILLATION_REFERENCE = "argument-distillation.md"
 LIBRARY_REFERENCE = "library-use.md"
 EXAMPLE_REFERENCE = "paragraph-examples.md"
 SOURCE_EXAMPLE_REFERENCE = "source-backed-exemplars.md"
+CANONICAL_WRITING_NAME = "research-writing-skill"
 EXAMPLE_ANCHORS = {
     "title_abstract": ("abstract-example",),
     "introduction": ("introduction-example",),
@@ -209,6 +212,56 @@ def reference_text(name: str, root: Path | None = None, *, anchors: list[str] | 
             f"{path.parent}.\n" + content)
 
 
+def canonical_writing_skill() -> Path | None:
+    """Resolve a maintained host skill; missing implicit installs keep MAF standalone.
+
+    An explicit file override must resolve successfully instead of silently
+    falling back to another writing provider. No user settings are modified.
+    """
+    override = os.environ.get("MAF_RESEARCH_WRITING_SKILL")
+    codex_home = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
+    path = (Path(override).expanduser() if override else
+            codex_home / "skills" / CANONICAL_WRITING_NAME / "SKILL.md")
+    if not path.is_file():
+        if override:
+            raise ValueError(f"Missing configured writing skill: {path}")
+        return None
+    body = path.read_text(encoding="utf-8-sig")
+    frontmatter = re.match(r"\A---[ \t]*\r?\n(.*?)\r?\n---[ \t]*(?:\r?\n|\Z)", body, re.DOTALL)
+    name = (re.search(r"^name:[ \t]*(?:research-writing-skill|'research-writing-skill'|\"research-writing-skill\")[ \t]*(?:#.*)?$",
+                      frontmatter.group(1), re.MULTILINE) if frontmatter else None)
+    if name is None:
+        raise ValueError(f"Unexpected writing skill name: {path}")
+    return path.resolve()
+
+
+def canonical_role_text(role: str, path: Path, scope: dict | None, root: Path) -> str:
+    """Carry the host's single writing standard with MAF's existing task scope."""
+    if role in {"writer", "reviewer"}:
+        content = (f"MAF writing role: {role}. Use the assigned task, input versions and "
+                   "owned output paths. Return the actual artifact and located unresolved "
+                   "issues; reviewers return located findings under the review contract. "
+                   "The coordinator owns shared research decisions.\n")
+    else:
+        content = (root / "roles" / f"{role}.md").read_text(encoding="utf-8")
+    for skill in selected_skills(role, scope):
+        if skill in {"research-coordinator", "simulation-evidence"}:
+            content += skill_text(skill, root)
+    content += (f"\nApplicable skill source: {path}. This maintained entry is the single "
+                "writing standard for this assignment. Resolve its references relative "
+                f"to {path.parent} and read only those needed for the task. MAF's bundled "
+                "teaching stack is not also injected.\n")
+    content += path.read_text(encoding="utf-8-sig")
+    if scope:
+        sections = list(SECTIONS) if scope["sections"] == ["full_manuscript"] else scope["sections"]
+        for section in sections:
+            source = root / "skills" / SECTIONS[section] / "SKILL.md"
+            heading = next(line for line in source.read_text(encoding="utf-8").splitlines()
+                           if line.startswith("# "))
+            content += f"\n{heading}\nMAF section selection: {section}. Use the maintained entry's corresponding section guidance.\n"
+    return content
+
+
 def load_role(role: str, writing: dict | None = None) -> str:
     if role not in {"coordinator", "literature", "simulation", "mechanism", "writer", "reviewer"}:
         raise ValueError(f"Unknown role {role}")
@@ -216,20 +269,31 @@ def load_role(role: str, writing: dict | None = None) -> str:
     path = root / "roles" / f"{role}.md"
     if not path.is_file():
         raise ValueError(f"Missing role charter {role}")
-    content = path.read_text(encoding="utf-8")
-    for skill in selected_skills(role, writing):
-        content += skill_text(skill, root, compact_section=True)
-    for name in selected_references(role, writing):
-        anchors = (section_reference_anchors(writing) if name == SECTION_REFERENCE else
-                   distillation_reference_anchors(writing) if name == DISTILLATION_REFERENCE else
-                   library_reference_anchors(writing) if name == LIBRARY_REFERENCE else
-                   example_reference_anchors(writing) if name == EXAMPLE_REFERENCE else
-                   source_example_reference_anchors(writing) if name == SOURCE_EXAMPLE_REFERENCE else None)
-        content += reference_text(name, root, anchors=anchors)
+    scope = writing_selection(writing)
+    canonical = canonical_writing_skill() if role == "writer" or scope is not None else None
+    if canonical:
+        content = canonical_role_text(role, canonical, scope, root)
+    else:
+        content = path.read_text(encoding="utf-8")
+        for skill in selected_skills(role, writing):
+            if skill == "scientific-writing":
+                content += reference_text("legacy-writing-core.md", root)
+            else:
+                content += skill_text(skill, root, compact_section=True)
+        for name in selected_references(role, writing):
+            anchors = (section_reference_anchors(writing) if name == SECTION_REFERENCE else
+                       distillation_reference_anchors(writing) if name == DISTILLATION_REFERENCE else
+                       library_reference_anchors(writing) if name == LIBRARY_REFERENCE else
+                       example_reference_anchors(writing) if name == EXAMPLE_REFERENCE else
+                       source_example_reference_anchors(writing) if name == SOURCE_EXAMPLE_REFERENCE else None)
+            content += reference_text(name, root, anchors=anchors)
     if writing is not None:
         scope = writing_selection(writing)
         content += f"\nAssigned writing mode: {scope['mode']}; sections: {', '.join(scope['sections'])}. "
         content += "Write only these sections; request needed supplementary evidence within the authorized research scope and await actual results. Do not invent findings or silently expand the study.\n"
         if role == "literature":
-            content += "For source synthesis and citation verification, read the scientific-writing reference source-use.md.\n"
+            if canonical:
+                content += "For source synthesis and citation verification, use the resource-selection reference linked by the maintained writing entry.\n"
+            else:
+                content += "For source synthesis and citation verification, read the scientific-writing reference source-use.md.\n"
     return content

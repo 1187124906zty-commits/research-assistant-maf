@@ -3,6 +3,7 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from research_assistant import guidance
 
@@ -14,6 +15,12 @@ spec.loader.exec_module(cases_module)
 
 
 class ArgumentDistillationTests(unittest.TestCase):
+    def setUp(self):
+        # These original assertions exercise MAF's independent bundled fallback.
+        provider = patch.object(guidance, "canonical_writing_skill", return_value=None)
+        provider.start()
+        self.addCleanup(provider.stop)
+
     def test_reader_task_routing_preserves_explicit_section_scope(self):
         intro = {"mode": "revise", "sections": ["introduction"]}
         methods = {"mode": "audit", "sections": ["methods_results"]}
