@@ -1,11 +1,18 @@
 """Delivery and progressive disclosure invariants, not prose quality scores."""
 import re
 import unittest
+from unittest.mock import patch
 
 from research_assistant import guidance
 
 
 class CompactWritingTests(unittest.TestCase):
+    def setUp(self):
+        # These original assertions exercise MAF's independent bundled fallback.
+        provider = patch.object(guidance, "canonical_writing_skill", return_value=None)
+        provider.start()
+        self.addCleanup(provider.stop)
+
     def test_actual_load_is_bounded_and_examples_follow_scope(self):
         expected = {
             "title_abstract": ["abstract-example"],

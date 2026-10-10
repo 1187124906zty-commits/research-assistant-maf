@@ -178,8 +178,12 @@ class Session:
         writing = packet_writing(packet)
         instructions = role_text(role, writing)
         if role == "reviewer" and packet.get("writing_review") is True and writing is None:
-            instructions += guidance.skill_text("scientific-writing")
-            instructions += guidance.skill_text("paper-writing-review")
+            canonical = guidance.canonical_writing_skill()
+            if canonical:
+                instructions = guidance.canonical_role_text(role, canonical, None, guidance.resource_root())
+            else:
+                instructions += guidance.reference_text("legacy-writing-core.md")
+                instructions += guidance.skill_text("paper-writing-review")
         return {"role": role, "instructions": instructions +
                 "\nUse only the assigned writes. Never edit .research-assistant shared state. "
                 "Read consequential original inputs; return one JSON object matching the supplied schema. "
